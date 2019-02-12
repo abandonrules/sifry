@@ -5,23 +5,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import cz.absolutno.sifry.R;
-import cz.absolutno.sifry.Utils;
-import cz.absolutno.sifry.common.activity.AbstractCFragment;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
 import cz.absolutno.sifry.common.activity.BottomBarActivity;
 
 public final class MorseActivity extends BottomBarActivity {
 
-    private static final int TRANSMIT = 0;
-    private static final int ENCODE = 1;
-    private static final int DECODE = 2;
-    private static final int REFERENCE = 3;
+    private static final int ENCODE = 0;
+    private static final int DECODE = 1;
+    private static final int REFERENCE = 2;
 
     @Override
     protected void onCreate(Bundle state) {
         super.onCreate(state);
         if (state == null) {
-            getBBar().setEntries(new String[]{getString(R.string.tMTransmit), getString(R.string.tEncode), getString(R.string.tDecode), getString(R.string.tRef)}, DECODE);
+            getBBar().setEntries(new String[]{getString(R.string.tEncode), getString(R.string.tDecode), getString(R.string.tRef)}, DECODE);
             AbstractDFragment frag = new MorseDFragment();
             FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
             trans.replace(R.id.content, frag, "D");
@@ -41,7 +38,7 @@ public final class MorseActivity extends BottomBarActivity {
                 if (frag.getTag().equals("D")) {
                     args = new Bundle();
                     frag = new MorseCFragment();
-                    if (((MorseDFragment) getCurrFragment()).saveData(args))
+                    if (getCurrFragment().saveData(args))
                         frag.setArguments(args);
                     trans.replace(R.id.content, frag, "C");
                     trans.addToBackStack(null);
@@ -53,7 +50,7 @@ public final class MorseActivity extends BottomBarActivity {
                 frag = getCurrFragment();
                 args = new Bundle();
                 if (frag.getTag().equals("C"))
-                    if (((AbstractCFragment) frag).saveData(args))
+                    if (frag.saveData(args))
                         ((AbstractDFragment) fm.findFragmentByTag("D")).loadData(args);
                 fm.popBackStack();
                 break;
@@ -63,28 +60,13 @@ public final class MorseActivity extends BottomBarActivity {
                 trans.addToBackStack(null);
                 trans.commit();
                 break;
-            case TRANSMIT:
-                args = new Bundle();
-                if (((MorseCFragment) getCurrFragment()).saveData(args)) {
-                    frag = new MorseTFragment();
-                    frag.setArguments(args);
-                    trans.replace(R.id.content, frag, "T");
-                    trans.addToBackStack(null);
-                    trans.commit();
-                } else {
-                    Utils.toast(R.string.tErrVar);
-                    getBBar().goTo(ENCODE);
-                }
-                break;
         }
     }
 
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
-        if (fm.findFragmentByTag("T") != null)
-            getBBar().goTo(ENCODE);
-        else if (fm.findFragmentByTag("C") != null || fm.findFragmentByTag("R") != null)
+        if (fm.findFragmentByTag("C") != null || fm.findFragmentByTag("R") != null)
             getBBar().goTo(DECODE);
         else
             super.onBackPressed();

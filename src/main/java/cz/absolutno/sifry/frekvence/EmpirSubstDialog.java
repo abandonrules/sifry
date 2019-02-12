@@ -1,10 +1,13 @@
 package cz.absolutno.sifry.frekvence;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -38,28 +41,31 @@ public final class EmpirSubstDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        colPrimary = getResources().getColor(R.color.priColor);
-        colOK = getResources().getColor(R.color.esubsOKColor);
-        colColl = getResources().getColor(R.color.esubsCollColor);
+        colPrimary = ContextCompat.getColor(getContext(), R.color.priColor);
+        colOK = ContextCompat.getColor(getContext(), R.color.esubsOKColor);
+        colColl = ContextCompat.getColor(getContext(), R.color.esubsCollColor);
 
         mezera = getString(R.string.tFDMezera);
         nic = getString(R.string.tESDNic);
         jine = getString(R.string.tESDJine);
     }
 
+    @NonNull
     @SuppressWarnings("unchecked")
     @Override
+    @SuppressLint("InflateParams")
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Builder bld = new Builder(getActivity());
         bld.setCancelable(true);
 
         final SubsItem item = (SubsItem) getArguments().getSerializable(App.SPEC);
+        assert item != null;
         abc = Alphabet.getPreferentialFullInstance();
         used = (HashMap<String, Integer>) getArguments().getSerializable(App.DATA);
 
         layout = App.getInflater().inflate(R.layout.esubs_dialog, null);
         ((TextView) layout.findViewById(R.id.tvESDPuv)).setText(item.ord >= 0 ? item.orig : Utils.getCharDesc(item.orig.charAt(0), mezera));
-        GridView grid = (GridView) layout.findViewById(R.id.gvESDialog);
+        GridView grid = layout.findViewById(R.id.gvESDialog);
         grid.setAdapter(new AlphabetLA(item.repl));
 
         bld.setView(layout);
@@ -126,10 +132,10 @@ public final class EmpirSubstDialog extends DialogFragment {
 
     private final class AlphabetLA extends BaseAdapter {
 
-        private String orig;
-        private int cnt;
+        private final String orig;
+        private final int cnt;
 
-        public AlphabetLA(String orig) {
+        AlphabetLA(String orig) {
             this.orig = orig;
             cnt = abc.count();
         }
@@ -154,7 +160,7 @@ public final class EmpirSubstDialog extends DialogFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView tv;
             if (convertView == null)
-                tv = (TextView) App.getInflater().inflate(R.layout.gen_letter_item, null);
+                tv = (TextView) App.getInflater().inflate(R.layout.gen_letter_item, parent, false);
             else
                 tv = (TextView) convertView;
             String chr = getItem(position);
@@ -171,6 +177,6 @@ public final class EmpirSubstDialog extends DialogFragment {
     }
 
     public interface OnSelectedListener {
-        public void onSelected(String from, String to);
+        void onSelected(String from, String to);
     }
 }

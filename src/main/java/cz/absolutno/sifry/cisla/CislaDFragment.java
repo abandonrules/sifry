@@ -55,7 +55,7 @@ public final class CislaDFragment extends AbstractDFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cislad_layout, null);
+        View v = inflater.inflate(R.layout.cislad_layout, container, false);
 
         abcPref = Alphabet.getPreferentialInstance();
         abcPerm = Alphabet.getVariantInstance(24, "");
@@ -70,6 +70,7 @@ public final class CislaDFragment extends AbstractDFragment {
         itp = interp[0];
 
         ((Spinner) v.findViewById(R.id.spCDSoust)).setOnItemSelectedListener(new OnItemSelectedListener() {
+            @SuppressWarnings("ConstantConditions")
             public void onItemSelected(AdapterView<?> parentView, View childView, int position, long id) {
                 mod = mody[position];
                 zaklad = zaklady[position];
@@ -97,13 +98,13 @@ public final class CislaDFragment extends AbstractDFragment {
         if (savedInstanceState == null)
             ((Spinner) v.findViewById(R.id.spCDSoust)).setSelection(3);
 
-        spInterp = (Spinner) v.findViewById(R.id.spCDInterp);
-        ArrayAdapter<InterpItem> adapter = new ArrayAdapter<CislaDFragment.InterpItem>(getActivity(), android.R.layout.simple_spinner_item, interpList(abc.count()));
+        spInterp = v.findViewById(R.id.spCDInterp);
+        ArrayAdapter<InterpItem> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, interpList(abc.count()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spInterp.setAdapter(adapter);
         spInterp.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parentView, View childView, int position, long id) {
-                itp = ((InterpItem) parentView.getItemAtPosition(position)).interp;//interp[position];
+                itp = ((InterpItem) parentView.getItemAtPosition(position)).interp;
                 cvVstup.setLayout(mod, zaklad, itp);
                 updateNula();
                 updateVstup();
@@ -115,7 +116,7 @@ public final class CislaDFragment extends AbstractDFragment {
         if (savedInstanceState == null)
             spInterp.setSelection(0);
 
-        cvVstup = (CislaView) v.findViewById(R.id.cvCDVstup);
+        cvVstup = v.findViewById(R.id.cvCDVstup);
         cvVstup.setOnInputListener(new CislaView.OnInputListener() {
             public void onInput(int tag, String txt) {
                 switch (mod) {
@@ -135,13 +136,13 @@ public final class CislaDFragment extends AbstractDFragment {
             }
         });
 
-        tvVstup = (TextView) v.findViewById(R.id.tvCDVstup);
+        tvVstup = v.findViewById(R.id.tvCDVstup);
         tvVstup.setOnClickListener(enterListener);
 
-        tvRes = (TextView) v.findViewById(R.id.tvRes);
+        tvRes = v.findViewById(R.id.tvRes);
         tvRes.setOnClickListener(Utils.copyClickListener);
 
-        ImageView ivBsp = (ImageView) v.findViewById(R.id.ivBsp);
+        ImageView ivBsp = v.findViewById(R.id.ivBsp);
         ivBsp.setOnClickListener(bspListener);
         ivBsp.setOnLongClickListener(clearListener);
 
@@ -197,7 +198,7 @@ public final class CislaDFragment extends AbstractDFragment {
             case R.id.idCDCisla:
                 if (zaklad != 10) {
                     sb.append(prevod(vstup, zaklad)).append(" (").append(zaklad).append(")");
-                    if (vstup > 0) sb.append(" = ").append(vstup).append(" (10)");
+                    sb.append(" = ").append(vstup).append(" (10)");
                 } else sb.append(vstup);
                 break;
             case R.id.idCDRim:
@@ -228,20 +229,22 @@ public final class CislaDFragment extends AbstractDFragment {
     }
 
     private String prevod(int x, int zaklad) {
-        if (x <= 0)
+        if (x < 0)
             return null;
+        else if(x == 0)
+            return "0";
         else {
-            String s = "";
+            StringBuilder sb = new StringBuilder();
             while (x != 0) {
-                s = String.format("%X", x % zaklad) + s;
+                sb.insert(0, String.format("%X", x % zaklad));
                 x /= zaklad;
             }
-            return s;
+            return sb.toString();
         }
     }
 
 
-    private OnClickListener enterListener = new OnClickListener() {
+    private final OnClickListener enterListener = new OnClickListener() {
         public void onClick(View v) {
             if (!(vstup == 0 && !nula))
                 reseni += znak();
@@ -251,7 +254,7 @@ public final class CislaDFragment extends AbstractDFragment {
         }
     };
 
-    private OnClickListener bspListener = new OnClickListener() {
+    private final OnClickListener bspListener = new OnClickListener() {
         public void onClick(View v) {
             if (vstup != 0) {
                 switch (mod) {
@@ -307,7 +310,7 @@ public final class CislaDFragment extends AbstractDFragment {
         else
             abcPref = Alphabet.getPreferentialInstance();
 
-        ArrayAdapter<InterpItem> adapter = new ArrayAdapter<CislaDFragment.InterpItem>(getActivity(), android.R.layout.simple_spinner_item, interpList(abc.count()));
+        ArrayAdapter<InterpItem> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, interpList(abc.count()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spInterp.setAdapter(adapter);
 
@@ -316,7 +319,6 @@ public final class CislaDFragment extends AbstractDFragment {
     }
 
     private InterpItem[] interpList(int count) {
-        int[] interp = Utils.getIdArray(R.array.iaCDInterp);
         String[] elms = getResources().getStringArray(R.array.pataCDInterp);
         InterpItem res[] = new InterpItem[elms.length];
         for (int i = 0; i < elms.length; i++)
@@ -329,10 +331,10 @@ public final class CislaDFragment extends AbstractDFragment {
 
 
     private static final class InterpItem {
-        int interp;
-        String txt;
+        final int interp;
+        final String txt;
 
-        public InterpItem(int interp, String txt) {
+        InterpItem(int interp, String txt) {
             this.interp = interp;
             this.txt = txt;
         }

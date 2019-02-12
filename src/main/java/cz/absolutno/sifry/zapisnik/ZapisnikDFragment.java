@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -50,15 +49,15 @@ public final class ZapisnikDFragment extends AbstractDFragment {
     // reading an ArrayList serialized in an input stream in onDestroy() below
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        lvMain = (ListView) inflater.inflate(R.layout.gen_list_layout, null);
+        lvMain = (ListView) inflater.inflate(R.layout.gen_list_layout, container, false);
 
         try {
             FileInputStream fis = App.getContext().openFileInput(ZapisnikActivity.FILE);
             ObjectInputStream ois = new ObjectInputStream(fis);
             stan = (ArrayList<Stanoviste>) ois.readObject();
         } catch (Exception e) {
-            e.printStackTrace();
-            stan = new ArrayList<Stanoviste>();
+            //e.printStackTrace();
+            stan = new ArrayList<>();
         }
 
         patNazev = getString(R.string.patZDDefault);
@@ -81,15 +80,13 @@ public final class ZapisnikDFragment extends AbstractDFragment {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(stan);
             oos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    private OnItemClickListener itemClickListener = new OnItemClickListener() {
+    private final OnItemClickListener itemClickListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
             if (id == -1)
                 prichod();
@@ -110,8 +107,6 @@ public final class ZapisnikDFragment extends AbstractDFragment {
             menu.findItem(R.id.mZCtxOdchod).setVisible(false);
     }
 
-    ;
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
@@ -131,7 +126,7 @@ public final class ZapisnikDFragment extends AbstractDFragment {
         return super.onContextItemSelected(item);
     }
 
-    public void prichod() {
+    private void prichod() {
         ZapisnikSFragment dialog = new ZapisnikSFragment();
         Bundle args = new Bundle();
         args.putSerializable(App.DATA, new Stanoviste(dalsiStan()));
@@ -141,7 +136,7 @@ public final class ZapisnikDFragment extends AbstractDFragment {
         dialog.show(getFragmentManager(), "prichod");
     }
 
-    private ZapisnikSFragment.OnPositiveButtonListener prichodListener = new ZapisnikSFragment.OnPositiveButtonListener() {
+    private final ZapisnikSFragment.OnPositiveButtonListener prichodListener = new ZapisnikSFragment.OnPositiveButtonListener() {
         public void onPositiveButton(Stanoviste s) {
             stan.add(s);
             lvMain.invalidateViews();
@@ -158,7 +153,7 @@ public final class ZapisnikDFragment extends AbstractDFragment {
         dialog.show(getFragmentManager(), "zmena");
     }
 
-    private ZapisnikSFragment.OnPositiveButtonListener zmenaListener = new ZapisnikSFragment.OnPositiveButtonListener() {
+    private final ZapisnikSFragment.OnPositiveButtonListener zmenaListener = new ZapisnikSFragment.OnPositiveButtonListener() {
         public void onPositiveButton(Stanoviste s) {
             lvMain.invalidateViews();
         }
@@ -171,7 +166,7 @@ public final class ZapisnikDFragment extends AbstractDFragment {
         dialog.show(getFragmentManager(), "clear");
     }
 
-    private SmazVseFragment.OnPositiveButtonListener clearListener = new SmazVseFragment.OnPositiveButtonListener() {
+    private final SmazVseFragment.OnPositiveButtonListener clearListener = new SmazVseFragment.OnPositiveButtonListener() {
         public void onPositiveButton() {
             stan.clear();
             lvMain.invalidateViews();
@@ -212,7 +207,7 @@ public final class ZapisnikDFragment extends AbstractDFragment {
     public void onResume() {
         super.onResume();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        cislovat = (sp != null ? sp.getBoolean("pref_zap_auto", true) : true);
+        cislovat = (sp == null || sp.getBoolean("pref_zap_auto", true));
         lvMain.invalidateViews();
     }
 
@@ -273,9 +268,10 @@ public final class ZapisnikDFragment extends AbstractDFragment {
             int type = getItemViewType(position);
             if (convertView == null || type != TYPE_STAN || convertView.getId() != R.id.zdItem)
                 convertView = App.getInflater().inflate(
-                        type == TYPE_STAN ? R.layout.zapisnik_item : R.layout.zapisnik_item_new, null);
+                        type == TYPE_STAN ? R.layout.zapisnik_item : R.layout.zapisnik_item_new, parent, false);
             if (type == TYPE_STAN) {
                 Stanoviste s = getItem(position);
+                assert s != null;
                 ((TextView) convertView.findViewById(R.id.tvZStan)).setText(s.nazev);
                 ((TextView) convertView.findViewById(R.id.tvZCas)).setText(s.fmtCas());
                 ((TextView) convertView.findViewById(R.id.tvZRes)).setText(s.reseni);

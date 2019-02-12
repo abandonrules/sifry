@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.tabulky;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -18,15 +19,16 @@ import cz.absolutno.sifry.R;
 
 public abstract class AidView extends View {
 
-    private int yOff;
+    private final int yOff;
 
-    private LinearLayout llAid;
-    private PopupWindow pwAid;
+    private final LinearLayout llAid;
+    private final PopupWindow pwAid;
     private int pwWd, pwHt;
     private boolean active;
 
     protected OnInputListener oil = null;
 
+    @SuppressLint("InflateParams")
     public AidView(Context ctx, AttributeSet as) {
         super(ctx, as);
 
@@ -34,7 +36,8 @@ public abstract class AidView extends View {
 
         llAid = (LinearLayout) App.getInflater().inflate(R.layout.aid_popup, null);
         pwAid = new PopupWindow(this);
-        pwAid.setWindowLayoutMode(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        pwAid.setWidth(LayoutParams.WRAP_CONTENT);
+        pwAid.setHeight(LayoutParams.WRAP_CONTENT);
         pwAid.setContentView(llAid);
         pwAid.setTouchable(false);
         pwAid.setBackgroundDrawable(null);
@@ -49,18 +52,16 @@ public abstract class AidView extends View {
             active = sp.getBoolean("pref_tab_aid", active);
     }
 
-    public final boolean isAidActive() { /* Kontrola nad zobrazováním nápovědek je na volajícím */
+    protected final boolean isAidActive() { /* Kontrola nad zobrazováním nápovědek je na volajícím */
         return active;
     }
 
-    public final void setAidEntries(String[] list) {
+    protected final void setAidEntries(String[] list) {
         final int numEntries = llAid.getChildCount();
         if (list.length > numEntries) {
             LayoutInflater inflater = App.getInflater();
-            for (int i = numEntries; i < list.length; i++) {
-                View v = inflater.inflate(R.layout.aid_entry, null);
-                llAid.addView(v);
-            }
+            for (int i = numEntries; i < list.length; i++)
+                inflater.inflate(R.layout.aid_entry, llAid);
         } else if (list.length < numEntries) {
             for (int i = list.length; i < numEntries; i++)
                 llAid.removeViewAt(i);
@@ -75,12 +76,12 @@ public abstract class AidView extends View {
         setAidHighlight(-1);
     }
 
-    public final void setAid(String aid) {
+    protected final void setAid(String aid) {
         setAidEntries(new String[]{aid});
         setAidHighlight(-1);
     }
 
-    public final void setAidHighlight(int highlight) {
+    protected final void setAidHighlight(int highlight) {
         final int numEntries = llAid.getChildCount();
         for (int i = 0; i < numEntries; i++)
             ((TextView) (llAid.getChildAt(i))).setTypeface(i == highlight ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
@@ -88,7 +89,7 @@ public abstract class AidView extends View {
             llAid.invalidate();
     }
 
-    public final void showAid(int x, int y) {
+    protected final void showAid(int x, int y) {
         int[] loc = new int[2];
         getLocationOnScreen(loc);
         if (pwAid.isShowing())
@@ -98,11 +99,11 @@ public abstract class AidView extends View {
         getParent().requestDisallowInterceptTouchEvent(true);
     }
 
-    public final void showAid(float x, float y) {
+    protected final void showAid(float x, float y) {
         showAid((int) x, (int) y);
     }
 
-    public final void hideAid() {
+    protected final void hideAid() {
         if (pwAid.isShowing())
             pwAid.dismiss();
     }
@@ -124,7 +125,7 @@ public abstract class AidView extends View {
     }
 
     public interface OnInputListener {
-        abstract public void onInput(int x, String s);
+        void onInput(int x, String s);
     }
 
 }

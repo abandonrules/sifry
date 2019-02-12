@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">Puzzlehunt Assistant</string>
-    <string name="tExportDir">Puzzlehunt Assistant</string>
 
     <string name="tVstup">Input:</string>
     <string name="tVystup">Output:</string>
@@ -12,23 +11,18 @@
     <string name="tEncode">Encrypt</string>
     <string name="tDecode">Decrypt</string>
     <string name="tCopy">Copy</string>
-    <string name="tSave">Save</string>
-    <string name="tSend">Send</string>
-    <string name="tExport">Export</string>
-    <string name="tFilename">Save as:</string>
+    <string name="tShare">Share</string>
     <string name="tCtxCopy">Copy</string>
     <string name="tCtxPaste">Paste</string>
     <string name="tRef">Reference</string>
     <string name="tVar">Variants</string>
     <string name="tClose">Close</string>
     <string name="tGo">Go</string>
-    <string name="tStart">Start</string>
-    <string name="tStop">Stop</string>
 
 
     <string name="patCopyCap">Text: \"%s\"</string>
     <string name="patBitmapCap">Bitmap: %1$d × %2$d, %3$d B</string>
-    <string name="patBitmapFN" translatable="false">%s.png</string>
+    <string name="tmpBitmapName" translatable="false">export.png</string>
     <string name="tNotFound">Not found!</string>
     <string name="icon">icon</string>
 
@@ -44,7 +38,6 @@
     <string name="tErrCopy">No text copied</string>
     <string name="tErrPaste">Clipboard is empty</string>
     <string name="tErrEncode">Some characters were not recognized and were omitted.</string>
-    <string name="tErrFile">File access error.</string>
     <string name="tErrVar">Please enter the input first.</string>
 
     <string name="tSipkaL" translatable="false">◀</string>
@@ -53,7 +46,7 @@
     <string name="tSipkaD" translatable="false">▼</string>
 
 
-<string name="tHelpMain"><![CDATA[
+<string name="tHelpMain" tools:ignore="Typos"><![CDATA[
 <h1>Puzzlehunt Assistant</h1>
 
 <p>The purpose of this application is to help with routine tasks used in cipher solving and
@@ -169,7 +162,7 @@ please do not hesitate to write to the author personally at <tt>vasek.potocek@gm
 
 <p>Version %s</p>
 
-<p>© 2012-2015 Vašek Potoček</p>
+<p>© 2012-2018 Vašek Potoček</p>
 
 <p>Special thanks to testers:<br/>
 – Martin Polívka<br/>
@@ -205,12 +198,18 @@ component directly.</p>
 	
 	
 <string name="tHelpNews"><![CDATA[
-<h1>Release Highlights for v2.1</h1>
+<h1>Changes in v2.2</h1>
 
-– Dictionary data packed in the main application APK<br/>
-– Android 2.2 and older no longer supported<br/>
+– Minimum Android version bumped to 4.0.1 (Ice Cream Sandwich)<br/>
+– Morse transmission and file export no longer supported (app no more requires any extra permissions)<br/>
+– ARM64 devices now supported<br/>
+– Bug fixes<br/>
 
 <h3>Older versions</h3>
+
+<h5>Version 2.1 (28 Sep 2015)</h5>
+– Dictionary data packed in the main application APK<br/>
+– Android 2.2 and older no longer supported<br/>
 
 <h5>Version 2.0 (21 Jan 2014)</h5>
 – Help available for all tools<br/>

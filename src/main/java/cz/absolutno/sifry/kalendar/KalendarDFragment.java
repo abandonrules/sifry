@@ -1,6 +1,8 @@
 package cz.absolutno.sifry.kalendar;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -43,33 +44,33 @@ public final class KalendarDFragment extends AbstractDFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.kalendar_layout, null);
-        kalMain = (KalendarView) v.findViewById(R.id.kalKDMain);
+        View v = inflater.inflate(R.layout.kalendar_layout, container, false);
+        kalMain = v.findViewById(R.id.kalKDMain);
 
         fmt = DateFormat.getDateInstance(DateFormat.SHORT);
 
-        etDay = (EditText) v.findViewById(R.id.etKDDenRoku);
-        etMonth = (EditText) v.findViewById(R.id.etKDMesic);
-        etYear = (EditText) v.findViewById(R.id.etKDRok);
-        etSince = (EditText) v.findViewById(R.id.etKDDniOd);
-        tvSince = (TextView) v.findViewById(R.id.tvKDDniOd);
+        etDay = v.findViewById(R.id.etKDDenRoku);
+        etMonth = v.findViewById(R.id.etKDMesic);
+        etYear = v.findViewById(R.id.etKDRok);
+        etSince = v.findViewById(R.id.etKDDniOd);
+        tvSince = v.findViewById(R.id.tvKDDniOd);
 
-        ((Button) v.findViewById(R.id.btKDMesicMinus)).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.btKDMesicMinus).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 kalMain.add(Calendar.MONTH, -1);
             }
         });
-        ((Button) v.findViewById(R.id.btKDMesicPlus)).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.btKDMesicPlus).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 kalMain.add(Calendar.MONTH, 1);
             }
         });
-        ((Button) v.findViewById(R.id.btKDRokMinus)).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.btKDRokMinus).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 kalMain.add(Calendar.YEAR, -1);
             }
         });
-        ((Button) v.findViewById(R.id.btKDRokPlus)).setOnClickListener(new OnClickListener() {
+        v.findViewById(R.id.btKDRokPlus).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 kalMain.add(Calendar.YEAR, 1);
             }
@@ -120,7 +121,7 @@ public final class KalendarDFragment extends AbstractDFragment {
             }
         });
 
-        jmeno = (AutoCompleteTextView) v.findViewById(R.id.etKDJmeno);
+        jmeno = v.findViewById(R.id.etKDJmeno);
         jmeno.setOnEditorActionListener(new OnEditorActionListener() {
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 hledej();
@@ -153,7 +154,8 @@ public final class KalendarDFragment extends AbstractDFragment {
         kalMain.clear();
     }
 
-    private KalendarView.OnChangeListener kalendarListener = new KalendarView.OnChangeListener() {
+    private final KalendarView.OnChangeListener kalendarListener = new KalendarView.OnChangeListener() {
+        @SuppressLint("SetTextI18n")
         public void onChange(int year, int month, int day, int dayYear, int daysSince) {
             etMonth.setText(Integer.toString(month + 1));
             etYear.setText(Integer.toString(year));
@@ -163,6 +165,7 @@ public final class KalendarDFragment extends AbstractDFragment {
                 jmeno.setText(db[month][day - 1]);
         }
 
+        @SuppressLint("SetTextI18n")
         public void onChangeAnchor(Date anchor, int daysSince) {
             tvSince.setText(String.format(getString(R.string.patKDDniOd), fmt.format(anchor)));
             etSince.setText(Integer.toString(daysSince));
@@ -187,6 +190,7 @@ public final class KalendarDFragment extends AbstractDFragment {
         kalMain.requestFocus();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onResume() {
         super.onResume();
@@ -200,15 +204,16 @@ public final class KalendarDFragment extends AbstractDFragment {
         kalMain.requestListener();
     }
 
-    public void loadKalendar(int kal) {
+    @SuppressWarnings("ConstantConditions")
+    private void loadKalendar(int kal) {
         getView().findViewById(R.id.pbKDLoading).setVisibility(View.VISIBLE);
         db = Utils.load2DStringArray(kal);
 
-        final ArrayList<JmenoItem> flat = new ArrayList<JmenoItem>();
+        final ArrayList<JmenoItem> flat = new ArrayList<>();
 
         final Runnable loadingFinished = new Runnable() {
             public void run() {
-                jmeno.setAdapter(new ArrayAdapter<JmenoItem>(getActivity(), R.layout.kalendar_ac_item, flat));
+                jmeno.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.kalendar_ac_item, flat));
                 getView().findViewById(R.id.pbKDLoading).setVisibility(View.GONE);
             }
         };
@@ -216,15 +221,12 @@ public final class KalendarDFragment extends AbstractDFragment {
         final Runnable loadAC = new Runnable() {
             public void run() {
                 A:
-                for (int m = 0; m < db.length; m++)
-                    for (int d = 0; d < db[m].length; d++) {
-                        String jmena = db[m][d].toString();
+                for (CharSequence[] x : db)
+                    for (CharSequence y : x) {
+                        String jmena = y.toString();
                         if (jmena.subSequence(0, 1).equals("*")) continue;
-                        for (String jmeno : jmena.split(", ")) {
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(CzechAlphabet.normalize(jmeno)).append(" : ").append(jmeno);
-                            flat.add(new JmenoItem(sb.toString()));
-                        }
+                        for (String jmeno : jmena.split(", "))
+                            flat.add(new JmenoItem(CzechAlphabet.normalize(jmeno) + " : " + jmeno));
                         if (termLoading)
                             break A;
                     }
@@ -242,9 +244,9 @@ public final class KalendarDFragment extends AbstractDFragment {
 
 
     private static final class JmenoItem implements Comparable<JmenoItem> {
-        private String data;
+        private final String data;
 
-        public JmenoItem(String data) {
+        JmenoItem(String data) {
             this.data = data;
         }
 
@@ -256,7 +258,7 @@ public final class KalendarDFragment extends AbstractDFragment {
                 return data;
         }
 
-        public int compareTo(JmenoItem another) {
+        public int compareTo(@NonNull JmenoItem another) {
             return data.compareTo(another.data);
         }
     }

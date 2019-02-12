@@ -2,7 +2,7 @@ package cz.absolutno.sifry.common.widget;
 
 import android.view.animation.AnimationUtils;
 
-public final class BottomBarFlinger {
+final class BottomBarFlinger {
 
     private static final float SPEED = 1E-6f;
     private static final float SPEED2 = 1E-2f;
@@ -16,8 +16,8 @@ public final class BottomBarFlinger {
     private long lastT;
     private boolean gotoMode;
 
-    private float minX;
-    private float maxX;
+    private final float minX;
+    private final float maxX;
     private float lastX;
 
     public BottomBarFlinger(float minX, float maxX, float curX) {

@@ -12,12 +12,13 @@ import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.alphabet.PlainEnglishAlphabet;
 import cz.absolutno.sifry.tabulky.TabulkyCListAdapter;
 
+@SuppressWarnings("PointlessBitwiseExpression")
 public final class MobilCAdapter extends TabulkyCListAdapter {
 
-    private MobilDecoder md;
+    private final MobilDecoder md;
     private int[][] sour;
-    private String[] items;
-    private int[] itemIDs;
+    private final String[] items;
+    private final int[] itemIDs;
     private String input;
 
     public MobilCAdapter() {
@@ -88,7 +89,7 @@ public final class MobilCAdapter extends TabulkyCListAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getViewHelper(convertView, position);
+        return getViewHelper(position, convertView, parent);
     }
 
 }

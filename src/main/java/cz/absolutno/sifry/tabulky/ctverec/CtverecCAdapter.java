@@ -19,8 +19,8 @@ public final class CtverecCAdapter extends TabulkyCListAdapter {
 
     private Alphabet abc;
     private int[][] sour;
-    private String[] items;
-    private int[] itemIDs;
+    private final String[] items;
+    private final int[] itemIDs;
 
     public CtverecCAdapter() {
         abc = null;
@@ -91,13 +91,13 @@ public final class CtverecCAdapter extends TabulkyCListAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         boolean graf = (getItemId(position) == R.id.idTCCtv5x5 || getItemId(position) == R.id.idTCCtv3x3);
-        View v = getViewHelper(convertView, position);
+        View v = getViewHelper(position, convertView, parent);
         if (graf) {
             boolean alt = (getItemId(position) == R.id.idTCCtv3x3);
-            FixedGridLayout fgl = (FixedGridLayout) v.findViewById(R.id.cont);
+            FixedGridLayout fgl = v.findViewById(R.id.cont);
             LayoutInflater inflater = App.getInflater();
             for (int[] s : sour) {
-                CtverecTView t = (CtverecTView) inflater.inflate(R.layout.ctverecc_item, null);
+                CtverecTView t = (CtverecTView) inflater.inflate(R.layout.ctverecc_item, fgl, false);
                 t.setIn(s[0], s[1], alt);
                 fgl.addView(t);
             }

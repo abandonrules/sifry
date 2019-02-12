@@ -34,7 +34,7 @@ public final class BrailleDFragment extends AbstractDFragment {
     private boolean space = false;
     private boolean tah = false;
 
-    private ArrayList<Integer> raw = new ArrayList<Integer>();
+    private ArrayList<Integer> raw = new ArrayList<>();
 
     @Override
     protected int getMenuCaps() {
@@ -51,34 +51,35 @@ public final class BrailleDFragment extends AbstractDFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.brailled_layout, null);
+        View v = inflater.inflate(R.layout.brailled_layout, container, false);
 
-        bvVstup = (BrailleView) v.findViewById(R.id.bvBDVstup);
-        reseni = (TextView) v.findViewById(R.id.tvRes);
+        bvVstup = v.findViewById(R.id.bvBDVstup);
+        reseni = v.findViewById(R.id.tvRes);
         reseni.setOnClickListener(Utils.copyClickListener);
-        pism = (TextView) v.findViewById(R.id.tvBDPism);
-        bt = (BrailleTView) v.findViewById(R.id.btBDVstup);
-        thumb = (LinearLayout) v.findViewById(R.id.llBDThumb);
-        fglVstup = (FixedGridLayout) v.findViewById(R.id.fglBDVstup);
+        pism = v.findViewById(R.id.tvBDPism);
+        bt = v.findViewById(R.id.btBDVstup);
+        thumb = v.findViewById(R.id.llBDThumb);
+        fglVstup = v.findViewById(R.id.fglBDVstup);
 
         bvVstup.setOnChangeListener(brailleListener);
         v.findViewById(R.id.llBDThumb).setOnClickListener(thumbListener);
 
-        ImageView ivBsp = (ImageView) v.findViewById(R.id.ivBsp);
+        ImageView ivBsp = v.findViewById(R.id.ivBsp);
         ivBsp.setOnClickListener(bspListener);
         ivBsp.setOnLongClickListener(clearListener);
 
         return v;
     }
 
-    private OnStateChangedListener stateListener = new OnStateChangedListener() {
+    private final OnStateChangedListener stateListener = new OnStateChangedListener() {
+        @SuppressWarnings("ConstantConditions")
         public void onStateChanged(String state) {
-            ((LinearLayout) getView().findViewById(R.id.llBDStav)).setVisibility(state.length() > 0 ? View.VISIBLE : View.INVISIBLE);
+            getView().findViewById(R.id.llBDStav).setVisibility(state.length() > 0 ? View.VISIBLE : View.INVISIBLE);
             ((TextView) getView().findViewById(R.id.tvBDStav)).setText(state);
         }
     };
 
-    private BrailleView.OnChangeListener brailleListener = new BrailleView.OnChangeListener() {
+    private final BrailleView.OnChangeListener brailleListener = new BrailleView.OnChangeListener() {
         public void onChange(int x, boolean down) {
             bt.setIn(x);
             if (bd == null) return;
@@ -93,7 +94,7 @@ public final class BrailleDFragment extends AbstractDFragment {
         }
     };
 
-    private OnClickListener thumbListener = new OnClickListener() {
+    private final OnClickListener thumbListener = new OnClickListener() {
         public void onClick(View v) {
             submit();
         }
@@ -102,7 +103,7 @@ public final class BrailleDFragment extends AbstractDFragment {
     private void submit() {
         int x = bvVstup.getVal();
         if (x == 0 && !space) return;
-        BrailleTView v = (BrailleTView) App.getInflater().inflate(R.layout.braillec_item, null);
+        BrailleTView v = (BrailleTView) App.getInflater().inflate(R.layout.braillec_item, fglVstup, false);
         v.setIn(x);
         fglVstup.addView(v);
         raw.add(x);
@@ -110,7 +111,7 @@ public final class BrailleDFragment extends AbstractDFragment {
         bvVstup.clear();
     }
 
-    private OnClickListener bspListener = new OnClickListener() {
+    private final OnClickListener bspListener = new OnClickListener() {
         public void onClick(View v) {
             if (!tah)
                 if (bvVstup.getVal() != 0) {
@@ -157,6 +158,7 @@ public final class BrailleDFragment extends AbstractDFragment {
         state.putIntegerArrayList(App.DATA, raw);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onResume() {
         super.onResume();
@@ -168,19 +170,19 @@ public final class BrailleDFragment extends AbstractDFragment {
         reseni.setText(bd.decode(raw));
         brailleListener.onChange(bvVstup.getVal(), true);
 
-        tah = (sp != null ? sp.getBoolean("pref_brl_tah", false) : false);
+        tah = (sp != null && sp.getBoolean("pref_brl_tah", false));
         ((TextView) getView().findViewById(R.id.tvBDVse)).setText(getString(tah ? R.string.tBDVseTah : R.string.tBDVse));
         getView().findViewById(R.id.ivGo).setVisibility(tah ? View.INVISIBLE : View.VISIBLE);
         bvVstup.setTah(tah);
 
         fglVstup.removeAllViews();
         for (int i = 0; i < raw.size(); i++) {
-            BrailleTView v = (BrailleTView) App.getInflater().inflate(R.layout.braillec_item, null);
+            BrailleTView v = (BrailleTView) App.getInflater().inflate(R.layout.braillec_item, fglVstup, false);
             v.setIn(raw.get(i));
             fglVstup.addView(v);
         }
 
-        space = (sp != null ? sp.getBoolean("pref_brl_spc", false) : false);
+        space = (sp != null && sp.getBoolean("pref_brl_spc", false));
         if (bvVstup.getVal() == 0) {
             thumb.setVisibility(space ? View.VISIBLE : View.INVISIBLE);
             pism.setText(space ? bd.getDesc(0) : "");

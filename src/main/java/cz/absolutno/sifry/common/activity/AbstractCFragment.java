@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -29,8 +28,6 @@ import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.widget.DrawOnWhiteView;
 
 public abstract class AbstractCFragment extends AbstractDFragment {
-
-    private static final String FN_COPY = "copytmp.png";
 
     protected abstract boolean encode(String input);
 
@@ -54,7 +51,8 @@ public abstract class AbstractCFragment extends AbstractDFragment {
         });
     }
 
-    private final EditText vstup() {
+    @SuppressWarnings("ConstantConditions")
+    private EditText vstup() {
         return (EditText) getView().findViewById(R.id.etCVstup);
     }
 
@@ -83,6 +81,7 @@ public abstract class AbstractCFragment extends AbstractDFragment {
     @Override
     public void onPause() {
         super.onPause();
+        //noinspection ConstantConditions
         ((android.view.inputmethod.InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((BottomBarActivity) getActivity()).getBBar().getWindowToken(), 0);
     }
 
@@ -93,7 +92,7 @@ public abstract class AbstractCFragment extends AbstractDFragment {
         }
     };
 
-    protected final void zpracuj(boolean novy) {
+    private void zpracuj(boolean novy) {
         boolean err = encode(vstup().getText().toString());
         if (err && novy)
             Utils.toast(R.string.tErrEncode);
@@ -157,26 +156,25 @@ public abstract class AbstractCFragment extends AbstractDFragment {
             c.restoreToCount(d);
             c.translate(w, 0);
         }
-        FileOutputStream fos;
         try {
-            fos = getActivity().openFileOutput(FN_COPY, Context.MODE_WORLD_READABLE);
+            final String fname = getContext().getString(R.string.tmpBitmapName);
+            FileOutputStream fos;
+            fos = getActivity().openFileOutput(fname, Context.MODE_PRIVATE);
             bmp.compress(CompressFormat.PNG, 100, fos);
             fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Bundle args = new Bundle();
+            args.putString(App.VSTUP, getActivity().getFileStreamPath(fname).toString());
+            args.putInt(App.VSTUP1, bmp.getWidth());
+            args.putInt(App.VSTUP2, bmp.getHeight());
+            BitmapFragment dialog = new BitmapFragment();
+            dialog.setArguments(args);
+            dialog.show(getActivity().getSupportFragmentManager(), "copy");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Bundle args = new Bundle();
-        args.putString(App.VSTUP, getActivity().getFileStreamPath(FN_COPY).toString());
-        args.putInt(App.VSTUP1, bmp.getWidth());
-        args.putInt(App.VSTUP2, bmp.getHeight());
-        BitmapFragment dialog = new BitmapFragment();
-        dialog.setArguments(args);
-        dialog.show(getActivity().getSupportFragmentManager(), "copy");
     }
 
-    public OnItemClickListener genItemClickListener = new OnItemClickListener() {
+    protected final OnItemClickListener genItemClickListener = new OnItemClickListener() {
         public void onItemClick(AdapterView<?> parentView, View childView, int position, long id) {
             View v = childView.findViewById(R.id.cont);
             if (v instanceof TextView)

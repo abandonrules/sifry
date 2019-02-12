@@ -1,7 +1,7 @@
 /*
  *    Stack-less Just-In-Time compiler
  *
- *    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
+ *    Copyright Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -52,7 +52,7 @@
    The unused blocks are stored in a chain list pointed by free_blocks. This
    list is useful if we need to find a suitable memory area when the allocator
    is called.
- 
+
    When a block is freed, the new free block is connected to its adjacent free
    blocks if possible.
 
@@ -83,10 +83,10 @@
 
 static SLJIT_INLINE void* alloc_chunk(sljit_uw size)
 {
-	return VirtualAlloc(0, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 }
 
-static SLJIT_INLINE void free_chunk(void* chunk, sljit_uw size)
+static SLJIT_INLINE void free_chunk(void *chunk, sljit_uw size)
 {
 	SLJIT_UNUSED_ARG(size);
 	VirtualFree(chunk, 0, MEM_RELEASE);
@@ -94,15 +94,24 @@ static SLJIT_INLINE void free_chunk(void* chunk, sljit_uw size)
 
 #else
 
-#include <sys/mman.h>
-
 static SLJIT_INLINE void* alloc_chunk(sljit_uw size)
 {
-	void* retval = mmap(0, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANON, -1, 0);
+	void *retval;
+
+#ifdef MAP_ANON
+	retval = mmap(NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANON, -1, 0);
+#else
+	if (dev_zero < 0) {
+		if (open_dev_zero())
+			return NULL;
+	}
+	retval = mmap(NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, dev_zero, 0);
+#endif
+
 	return (retval != MAP_FAILED) ? retval : NULL;
 }
 
-static SLJIT_INLINE void free_chunk(void* chunk, sljit_uw size)
+static SLJIT_INLINE void free_chunk(void *chunk, sljit_uw size)
 {
 	munmap(chunk, size);
 }
@@ -128,10 +137,10 @@ struct free_block {
 };
 
 #define AS_BLOCK_HEADER(base, offset) \
-	((struct block_header*)(((sljit_ub*)base) + offset))
+	((struct block_header*)(((sljit_u8*)base) + offset))
 #define AS_FREE_BLOCK(base, offset) \
-	((struct free_block*)(((sljit_ub*)base) + offset))
-#define MEM_START(base)		((void*)(((sljit_ub*)base) + sizeof(struct block_header)))
+	((struct free_block*)(((sljit_u8*)base) + offset))
+#define MEM_START(base)		((void*)(((sljit_u8*)base) + sizeof(struct block_header)))
 #define ALIGN_SIZE(size)	(((size) + sizeof(struct block_header) + 7) & ~7)
 
 static struct free_block* free_blocks;
@@ -144,7 +153,7 @@ static SLJIT_INLINE void sljit_insert_free_block(struct free_block *free_block, 
 	free_block->size = size;
 
 	free_block->next = free_blocks;
-	free_block->prev = 0;
+	free_block->prev = NULL;
 	if (free_blocks)
 		free_blocks->prev = free_block;
 	free_blocks = free_block;
@@ -171,8 +180,8 @@ SLJIT_API_FUNC_ATTRIBUTE void* sljit_malloc_exec(sljit_uw size)
 	sljit_uw chunk_size;
 
 	allocator_grab_lock();
-	if (size < sizeof(struct free_block))
-		size = sizeof(struct free_block);
+	if (size < (64 - sizeof(struct block_header)))
+		size = (64 - sizeof(struct block_header));
 	size = ALIGN_SIZE(size);
 
 	free_block = free_blocks;
@@ -202,7 +211,10 @@ SLJIT_API_FUNC_ATTRIBUTE void* sljit_malloc_exec(sljit_uw size)
 
 	chunk_size = (size + sizeof(struct block_header) + CHUNK_SIZE - 1) & CHUNK_MASK;
 	header = (struct block_header*)alloc_chunk(chunk_size);
-	PTR_FAIL_IF(!header);
+	if (!header) {
+		allocator_release_lock();
+		return NULL;
+	}
 
 	chunk_size -= sizeof(struct block_header);
 	total_size += chunk_size;
@@ -237,14 +249,14 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_free_exec(void* ptr)
 	struct free_block* free_block;
 
 	allocator_grab_lock();
-	header = AS_BLOCK_HEADER(ptr, -(sljit_w)sizeof(struct block_header));
+	header = AS_BLOCK_HEADER(ptr, -(sljit_sw)sizeof(struct block_header));
 	allocated_size -= header->size;
 
 	/* Connecting free blocks together if possible. */
 
 	/* If header->prev_size == 0, free_block will equal to header.
 	   In this case, free_block->header.size will be > 0. */
-	free_block = AS_FREE_BLOCK(header, -(sljit_w)header->prev_size);
+	free_block = AS_FREE_BLOCK(header, -(sljit_sw)header->prev_size);
 	if (SLJIT_UNLIKELY(!free_block->header.size)) {
 		free_block->size += header->size;
 		header = AS_BLOCK_HEADER(free_block, free_block->size);
@@ -273,5 +285,28 @@ SLJIT_API_FUNC_ATTRIBUTE void sljit_free_exec(void* ptr)
 		}
 	}
 
+	allocator_release_lock();
+}
+
+SLJIT_API_FUNC_ATTRIBUTE void sljit_free_unused_memory_exec(void)
+{
+	struct free_block* free_block;
+	struct free_block* next_free_block;
+
+	allocator_grab_lock();
+
+	free_block = free_blocks;
+	while (free_block) {
+		next_free_block = free_block->next;
+		if (!free_block->header.prev_size && 
+				AS_BLOCK_HEADER(free_block, free_block->size)->size == 1) {
+			total_size -= free_block->size;
+			sljit_remove_free_block(free_block);
+			free_chunk(free_block, free_block->size + sizeof(struct block_header));
+		}
+		free_block = next_free_block;
+	}
+
+	SLJIT_ASSERT((total_size && free_blocks) || (!total_size && !free_blocks));
 	allocator_release_lock();
 }

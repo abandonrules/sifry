@@ -9,13 +9,13 @@ import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 import cz.absolutno.sifry.common.alphabet.Alphabet;
 
-public abstract class AbstractSubstAdapter extends BaseAdapter {
+abstract class AbstractSubstAdapter extends BaseAdapter {
 
-    protected final Alphabet abc;
-    protected final int cnt;
-    protected String str;
+    final Alphabet abc;
+    final int cnt;
+    String str;
 
-    public AbstractSubstAdapter(Alphabet abc) {
+    AbstractSubstAdapter(Alphabet abc) {
         this.abc = abc;
         cnt = abc.count();
     }
@@ -37,7 +37,7 @@ public abstract class AbstractSubstAdapter extends BaseAdapter {
             return 0;
     }
 
-    protected boolean isValid() {
+    boolean isValid() {
         return (str != null && str.length() != 0);
     }
 
@@ -45,7 +45,7 @@ public abstract class AbstractSubstAdapter extends BaseAdapter {
 
     public abstract String getItem(int position);
 
-    public abstract String getItemDesc(int position);
+    protected abstract String getItemDesc(int position);
 
     public final long getItemId(int position) {
         return position;
@@ -53,9 +53,9 @@ public abstract class AbstractSubstAdapter extends BaseAdapter {
 
     public final View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null)
-            convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
-        TextView tvDesc = (TextView) convertView.findViewById(R.id.desc);
-        TextView tvCont = (TextView) convertView.findViewById(R.id.cont);
+            convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
+        TextView tvDesc = convertView.findViewById(R.id.desc);
+        TextView tvCont = convertView.findViewById(R.id.cont);
         tvDesc.setText(getItemDesc(position));
         tvCont.setText(getItem(position));
         return convertView;

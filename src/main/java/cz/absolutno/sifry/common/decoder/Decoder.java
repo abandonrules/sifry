@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public abstract class Decoder {
 
-    public Decoder() {
+    protected Decoder() {
     }
 
-    public abstract String decode(int x);
+    protected abstract String decode(int x);
 
-    public String getDesc(int x) {
+    String getDesc(int x) {
         return decode(x);
     }
 

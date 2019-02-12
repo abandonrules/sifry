@@ -10,8 +10,8 @@ public class TranslateAdapter extends AbstractSubstAdapter {
     private static final int ENCRYPT = 1;
     private static final int DECRYPT = 0;
 
-    private int[] tr, trInv;
-    private String enc, dec;
+    private final int[] tr, trInv;
+    private final String enc, dec;
 
     public TranslateAdapter(Alphabet abc) {
         super(abc);
@@ -31,7 +31,7 @@ public class TranslateAdapter extends AbstractSubstAdapter {
         notifyDataSetChanged();
     }
 
-    protected final void setTr(int[] tr) {
+    final void setTr(int[] tr) {
         if (tr.length != cnt)
             return;
         for (int i = 0; i < cnt; i++)
@@ -46,7 +46,7 @@ public class TranslateAdapter extends AbstractSubstAdapter {
         notifyDataSetChanged();
     }
 
-    protected final void setOne(int from, int to) {
+    final void setOne(int from, int to) {
         int oImage = tr[from];
         int oPre = trInv[to];
         tr[from] = to;
@@ -56,11 +56,11 @@ public class TranslateAdapter extends AbstractSubstAdapter {
         notifyDataSetChanged();
     }
 
-    protected final int[] getTr() {
+    final int[] getTr() {
         return tr;
     }
 
-    protected final int getOne(int from) {
+    final int getOne(int from) {
         return tr[from];
     }
 

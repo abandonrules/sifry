@@ -17,19 +17,19 @@ public final class MorseRFragment extends AbstractRFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.gen_exp_list_layout, null);
+        View v = inflater.inflate(R.layout.gen_exp_list_layout, container, false);
         ((ExpandableListView) v.findViewById(R.id.main)).setAdapter(new MorseELA());
         return v;
     }
 
     private static final class MorseELA extends BaseExpandableListAdapter {
 
-        private String[] groups;
+        private final String[] groups;
         private final String[][] elms = new String[3][];
-        private String[] znaky;
-        private char tecka, carka;
+        private final String[] znaky;
+        private final char tecka, carka;
 
-        public MorseELA() {
+        MorseELA() {
             Resources res = App.getContext().getResources();
             groups = res.getStringArray(R.array.saMDGroups);
             elms[0] = res.getStringArray(R.array.saMDPismena);
@@ -54,7 +54,7 @@ public final class MorseRFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -74,7 +74,7 @@ public final class MorseRFragment extends AbstractRFragment {
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                                  View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.morse_item, null);
+                convertView = App.getInflater().inflate(R.layout.morse_item, parent, false);
 
             String s = getChild(groupPosition, childPosition);
             int i1 = s.indexOf(':');

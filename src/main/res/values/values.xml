@@ -6,7 +6,7 @@
     <dimen name="aidOffset">30dp</dimen>
     <dimen name="vlajkyOkraj">5dp</dimen>
 
-    <dimen name="mainTextSize">14dp</dimen>
+    <dimen name="mainTextSize">14sp</dimen>
     <dimen name="defTextSize">22sp</dimen>
 
     <dimen name="maxTextSize">100sp</dimen>
@@ -18,15 +18,5 @@
     <bool name="pref_tbl_aid_default">true</bool>
 
     <integer name="pref_vlajky_delay_default">500</integer>
-
-    <integer name="mtSpeedMin">1</integer>
-    <integer name="mtSpeedDef">5</integer>
-    <integer name="mtSpeedSpan">9</integer>
-    <integer name="mtFreqMin">50</integer>
-    <integer name="mtFreqDef">100</integer>
-    <integer name="mtFreqSpan">100</integer>
-    <integer name="mtVolMin">1</integer>
-    <integer name="mtVolDef">50</integer>
-    <integer name="mtVolSpan">99</integer>
 
 </resources>

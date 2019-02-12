@@ -40,11 +40,12 @@ public abstract class AbstractDFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        //noinspection ConstantConditions
         ((android.view.inputmethod.InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((BottomBarActivity) getActivity()).getBBar().getWindowToken(), 0);
     }
 
     /* Convenience for subclasses */
-    protected OnLongClickListener clearListener = new OnLongClickListener() {
+    protected final OnLongClickListener clearListener = new OnLongClickListener() {
         public boolean onLongClick(View v) {
             onClear();
             return true;

@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.tabulky.malypolsky;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,7 +9,7 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.graphics.Typeface;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -20,8 +21,9 @@ import cz.absolutno.sifry.tabulky.AidView;
 
 public final class MalyPolskyView extends AidView {
 
-    private int w, h, sx, sy, wd;
-    private Paint pLine, pFill, pText;
+    private int w, h, sx, sy;
+    private final int wd;
+    private final Paint pLine, pFill, pText;
     private MalyPolskyKrizDecoder mpk = null;
 
     private int lastAidIx = -1;
@@ -32,7 +34,7 @@ public final class MalyPolskyView extends AidView {
         wd = Utils.dpToPix(3);
 
         pLine = new Paint();
-        pLine.setColor(getResources().getColor(R.color.mainColor));
+        pLine.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         pLine.setStrokeWidth(wd);
         pLine.setStrokeCap(Cap.ROUND);
         pLine.setStyle(Style.STROKE);
@@ -44,7 +46,7 @@ public final class MalyPolskyView extends AidView {
         pText = new Paint();
         pText.setAntiAlias(true);
         pText.setTypeface(Typeface.DEFAULT);
-        pText.setColor(getResources().getColor(R.color.priColor));
+        pText.setColor(ContextCompat.getColor(ctx, R.color.priColor));
         pText.setTextAlign(Align.CENTER);
     }
 
@@ -131,6 +133,7 @@ public final class MalyPolskyView extends AidView {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         int cnt = e.getPointerCount();
@@ -138,7 +141,7 @@ public final class MalyPolskyView extends AidView {
 
         final int ix = index(e.getX(), e.getY());
 
-        switch (MotionEventCompat.getActionMasked(e)) {
+        switch (e.getActionMasked()) {
             case MotionEvent.ACTION_UP:
                 if (ix >= 0) {
                     if (oil != null) oil.onInput(ix, mpk.decode(ix));
@@ -215,6 +218,7 @@ public final class MalyPolskyView extends AidView {
         return mpk.decode(i);
     }
 
+    @SuppressWarnings("unused")
     public Decoder getDecoder() {
         return mpk;
     }

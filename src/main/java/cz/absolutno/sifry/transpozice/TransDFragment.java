@@ -36,12 +36,13 @@ public final class TransDFragment extends AbstractDFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.transd_layout, null);
+        View v = inflater.inflate(R.layout.transd_layout, container, false);
 
         tvarIDs = Utils.getIdArray(R.array.iaTTvary);
 
-        text = (EditText) v.findViewById(R.id.etTVstup);
+        text = v.findViewById(R.id.etTVstup);
         text.setOnEditorActionListener(new OnEditorActionListener() {
+            @SuppressWarnings("ConstantConditions")
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 zpracuj();
                 getView().findViewById(R.id.flTFocus).requestFocus();
@@ -50,13 +51,14 @@ public final class TransDFragment extends AbstractDFragment {
         });
 
         v.findViewById(R.id.ivGo).setOnClickListener(new OnClickListener() {
+            @SuppressWarnings("ConstantConditions")
             public void onClick(View v) {
                 zpracuj();
                 getView().findViewById(R.id.flTFocus).requestFocus();
             }
         });
 
-        tvRes = (TextView) v.findViewById(R.id.tvRes);
+        tvRes = v.findViewById(R.id.tvRes);
         tvRes.setOnClickListener(Utils.copyClickListener);
         reseni = "";
 
@@ -107,6 +109,7 @@ public final class TransDFragment extends AbstractDFragment {
         return v;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void setVstup(int id) {
         getView().findViewById(R.id.ctvTLine).setVisibility(id == R.id.idTNic ? View.VISIBLE : View.GONE);
         getView().findViewById(R.id.trvTVstupObdelnik).setVisibility(id == R.id.idTObdelnik ? View.VISIBLE : View.GONE);
@@ -117,16 +120,16 @@ public final class TransDFragment extends AbstractDFragment {
 
         switch (id) {
             case R.id.idTNic:
-                vstup = (TransView) getView().findViewById(R.id.trvTVstupLine);
+                vstup = getView().findViewById(R.id.trvTVstupLine);
                 break;
             case R.id.idTObdelnik:
-                vstup = (TransView) getView().findViewById(R.id.trvTVstupObdelnik);
+                vstup = getView().findViewById(R.id.trvTVstupObdelnik);
                 break;
             case R.id.idTTrojuhelnik:
-                vstup = (TransView) getView().findViewById(R.id.trvTVstupTrojuhelnik);
+                vstup = getView().findViewById(R.id.trvTVstupTrojuhelnik);
                 break;
             case R.id.idTRTrojuhelnik:
-                vstup = (TransView) getView().findViewById(R.id.trvTVstupRTrojuhelnik);
+                vstup = getView().findViewById(R.id.trvTVstupRTrojuhelnik);
                 break;
         }
         vstup.setOnInputListener(new OnInputListener() {

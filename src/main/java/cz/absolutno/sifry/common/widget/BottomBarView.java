@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.common.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +12,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,9 +24,10 @@ import cz.absolutno.sifry.Utils;
 
 public final class BottomBarView extends View {
 
-    private float w, h, wd, wg;
-    private GradientDrawable grad;
-    private Paint pLine, pText;
+    private float w, h;
+    private final float wd, wg;
+    private final GradientDrawable grad;
+    private final Paint pLine, pText;
 
     private VelocityTracker vel = null;
     private BottomBarFlinger flinger;
@@ -45,7 +47,7 @@ public final class BottomBarView extends View {
         wg = getResources().getDimension(R.dimen.gradSize);
 
         pLine = new Paint();
-        pLine.setColor(getResources().getColor(R.color.mainColor));
+        pLine.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         pLine.setAntiAlias(true);
         pLine.setStrokeWidth(wd);
         pLine.setStrokeCap(Cap.ROUND);
@@ -55,7 +57,7 @@ public final class BottomBarView extends View {
         pText.setTextAlign(Paint.Align.CENTER);
         pText.setTypeface(Typeface.DEFAULT);
         pText.setTextSize(getResources().getDimensionPixelSize(R.dimen.mainTextSize));
-        pText.setColor(isInEditMode() ? Color.WHITE : getResources().getColor(R.color.priColor));
+        pText.setColor(isInEditMode() ? Color.WHITE : ContextCompat.getColor(ctx, R.color.priColor));
         pText.setAntiAlias(true);
 
         grad = new GradientDrawable(Orientation.LEFT_RIGHT, new int[]{Color.BLACK, Color.TRANSPARENT});
@@ -77,10 +79,11 @@ public final class BottomBarView extends View {
         return entries;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        int action = MotionEventCompat.getActionMasked(e);
-        int index = MotionEventCompat.getActionIndex(e);
+        int action = e.getActionMasked();
+        int index = e.getActionIndex();
         if (index != 0) return false;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -170,7 +173,7 @@ public final class BottomBarView extends View {
     }
 
     public interface OnChangeListener {
-        public abstract void onChange(int curIx, int lastIx);
+        void onChange(int curIx, int lastIx);
     }
 
     public void setOnChangeListener(OnChangeListener ocl) {
@@ -203,16 +206,16 @@ public final class BottomBarView extends View {
         private String[] entries;
         private int index;
 
-        public SavedState(Parcelable in) {
+        SavedState(Parcelable in) {
             super(in);
         }
 
-        public void read(BottomBarView bv) {
+        void read(BottomBarView bv) {
             entries = bv.entries;
             index = bv.index;
         }
 
-        public SavedState(Parcel in) {
+        SavedState(Parcel in) {
             super(in);
             entries = in.createStringArray();
             index = in.readInt();
@@ -225,7 +228,7 @@ public final class BottomBarView extends View {
             dest.writeInt(index);
         }
 
-        public void apply(BottomBarView bv) {
+        void apply(BottomBarView bv) {
             bv.setEntries(entries, index);
         }
 

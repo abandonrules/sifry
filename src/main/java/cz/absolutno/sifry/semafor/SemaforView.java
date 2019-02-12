@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.semafor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
@@ -9,7 +10,7 @@ import android.graphics.Paint.Style;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.os.Handler;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -20,16 +21,17 @@ import cz.absolutno.sifry.Utils;
 
 public final class SemaforView extends View {
 
-    private float w, h, r, wd;
+    private float w, h, r;
+    private final float wd;
 
-    private Paint pStroke, pDash, pFill;
-    private boolean[] in = new boolean[8];
+    private final Paint pStroke, pDash, pFill;
+    private final boolean[] in = new boolean[8];
     private OnInputListener oil = null;
 
     private boolean tracking = false;
     private int lastDole = 0;
 
-    private Handler hnd = new Handler();
+    private final Handler hnd = new Handler();
 
     public SemaforView(Context ctx, AttributeSet as) {
         super(ctx, as);
@@ -37,7 +39,7 @@ public final class SemaforView extends View {
         wd = Utils.dpToPix(3);
 
         pDash = new Paint();
-        pDash.setColor(getResources().getColor(R.color.mainColor));
+        pDash.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         pDash.setStrokeWidth(wd);
         pDash.setStrokeCap(Cap.ROUND);
         pDash.setStyle(Style.STROKE);
@@ -50,10 +52,11 @@ public final class SemaforView extends View {
         pFill.setStyle(Style.FILL);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         int cnt = e.getPointerCount();
-        int action = MotionEventCompat.getActionMasked(e);
+        int action = e.getActionMasked();
         if (cnt == 0) return false;
         switch (action) {
             case MotionEvent.ACTION_CANCEL:
@@ -70,7 +73,7 @@ public final class SemaforView extends View {
                     clear();
                     tracking = true;
                 }
-                int pointerIndex = MotionEventCompat.getActionIndex(e);
+                int pointerIndex = e.getActionIndex();
                 int ix = index(e.getX(pointerIndex), e.getY(pointerIndex));
                 if (ix >= 0) {
                     if (action == MotionEvent.ACTION_DOWN && in[ix]) {
@@ -95,7 +98,7 @@ public final class SemaforView extends View {
         return false;
     }
 
-    private Runnable clearRunnable = new Runnable() {
+    private final Runnable clearRunnable = new Runnable() {
         public void run() {
             clear();
         }
@@ -121,7 +124,7 @@ public final class SemaforView extends View {
         return dole() != 0;
     }
 
-    public int getVal() {
+    private int getVal() {
         int x = 0;
         for (int i = 0; i < 8; i++)
             if (in[i])
@@ -148,7 +151,8 @@ public final class SemaforView extends View {
         r = h / 15;
         float o = 2 * (float) Math.PI * r;
         pDash.setPathEffect(new DashPathEffect(new float[]{o / 48, o / 16}, 0));
-        pStroke.setShader(new RadialGradient(w / 2, h / 2, h * 0.35f - r, 0, getResources().getColor(R.color.mainColor), Shader.TileMode.CLAMP));
+        pStroke.setShader(new RadialGradient(w / 2, h / 2, h * 0.35f - r, 0,
+                ContextCompat.getColor(getContext(), R.color.mainColor), Shader.TileMode.CLAMP));
     }
 
     @Override
@@ -180,7 +184,7 @@ public final class SemaforView extends View {
     }
 
     public interface OnInputListener {
-        abstract public void onInput(int x, int c);
+        void onInput(int x, int c);
     }
 
     public void setOnInputListener(OnInputListener oil) {

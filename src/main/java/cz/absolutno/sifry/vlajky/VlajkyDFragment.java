@@ -48,9 +48,9 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.vlajkyd_layout, null);
+        View v = inflater.inflate(R.layout.vlajkyd_layout, container, false);
 
-        GestureOverlayView gestures = (GestureOverlayView) v.findViewById(R.id.gestVD);
+        GestureOverlayView gestures = v.findViewById(R.id.gestVD);
         gestures.addOnGesturePerformedListener(this);
         gestures.setGestureStrokeWidth(getResources().getDimension(R.dimen.vlajkyOkraj));
         gest = GestureLibraries.fromRawResource(getActivity(), R.raw.vlajky);
@@ -59,12 +59,12 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
         if (!gest.load()) getActivity().finish();
 
         svgs = VlajkySVGs.getInstance();
-        llOdhady = (LinearLayout) v.findViewById(R.id.listVDOdhady);
+        llOdhady = v.findViewById(R.id.listVDOdhady);
 
-        tvRes = (TextView) v.findViewById(R.id.tvRes);
+        tvRes = v.findViewById(R.id.tvRes);
         tvRes.setOnClickListener(Utils.copyClickListener);
 
-        ImageView ivBsp = (ImageView) v.findViewById(R.id.ivBsp);
+        ImageView ivBsp = v.findViewById(R.id.ivBsp);
         ivBsp.setOnClickListener(bspListener);
         ivBsp.setOnLongClickListener(clearListener);
 
@@ -89,7 +89,7 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
                         for (int k = 0; k < c; k++)
                             if (((TextView) (llOdhady.getChildAt(k).findViewById(R.id.text))).getText().equals(schr))
                                 continue A;
-                        View v = inflater.inflate(R.layout.vlajkyd_item, null);
+                        View v = inflater.inflate(R.layout.vlajkyd_item, llOdhady, false);
                         ((ImageView) v.findViewById(R.id.image)).setImageDrawable(svgs.getChar(chr).getDrawable());
                         ((TextView) v.findViewById(R.id.text)).setText(schr);
                         v.setTag(String.valueOf(chr));
@@ -102,7 +102,7 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
         }
     }
 
-    private OnClickListener listener = new OnClickListener() {
+    private final OnClickListener listener = new OnClickListener() {
         public void onClick(View v) {
             reseni += (String) v.getTag();
             tvRes.setText(reseni);
@@ -110,7 +110,7 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
         }
     };
 
-    private OnClickListener bspListener = new OnClickListener() {
+    private final OnClickListener bspListener = new OnClickListener() {
         public void onClick(View v) {
             if (reseni.length() == 0) return;
             reseni = reseni.substring(0, reseni.length() - 1);
@@ -124,8 +124,6 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
         data.putString(App.VSTUP, reseni);
         return true;
     }
-
-    ;
 
     @Override
     public void loadData(Bundle data) {
@@ -144,6 +142,7 @@ public final class VlajkyDFragment extends AbstractDFragment implements GestureO
         llOdhady.removeAllViews();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onResume() {
         super.onResume();

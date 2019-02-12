@@ -18,18 +18,18 @@ public final class SemaforRFragment extends AbstractRFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.gen_exp_list_layout, null);
+        View v = inflater.inflate(R.layout.gen_exp_list_layout, container, false);
         ((ExpandableListView) v.findViewById(R.id.main)).setAdapter(new SemaforELA());
         return v;
     }
 
     private static final class SemaforELA extends BaseExpandableListAdapter {
 
-        private String groups[];
-        private int groupIDs[];
-        private String[][] elms;
+        private final String[] groups;
+        private final int[] groupIDs;
+        private final String[][] elms;
 
-        public SemaforELA() {
+        SemaforELA() {
             groups = App.getContext().getResources().getStringArray(R.array.saSmRGroups);
             groupIDs = Utils.getIdArray(R.array.iaSmRGroups);
             elms = new String[groups.length][];
@@ -51,7 +51,7 @@ public final class SemaforRFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -60,7 +60,7 @@ public final class SemaforRFragment extends AbstractRFragment {
             return 1;
         }
 
-        public int getChildrenCountFull(int groupPosition) {
+        int getChildrenCountFull(int groupPosition) {
             return elms[groupPosition].length;
         }
 
@@ -82,13 +82,11 @@ public final class SemaforRFragment extends AbstractRFragment {
             LayoutInflater inflater = App.getInflater();
             FixedGridLayout fgl;
             if (convertView == null)
-                fgl = (FixedGridLayout) inflater.inflate(R.layout.gen_grid_item, null);
+                fgl = (FixedGridLayout) inflater.inflate(R.layout.gen_grid_item, parent, false);
             else
                 fgl = (FixedGridLayout) convertView;
-            for (int i = fgl.getChildCount(); i < getChildrenCountFull(groupPosition); i++) {
-                View v = inflater.inflate(R.layout.semaforr_item, null);
-                fgl.addView(v);
-            }
+            for (int i = fgl.getChildCount(); i < getChildrenCountFull(groupPosition); i++)
+                inflater.inflate(R.layout.semaforr_item, fgl);
             for (int i = 0; i < getChildrenCountFull(groupPosition); i++) {
                 View v = fgl.getChildAt(i);
                 Item it = getChild(groupPosition, i);
@@ -112,12 +110,12 @@ public final class SemaforRFragment extends AbstractRFragment {
     }
 
     private static final class Item {
-        public int x;
-        public String desc;
+        final int x;
+        final String desc;
 
-        public Item(int x, String desc) {
+        Item(int x, String desc) {
             this.x = x;
             this.desc = desc;
         }
     }
-};
+}

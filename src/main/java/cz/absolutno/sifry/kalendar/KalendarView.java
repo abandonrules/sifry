@@ -10,11 +10,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,40 +28,40 @@ import cz.absolutno.sifry.Utils;
 
 public final class KalendarView extends View {
 
-    private float w, h, r, wd;
-    private Paint pLine, pText;
+    private float w, h, r;
+    private final Paint pLine, pText;
     private Calendar sel, anchor;
 
-    private SimpleDateFormat dayName;
-    private GestureDetector gesture;
+    private final SimpleDateFormat dayName;
+    private final GestureDetector gesture;
     private OnChangeListener ocl = null;
-    private int priColor, secColor, terColor, anchorColor, histColor, bothColor;
+    private final int priColor, secColor, terColor, anchorColor, histColor, bothColor;
     private int firstDay, firstWeek, lastWeek;
     private int[] weekNos, days, daysPre, daysPost;
     private String[] dayNames;
     private int todayIx, anchorIx;
-    private HashSet<HistEntry> hist = new HashSet<HistEntry>(10);
-    private boolean isHist[] = new boolean[32];
+    private HashSet<HistEntry> hist = new HashSet<>(10);
+    private final boolean[] isHist = new boolean[32];
 
     public KalendarView(Context ctx, AttributeSet as) {
         super(ctx, as);
 
-        wd = Utils.dpToPix(2);
+        float wd = Utils.dpToPix(2);
         if (isInEditMode()) {
             priColor = 0xFFFFFFFF;
             secColor = 0xFF808080;
             terColor = 0xFFC0C0C0;
         } else {
-            priColor = getResources().getColor(R.color.priColor);
-            secColor = getResources().getColor(R.color.secColor);
-            terColor = getResources().getColor(R.color.terColor);
+            priColor = ContextCompat.getColor(ctx, R.color.priColor);
+            secColor = ContextCompat.getColor(ctx, R.color.secColor);
+            terColor = ContextCompat.getColor(ctx, R.color.terColor);
         }
-        anchorColor = getResources().getColor(R.color.kalendarAnchorColor);
-        histColor = getResources().getColor(R.color.kalendarHistColor);
-        bothColor = getResources().getColor(R.color.kalendarBothColor);
+        anchorColor = ContextCompat.getColor(ctx, R.color.kalendarAnchorColor);
+        histColor = ContextCompat.getColor(ctx, R.color.kalendarHistColor);
+        bothColor = ContextCompat.getColor(ctx, R.color.kalendarBothColor);
 
         pLine = new Paint();
-        pLine.setColor(getResources().getColor(R.color.mainColor));
+        pLine.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         pLine.setAntiAlias(true);
         pLine.setStrokeWidth(wd);
         pLine.setStrokeCap(Cap.ROUND);
@@ -68,7 +70,7 @@ public final class KalendarView extends View {
         pText = new Paint();
         pText.setTextAlign(Paint.Align.CENTER);
         pText.setTypeface(Typeface.DEFAULT);
-        pText.setColor(isInEditMode() ? Color.WHITE : getResources().getColor(R.color.priColor));
+        pText.setColor(isInEditMode() ? Color.WHITE : ContextCompat.getColor(ctx, R.color.priColor));
         pText.setAntiAlias(true);
 
         gesture = new GestureDetector(getContext(), gestureListener);
@@ -84,16 +86,16 @@ public final class KalendarView extends View {
         setMinimumHeight(7 * getResources().getDimensionPixelSize(R.dimen.butSize));
     }
 
-    private class HistEntry {
-        protected int year;
-        protected int dayOfYear;
+    private static class HistEntry implements Serializable {
+        int year;
+        int dayOfYear;
 
-        public HistEntry() {
+        HistEntry() {
             year = 0;
             dayOfYear = 0;
         }
 
-        public HistEntry(int year, int dayOfYear) {
+        HistEntry(int year, int dayOfYear) {
             super();
             this.year = year;
             this.dayOfYear = dayOfYear;
@@ -101,9 +103,7 @@ public final class KalendarView extends View {
 
         @Override
         public boolean equals(Object o) {
-            if (o instanceof HistEntry)
-                return ((HistEntry) o).year == year && ((HistEntry) o).dayOfYear == dayOfYear;
-            else return false;
+            return o instanceof HistEntry && ((HistEntry) o).year == year && ((HistEntry) o).dayOfYear == dayOfYear;
         }
 
         @Override
@@ -112,13 +112,15 @@ public final class KalendarView extends View {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         gesture.onTouchEvent(e);
         return true;
     }
 
-    private GestureDetector.OnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
+    @SuppressWarnings("FieldCanBeLocal")
+    private final GestureDetector.OnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
         public boolean onDown(MotionEvent e) {
             float x = e.getX(), y = e.getY();
             if (x > w / 2 - 2.8f * r && y > h / 2 - 2.3f * r) {
@@ -195,8 +197,6 @@ public final class KalendarView extends View {
             }
             return true;
         }
-
-        ;
 
     };
 
@@ -302,8 +302,7 @@ public final class KalendarView extends View {
 		
 		/* Days */
         c.translate(r * 0.4f, 0);
-        for (int i = 0; i < days.length; i++) {
-            int d = days[i];
+        for (int d : days) {
             int y = (d & 0x700) >> 8;
             int x = (d & 0xE0) >> 5;
             int dn = (d & 31);
@@ -319,16 +318,14 @@ public final class KalendarView extends View {
         pText.setColor(secColor);
 		/* Days of preceding / following month */
         if (daysPre != null)
-            for (int i = 0; i < daysPre.length; i++) {
-                int d = daysPre[i];
+            for (int d : daysPre) {
                 int y = (d & 0x700) >> 8;
                 int x = (d & 0xE0) >> 5;
                 int dn = (d & 31);
                 c.drawText(Integer.toString(dn), w / 2 - 2.5f * r + x * r, h / 2 - 2 * r + y * r - (pText.ascent() + pText.descent()) / 2, pText);
             }
         if (daysPost != null)
-            for (int i = 0; i < daysPost.length; i++) {
-                int d = daysPost[i];
+            for (int d : daysPost) {
                 int y = (d & 0x700) >> 8;
                 int x = (d & 0xE0) >> 5;
                 int dn = (d & 31);
@@ -376,11 +373,11 @@ public final class KalendarView extends View {
         rebuild();
     }
 
-    public int getSince() {
+    private int getSince() {
         return (int) Math.round((sel.getTimeInMillis() - anchor.getTimeInMillis()) / 86400000.);
     }
 
-    public void reset() {
+    private void reset() {
         sel = Calendar.getInstance();
         rebuild();
     }
@@ -399,9 +396,9 @@ public final class KalendarView extends View {
     }
 
     public interface OnChangeListener {
-        public abstract void onChange(int year, int month, int day, int dayYear, int daysSince);
+        void onChange(int year, int month, int day, int dayYear, int daysSince);
 
-        public abstract void onChangeAnchor(Date anchor, int daysSince);
+        void onChangeAnchor(Date anchor, int daysSince);
     }
 
     public void setOnChangeListener(OnChangeListener ocl) {
@@ -434,18 +431,17 @@ public final class KalendarView extends View {
         private Calendar sel, anchor;
         private HashSet<HistEntry> hist;
 
-        public SavedState(Parcelable in) {
+        SavedState(Parcelable in) {
             super(in);
         }
 
-        public void read(KalendarView kv) {
+        void read(KalendarView kv) {
             sel = kv.sel;
             anchor = kv.anchor;
             hist = kv.hist;
         }
 
-        @SuppressWarnings("unchecked") /* přetypování na HashSet<HistEntry> */
-        public SavedState(Parcel in) {
+        @SuppressWarnings("unchecked") /* přetypování na HashSet<HistEntry> */ SavedState(Parcel in) {
             super(in);
             sel = (Calendar) in.readSerializable();
             anchor = (Calendar) in.readSerializable();
@@ -460,7 +456,7 @@ public final class KalendarView extends View {
             dest.writeSerializable(hist);
         }
 
-        public void apply(KalendarView kv) {
+        void apply(KalendarView kv) {
             kv.sel = sel;
             kv.anchor = anchor;
             kv.hist = hist;

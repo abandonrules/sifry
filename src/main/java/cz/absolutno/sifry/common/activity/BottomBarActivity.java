@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -24,9 +23,9 @@ import cz.absolutno.sifry.common.widget.BottomBarView;
 @SuppressWarnings("deprecation")
 public abstract class BottomBarActivity extends FragmentActivity implements OnBackStackChangedListener {
 
-    protected static final int HAS_COPY = 0x1;
-    protected static final int HAS_PASTE = 0x2;
-    protected static final int HAS_CLEAR = 0x4;
+    private static final int HAS_COPY = 0x1;
+    private static final int HAS_PASTE = 0x2;
+    private static final int HAS_CLEAR = 0x4;
 
     private BottomBarView bbar;
 
@@ -39,7 +38,7 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
         super.onCreate(state);
         App.updateLocale();
         setContentView(R.layout.bottom_bar_layout);
-        bbar = (BottomBarView) findViewById(R.id.bottom_bar);
+        bbar = findViewById(R.id.bottom_bar);
         bbar.setOnChangeListener(new BottomBarView.OnChangeListener() {
             public void onChange(int curIx, int lastIx) {
                 onBottomBarChange(curIx, lastIx);
@@ -51,7 +50,7 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
         return bbar;
     }
 
-    public AbstractDFragment getCurrFragment() {
+    protected AbstractDFragment getCurrFragment() {
         return (AbstractDFragment) getSupportFragmentManager().findFragmentById(R.id.content);
     }
 
@@ -80,17 +79,10 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
             hasClear = false;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            menu.findItem(R.id.mCtxSettings).setVisible(getPrefID() != 0);
-            menu.findItem(R.id.mCtxCopy).setVisible(hasCopy);
-            menu.findItem(R.id.mCtxPaste).setVisible(hasPaste);
-            menu.findItem(R.id.mCtxClear).setVisible(hasClear);
-        } else {
-            menu.findItem(R.id.mCtxSettings).setEnabled(getPrefID() != 0);
-            menu.findItem(R.id.mCtxCopy).setVisible(hasCopy);
-            menu.findItem(R.id.mCtxPaste).setVisible(hasPaste);
-            menu.findItem(R.id.mCtxClear).setVisible(hasClear);
-        }
+        menu.findItem(R.id.mCtxSettings).setVisible(getPrefID() != 0);
+        menu.findItem(R.id.mCtxCopy).setVisible(hasCopy);
+        menu.findItem(R.id.mCtxPaste).setVisible(hasPaste);
+        menu.findItem(R.id.mCtxClear).setVisible(hasClear);
         return true;
     }
 
@@ -105,7 +97,8 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
                 Bundle b = new Bundle();
                 b.putInt(App.SPEC, getPrefID());
                 intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
-                intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragment.class.getName());
+                /* Class does not exist in Gingerbread ⇒ getName() results in a NoClassDefFoundError */
+                intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "cz.absolutno.sifry.common.activity.SettingsFragment");
                 intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, b);
                 startActivity(intent);
                 return true;
@@ -117,11 +110,13 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
             case R.id.mCtxCopy:
                 String s = currFragment.onCopy();
                 if (s != null && !s.equals(""))
+                    //noinspection ConstantConditions
                     ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setText(s.replace('·', ' '));
                 else
                     Utils.toast(R.string.tErrCopy);
                 return true;
             case R.id.mCtxPaste:
+                //noinspection ConstantConditions
                 CharSequence cs = ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).getText();
                 if (cs != null && cs.length() != 0)
                     currFragment.onPaste(cs.toString());
@@ -147,7 +142,7 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
         }
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean("pref_changed", false);
-        editor.commit();
+        editor.apply();
         getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 

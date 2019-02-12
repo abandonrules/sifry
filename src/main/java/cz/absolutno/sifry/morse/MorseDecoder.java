@@ -10,12 +10,12 @@ import cz.absolutno.sifry.common.decoder.Decoder;
 
 public final class MorseDecoder extends Decoder {
 
-    private SparseArray<String> add;
+    private final SparseArray<String> add;
 
     public MorseDecoder() {
         super();
 
-        add = new SparseArray<String>();
+        add = new SparseArray<>();
 
         addFields(R.array.saMDPismena);
         addFields(R.array.saMDCislice);

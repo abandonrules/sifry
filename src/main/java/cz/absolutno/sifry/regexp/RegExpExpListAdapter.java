@@ -8,10 +8,10 @@ import android.widget.TextView;
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 
-public final class RegExpExpListAdapter extends BaseExpandableListAdapter {
+final class RegExpExpListAdapter extends BaseExpandableListAdapter {
 
     private int matches = 0;
-    private RegExpNative re;
+    private final RegExpNative re;
 
     public RegExpExpListAdapter(RegExpNative re) {
         this.re = re;
@@ -46,7 +46,7 @@ public final class RegExpExpListAdapter extends BaseExpandableListAdapter {
 
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null)
-            convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+            convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
         ((TextView) convertView).setText(getGroup(groupPosition));
         return convertView;
     }
@@ -66,7 +66,7 @@ public final class RegExpExpListAdapter extends BaseExpandableListAdapter {
 
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null)
-            convertView = App.getInflater().inflate(R.layout.simple_list_item, null);
+            convertView = App.getInflater().inflate(R.layout.simple_list_item, parent, false);
         ((TextView) convertView).setText(getChild(groupPosition, childPosition));
         return convertView;
     }

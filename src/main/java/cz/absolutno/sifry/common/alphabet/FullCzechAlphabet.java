@@ -7,8 +7,9 @@ import android.content.SharedPreferences;
 public final class FullCzechAlphabet extends FullAlphabet {
 
     private static final String abeceda = "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ";
-    private boolean ch;
+    private final boolean ch;
 
+    @SuppressWarnings("unused")
     public FullCzechAlphabet() {
         super(abeceda);
         this.ch = false;
@@ -19,6 +20,7 @@ public final class FullCzechAlphabet extends FullAlphabet {
         this.ch = ch;
     }
 
+    @SuppressWarnings("unused")
     public FullCzechAlphabet(SharedPreferences sp) {
         super(abeceda);
         this.ch = sp.getBoolean("pref_abc_ch", false);
@@ -55,9 +57,9 @@ public final class FullCzechAlphabet extends FullAlphabet {
     }
 
 
-    public final class CzechStringParser extends StringParser {
+    protected final class CzechStringParser extends StringParser {
 
-        public CzechStringParser(String s) {
+        CzechStringParser(String s) {
             super(s);
         }
 

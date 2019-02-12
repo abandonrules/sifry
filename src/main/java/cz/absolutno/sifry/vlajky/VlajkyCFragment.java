@@ -25,8 +25,8 @@ public final class VlajkyCFragment extends AbstractCFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.vlajkyc_layout, null);
-        fgl = (FixedGridLayout) v.findViewById(R.id.fglVCVystup);
+        View v = inflater.inflate(R.layout.vlajkyc_layout, container, false);
+        fgl = v.findViewById(R.id.fglVCVystup);
         svgs = VlajkySVGs.getInstance();
         fgl.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -41,7 +41,7 @@ public final class VlajkyCFragment extends AbstractCFragment {
         StringBuilder sb = new StringBuilder();
         fgl.removeAllViews();
         LayoutInflater inflater = App.getInflater();
-        DigitsExtendedAlphabet<?> abc = new DigitsExtendedAlphabet<PlainEnglishAlphabet>(new PlainEnglishAlphabet());
+        DigitsExtendedAlphabet<?> abc = new DigitsExtendedAlphabet<>(new PlainEnglishAlphabet());
         StringParser sp = abc.getStringParser(input);
         int ord;
         boolean err = false;
@@ -51,7 +51,7 @@ public final class VlajkyCFragment extends AbstractCFragment {
                 continue;
             }
             SVG svg = svgs.getChar(abc.chr(ord).charAt(0));
-            ImageView v = (ImageView) inflater.inflate(R.layout.vlajkyc_item, null);
+            ImageView v = (ImageView) inflater.inflate(R.layout.vlajkyc_item, fgl, false);
             v.setImageDrawable(svg.getDrawable());
             fgl.addView(v);
             sb.append(abc.chr(ord));

@@ -1,10 +1,13 @@
 package cz.absolutno.sifry.substituce;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,7 +23,6 @@ public final class TranslateFragment extends DialogFragment {
 
     private OnSelectedListener onSelectedListener = null;
     private Alphabet abc;
-    private View layout;
 
     private int colPrimary, colOK;
 
@@ -28,10 +30,11 @@ public final class TranslateFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        colPrimary = getResources().getColor(R.color.priColor);
-        colOK = getResources().getColor(R.color.esubsOKColor);
+        colPrimary = ContextCompat.getColor(getContext(), R.color.priColor);
+        colOK = ContextCompat.getColor(getContext(), R.color.esubsOKColor);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Builder bld = new Builder(getActivity());
@@ -41,9 +44,10 @@ public final class TranslateFragment extends DialogFragment {
         int to = getArguments().getInt(App.VSTUP2);
         abc = Alphabet.getPreferentialInstance();
 
-        layout = App.getInflater().inflate(R.layout.subst_dialog, null);
+        @SuppressLint("InflateParams")
+        View layout = App.getInflater().inflate(R.layout.subst_dialog, null);
         ((TextView) layout.findViewById(R.id.tvSVVPuv)).setText(abc.chr(from));
-        GridView grid = (GridView) layout.findViewById(R.id.gvSVDialog);
+        GridView grid = layout.findViewById(R.id.gvSVDialog);
         grid.setAdapter(new AlphabetLA(to));
 
         bld.setView(layout);
@@ -67,10 +71,10 @@ public final class TranslateFragment extends DialogFragment {
 
     private final class AlphabetLA extends BaseAdapter {
 
-        private int cnt;
-        private int orig;
+        private final int cnt;
+        private final int orig;
 
-        public AlphabetLA(int orig) {
+        AlphabetLA(int orig) {
             this.orig = orig;
             cnt = abc.count();
         }
@@ -90,7 +94,7 @@ public final class TranslateFragment extends DialogFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView tv;
             if (convertView == null)
-                tv = (TextView) App.getInflater().inflate(R.layout.gen_letter_item, null);
+                tv = (TextView) App.getInflater().inflate(R.layout.gen_letter_item, parent, false);
             else
                 tv = (TextView) convertView;
             String chr = getItem(position);
@@ -102,6 +106,6 @@ public final class TranslateFragment extends DialogFragment {
     }
 
     public interface OnSelectedListener {
-        public void onSelected(int from, int to);
+        void onSelected(int from, int to);
     }
 }

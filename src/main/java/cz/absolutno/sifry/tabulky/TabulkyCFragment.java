@@ -31,7 +31,7 @@ public final class TabulkyCFragment extends AbstractCFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.tabulkyc_layout, null);
+        View v = inflater.inflate(R.layout.tabulkyc_layout, container, false);
 
         tabulkyID = Utils.getIdArray(R.array.iaTDTabulky);
         vpVarID = Utils.getIdArray(R.array.iaTDVPVar);
@@ -40,10 +40,10 @@ public final class TabulkyCFragment extends AbstractCFragment {
         mpVarABC = getResources().getStringArray(R.array.saTDMPABCVar);
         ctvVarABC = getResources().getStringArray(R.array.saTDCtvABCVar);
 
-        spVar = (Spinner) v.findViewById(R.id.spTDTab);
-        spVPVar = (Spinner) v.findViewById(R.id.spTDVPVar);
-        spMPVar = (Spinner) v.findViewById(R.id.spTDMPVar);
-        spCtvVar = (Spinner) v.findViewById(R.id.spTDCtvAbeceda);
+        spVar = v.findViewById(R.id.spTDTab);
+        spVPVar = v.findViewById(R.id.spTDVPVar);
+        spMPVar = v.findViewById(R.id.spTDMPVar);
+        spCtvVar = v.findViewById(R.id.spTDCtvAbeceda);
 
         int var1 = getArguments().getInt(App.VSTUP1, 0);
         int var2 = getArguments().getInt(App.VSTUP2, 0);
@@ -111,7 +111,7 @@ public final class TabulkyCFragment extends AbstractCFragment {
         updateAdapter();
     }
 
-    private OnItemSelectedListener varListener = new OnItemSelectedListener() {
+    private final OnItemSelectedListener varListener = new OnItemSelectedListener() {
         public void onItemSelected(AdapterView<?> parentView, View childView, int position, long id) {
             updateAdapter();
         }
@@ -120,6 +120,7 @@ public final class TabulkyCFragment extends AbstractCFragment {
         }
     };
 
+    @SuppressWarnings("ConstantConditions")
     private void updateAdapter() {
         int item = tabulkyID[spVar.getSelectedItemPosition()];
         if (item != selItem) {

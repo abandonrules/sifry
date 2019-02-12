@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 import cz.absolutno.sifry.Utils;
@@ -25,7 +27,7 @@ public final class CislaRFragment extends AbstractRFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cislar_layout, null);
+        View v = inflater.inflate(R.layout.cislar_layout, container, false);
 
         tabIDs = Utils.getIdArray(R.array.iaCRGroups);
 
@@ -69,7 +71,7 @@ public final class CislaRFragment extends AbstractRFragment {
         return v;
     }
 
-    public void selectList(boolean ascii, boolean mala) {
+    private void selectList(boolean ascii, boolean mala) {
         headerOrd.setVisibility(ascii ? View.GONE : View.VISIBLE);
         headerASCII.setVisibility(ascii ? View.VISIBLE : View.GONE);
         adapter.set(ascii, mala);
@@ -78,17 +80,17 @@ public final class CislaRFragment extends AbstractRFragment {
 
     private static final class CislaLA extends BaseAdapter {
 
-        private Alphabet abc, abcPerm;
+        private final Alphabet abc, abcPerm;
         private boolean ascii = false;
         private boolean alt = false;
 
-        public CislaLA() {
+        CislaLA() {
             super();
             abc = Alphabet.getPreferentialInstance();
             abcPerm = Alphabet.getVariantInstance(24, "");
         }
 
-        public void set(boolean ascii, boolean alt) {
+        void set(boolean ascii, boolean alt) {
             this.ascii = ascii;
             this.alt = alt;
             notifyDataSetChanged();
@@ -108,7 +110,7 @@ public final class CislaRFragment extends AbstractRFragment {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null || convertView.getId() != (ascii ? R.id.crItemASCII : R.id.crItemOrd))
-                convertView = App.getInflater().inflate(ascii ? R.layout.cisla_item_ascii : R.layout.cisla_item, null);
+                convertView = App.getInflater().inflate(ascii ? R.layout.cisla_item_ascii : R.layout.cisla_item, parent, false);
             String pism;
             int x;
             if (ascii) {
@@ -119,7 +121,7 @@ public final class CislaRFragment extends AbstractRFragment {
                 pism = abc.chr(position);
             }
             ((TextView) convertView.findViewById(R.id.pis)).setText(pism);
-            ((TextView) convertView.findViewById(R.id.s10)).setText(String.format("%d", x));
+            ((TextView) convertView.findViewById(R.id.s10)).setText(String.format(Locale.ROOT, "%d", x));
             ((TextView) convertView.findViewById(R.id.s16)).setText(String.format("%02X", x));
             if (ascii) {
                 ((TextView) convertView.findViewById(R.id.s8)).setText(String.format("%03o", x));

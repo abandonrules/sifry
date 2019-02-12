@@ -16,8 +16,8 @@ public final class MalyPolskyCAdapter extends TabulkyCListAdapter {
 
     private MalyPolskyKrizDecoder mpk;
     private int[][] sour;
-    private String[] items;
-    private int[] itemIDs;
+    private final String[] items;
+    private final int[] itemIDs;
 
     public MalyPolskyCAdapter() {
         items = App.getContext().getResources().getStringArray(R.array.saTCMPItems);
@@ -82,12 +82,12 @@ public final class MalyPolskyCAdapter extends TabulkyCListAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = getViewHelper(convertView, position);
+        View v = getViewHelper(position, convertView, parent);
         if (getItemId(position) == R.id.idTCPrimo) {
-            FixedGridLayout fgl = (FixedGridLayout) v.findViewById(R.id.cont);
+            FixedGridLayout fgl = v.findViewById(R.id.cont);
             LayoutInflater inflater = App.getInflater();
             for (int[] s : sour) {
-                MalyPolskyTView t = (MalyPolskyTView) inflater.inflate(R.layout.mpolskyc_item, null);
+                MalyPolskyTView t = (MalyPolskyTView) inflater.inflate(R.layout.mpolskyc_item, fgl, false);
                 t.setIn(s);
                 fgl.addView(t);
             }

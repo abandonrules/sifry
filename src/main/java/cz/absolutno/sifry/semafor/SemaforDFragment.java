@@ -21,7 +21,7 @@ import cz.absolutno.sifry.common.decoder.StatefulDecoder.OnStateChangedListener;
 public final class SemaforDFragment extends AbstractDFragment {
 
     private TextView reseni;
-    private ArrayList<Integer> raw = new ArrayList<Integer>();
+    private ArrayList<Integer> raw = new ArrayList<>();
     private SemaforView sv;
     private LinearLayout llOdhady, llState;
     private TextView tvState;
@@ -45,24 +45,24 @@ public final class SemaforDFragment extends AbstractDFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.semaford_layout, null);
+        View v = inflater.inflate(R.layout.semaford_layout, container, false);
 
-        sv = (SemaforView) v.findViewById(R.id.svSmDVstup);
+        sv = v.findViewById(R.id.svSmDVstup);
         sv.setOnInputListener(inputListener);
 
-        reseni = (TextView) v.findViewById(R.id.tvRes);
+        reseni = v.findViewById(R.id.tvRes);
         reseni.setOnClickListener(Utils.copyClickListener);
-        llOdhady = (LinearLayout) v.findViewById(R.id.llSmDNavrhy);
-        llState = (LinearLayout) v.findViewById(R.id.llSmDStav);
-        tvState = (TextView) v.findViewById(R.id.tvSmDStav);
-        ImageView ivBsp = (ImageView) v.findViewById(R.id.ivBsp);
+        llOdhady = v.findViewById(R.id.llSmDNavrhy);
+        llState = v.findViewById(R.id.llSmDStav);
+        tvState = v.findViewById(R.id.tvSmDStav);
+        ImageView ivBsp = v.findViewById(R.id.ivBsp);
         ivBsp.setOnClickListener(bspListener);
         ivBsp.setOnLongClickListener(clearListener);
 
         return v;
     }
 
-    private SemaforView.OnInputListener inputListener = new SemaforView.OnInputListener() {
+    private final SemaforView.OnInputListener inputListener = new SemaforView.OnInputListener() {
         public void onInput(int x, int c) {
             llOdhady.removeAllViews();
             if (sd == null)
@@ -78,10 +78,10 @@ public final class SemaforDFragment extends AbstractDFragment {
                         x2 = x | (1 << sx);
                         String s = sd.getDesc(x2);
                         if (!s.equals("?")) {
-                            View v = inflater.inflate(R.layout.semaford_item, null);
+                            View v = inflater.inflate(R.layout.semaford_item, llOdhady, false);
                             ((SemaforTView) v.findViewById(R.id.image)).setIn(x2);
                             ((TextView) v.findViewById(R.id.text)).setText(s);
-                            v.setTag(Integer.valueOf(x2));
+                            v.setTag(x2);
                             v.setOnClickListener(clickListener);
                             llOdhady.addView(v);
                         }
@@ -95,7 +95,7 @@ public final class SemaforDFragment extends AbstractDFragment {
         }
     };
 
-    private OnClickListener clickListener = new OnClickListener() {
+    private final OnClickListener clickListener = new OnClickListener() {
         public void onClick(View v) {
             int x = (Integer) v.getTag();
             reseni.append(sd.decode(x));
@@ -105,7 +105,7 @@ public final class SemaforDFragment extends AbstractDFragment {
         }
     };
 
-    private OnClickListener bspListener = new OnClickListener() {
+    private final OnClickListener bspListener = new OnClickListener() {
         public void onClick(View v) {
             if (sv.isActive()) {
                 sv.clear();
@@ -118,7 +118,7 @@ public final class SemaforDFragment extends AbstractDFragment {
         }
     };
 
-    private OnStateChangedListener stateListener = new OnStateChangedListener() {
+    private final OnStateChangedListener stateListener = new OnStateChangedListener() {
         public void onStateChanged(String state) {
             llState.setVisibility(state.length() > 0 ? View.VISIBLE : View.INVISIBLE);
             tvState.setText(state);

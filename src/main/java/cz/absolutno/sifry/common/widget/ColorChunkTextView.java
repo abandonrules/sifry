@@ -1,11 +1,11 @@
 package cz.absolutno.sifry.common.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +19,7 @@ import cz.absolutno.sifry.Utils;
 public final class ColorChunkTextView extends View {
 
     private OnChunkClickListener onChunkClickListener = null;
-    private Paint p;
+    private final Paint p;
 
     private int downIx;
     private boolean trackingScroll;
@@ -30,7 +30,8 @@ public final class ColorChunkTextView extends View {
     private boolean widthsValid = false;
 
     private ChunkInternal[] data = new ChunkInternal[0];
-    private float sz, defSz, maxSz;
+    private float sz;
+    private final float defSz, maxSz;
     private float dy = 0;
 
     public ColorChunkTextView(Context ctx, AttributeSet as) {
@@ -43,11 +44,12 @@ public final class ColorChunkTextView extends View {
         p.setTextSize(sz);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         int cnt = e.getPointerCount();
         if (cnt >= 3) return false;
-        switch (MotionEventCompat.getActionMasked(e)) {
+        switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 trackingScroll = false;
                 trackingZoom = false;
@@ -116,6 +118,7 @@ public final class ColorChunkTextView extends View {
         return sb.toString();
     }
 
+    @SuppressWarnings("unused")
     public void replaceChunk(int i, ColorChunk newChunk) {
         data[i] = new ChunkInternal(newChunk);
         invalidateWidths();
@@ -228,7 +231,7 @@ public final class ColorChunkTextView extends View {
         return -1;
     }
 
-    protected void onChunkClick(int ix) {
+    private void onChunkClick(int ix) {
         if (onChunkClickListener != null)
             onChunkClickListener.onChunkClick(ix);
     }
@@ -263,17 +266,17 @@ public final class ColorChunkTextView extends View {
         private float sz;
         private float dy;
 
-        public SavedState(Parcelable in) {
+        SavedState(Parcelable in) {
             super(in);
         }
 
-        public void read(ColorChunkTextView ctv) {
+        void read(ColorChunkTextView ctv) {
             sz = ctv.sz;
             dy = ctv.dy;
             data = ctv.data;
         }
 
-        public SavedState(Parcel in) {
+        SavedState(Parcel in) {
             super(in);
             sz = in.readFloat();
             dy = in.readFloat();
@@ -288,7 +291,7 @@ public final class ColorChunkTextView extends View {
             dest.writeSerializable(data);
         }
 
-        public void apply(ColorChunkTextView ctv) {
+        void apply(ColorChunkTextView ctv) {
             ctv.setData(data);
             ctv.setTextSize(sz);
             ctv.setScroll(dy);
@@ -309,22 +312,23 @@ public final class ColorChunkTextView extends View {
 
 
     public interface OnChunkClickListener {
-        public void onChunkClick(int ix);
+        void onChunkClick(int ix);
     }
 
 
     public static class ColorChunk implements Serializable {
+        @SuppressWarnings("unused")
         private static final long serialVersionUID = -5907611771010408650L;
 
-        public String chr;
-        public int color;
+        public final String chr;
+        int color;
 
         public ColorChunk(String chr, int color) {
             this.chr = chr;
             this.color = color;
         }
 
-        public ColorChunk(ColorChunk chunk) {
+        ColorChunk(ColorChunk chunk) {
             chr = chunk.chr;
             color = chunk.color;
         }
@@ -336,14 +340,15 @@ public final class ColorChunkTextView extends View {
     }
 
     private static final class ChunkInternal extends ColorChunk {
+        @SuppressWarnings("unused")
         private static final long serialVersionUID = 7320543464412705968L;
 
-        public boolean goodbreak;
-        public float w;
-        public float x;
-        public int ln;
+        final boolean goodbreak;
+        float w;
+        float x;
+        int ln;
 
-        public ChunkInternal(ColorChunk chunk) {
+        ChunkInternal(ColorChunk chunk) {
             super(chunk);
             goodbreak = chr.equals(" ");
         }

@@ -24,13 +24,14 @@ public final class MalyPolskyVFragment extends AbstractRFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ArrayList<Integer> raw = getArguments().getIntegerArrayList(App.DATA);
+        assert raw != null;
         int sz = raw.size();
         sour = new int[sz][];
         for (int i = 0; i < sz; i++)
             sour[i] = MalyPolskyKrizDecoder.parseInt(raw.get(i));
 
-        View v = inflater.inflate(R.layout.gen_exp_list_layout, null);
-        ExpandableListView el = (ExpandableListView) v.findViewById(R.id.main);
+        View v = inflater.inflate(R.layout.gen_exp_list_layout, container, false);
+        ExpandableListView el = v.findViewById(R.id.main);
         el.setAdapter(new MalyPolskyELA());
         el.setOnChildClickListener(Utils.copyChildClickListener);
 
@@ -45,7 +46,7 @@ public final class MalyPolskyVFragment extends AbstractRFragment {
         private final String[] abcVars;
         private final MalyPolskyKrizDecoder[] mpk;
 
-        public MalyPolskyELA() {
+        MalyPolskyELA() {
             groups = App.getContext().getResources().getStringArray(R.array.saTDMPVar);
             groupID = Utils.getIdArray(R.array.iaTDMPVar);
             abcVars = App.getContext().getResources().getStringArray(R.array.saTDMPABCVar);
@@ -69,7 +70,7 @@ public final class MalyPolskyVFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -89,6 +90,7 @@ public final class MalyPolskyVFragment extends AbstractRFragment {
             return filter(groupPosition, rot, rX, inv);
         }
 
+        @SuppressWarnings("UnusedParameters")
         @SuppressLint("DefaultLocale")
         private String getChildDesc(int groupPosition, int childPosition) {
             int rot = childPosition % 4;
@@ -99,9 +101,9 @@ public final class MalyPolskyVFragment extends AbstractRFragment {
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
-            TextView tvDesc = (TextView) convertView.findViewById(R.id.desc);
-            TextView tvCont = (TextView) convertView.findViewById(R.id.cont);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
+            TextView tvDesc = convertView.findViewById(R.id.desc);
+            TextView tvCont = convertView.findViewById(R.id.cont);
             tvDesc.setText(getChildDesc(groupPosition, childPosition));
             tvCont.setText(getChild(groupPosition, childPosition));
             return convertView;

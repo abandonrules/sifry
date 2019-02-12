@@ -23,7 +23,7 @@ public final class CislaCFragment extends AbstractCFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cislac_layout, null);
+        View v = inflater.inflate(R.layout.cislac_layout, container, false);
         adapter = new CislaCELA();
         ((ExpandableListView) v.findViewById(R.id.elCCVystup)).setAdapter(adapter);
         ((ExpandableListView) v.findViewById(R.id.elCCVystup)).setOnChildClickListener(Utils.copyChildClickListener);
@@ -51,7 +51,9 @@ public final class CislaCFragment extends AbstractCFragment {
     private static final class CislaCELA extends BaseExpandableListAdapter {
 
         private String input;
-        private Alphabet abcPref, abcAscii, abcPerm;
+        private Alphabet abcPref;
+        private final Alphabet abcAscii;
+        private final Alphabet abcPerm;
 
         private final String[] groups;
         private final int[] groupIDs;
@@ -62,7 +64,7 @@ public final class CislaCFragment extends AbstractCFragment {
         private final int[] itemsASCIIMod;
         private final int[] itemsASCIIZakl;
 
-        public CislaCELA() {
+        CislaCELA() {
             Resources res = App.getContext().getResources();
             groups = res.getStringArray(R.array.saCCGroups);
             groupIDs = Utils.getIdArray(R.array.iaCCGroups);
@@ -79,17 +81,17 @@ public final class CislaCFragment extends AbstractCFragment {
             input = "";
         }
 
-        public void reloadPref() {
+        void reloadPref() {
             abcPref = Alphabet.getPreferentialInstance();
             notifyDataSetChanged();
         }
 
-        public void load(String input) {
+        void load(String input) {
             this.input = input;
             notifyDataSetChanged();
         }
 
-        public String getInput() {
+        String getInput() {
             return abcPref.filter(input);
         }
 
@@ -109,10 +111,9 @@ public final class CislaCFragment extends AbstractCFragment {
             return groups[groupPosition];
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded,
-                                 View convertView, ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -190,7 +191,7 @@ public final class CislaCFragment extends AbstractCFragment {
         public View getChildView(int groupPosition, int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
             ((TextView) convertView.findViewById(R.id.desc)).setText(getChildDesc(groupPosition, childPosition));
             ((TextView) convertView.findViewById(R.id.cont)).setText(getChild(groupPosition, childPosition));
             return convertView;

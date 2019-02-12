@@ -24,6 +24,7 @@ public final class CtverecVFragment extends AbstractRFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ArrayList<Integer> raw = getArguments().getIntegerArrayList(App.DATA);
+        assert raw != null;
         int sz = raw.size();
         sour = new int[sz][2];
         for (int i = 0; i < sz; i++) {
@@ -32,8 +33,8 @@ public final class CtverecVFragment extends AbstractRFragment {
             sour[i][1] = x / 5;
         }
 
-        View v = inflater.inflate(R.layout.gen_exp_list_layout, null);
-        ExpandableListView el = (ExpandableListView) v.findViewById(R.id.main);
+        View v = inflater.inflate(R.layout.gen_exp_list_layout, container, false);
+        ExpandableListView el = v.findViewById(R.id.main);
         el.setAdapter(new CtverecELA());
         el.setOnChildClickListener(Utils.copyChildClickListener);
 
@@ -47,7 +48,7 @@ public final class CtverecVFragment extends AbstractRFragment {
         private final String[] groupID;
         private final Alphabet[] abc;
 
-        public CtverecELA() {
+        CtverecELA() {
             groups = App.getContext().getResources().getStringArray(R.array.saTDCtvVar);
             groupID = App.getContext().getResources().getStringArray(R.array.saTDCtvABCVar);
             abc = new Alphabet[groups.length];
@@ -73,7 +74,7 @@ public final class CtverecVFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parentView) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parentView, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -86,6 +87,7 @@ public final class CtverecVFragment extends AbstractRFragment {
             return childPosition;
         }
 
+        @SuppressWarnings("UnusedParameters")
         private String getChildDesc(int groupPosition, int childPosition) {
             if (childPosition == 0) return "0";
             StringBuilder sb = new StringBuilder();
@@ -100,19 +102,21 @@ public final class CtverecVFragment extends AbstractRFragment {
         }
 
         public String getChild(int groupPosition, int childPosition) {
-            if (childPosition == 8)
-                return bifid(groupPosition, false);
-            else if (childPosition == 9)
-                return bifid(groupPosition, true);
-            else
-                return filter(groupPosition, (childPosition & 4) != 0, (childPosition & 1) != 0, (childPosition & 2) != 0);
+            switch (childPosition) {
+                case 8:
+                    return bifid(groupPosition, false);
+                case 9:
+                    return bifid(groupPosition, true);
+                default:
+                    return filter(groupPosition, (childPosition & 4) != 0, (childPosition & 1) != 0, (childPosition & 2) != 0);
+            }
         }
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
-            TextView tvDesc = (TextView) convertView.findViewById(R.id.desc);
-            TextView tvCont = (TextView) convertView.findViewById(R.id.cont);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
+            TextView tvDesc = convertView.findViewById(R.id.desc);
+            TextView tvCont = convertView.findViewById(R.id.cont);
             tvDesc.setText(getChildDesc(groupPosition, childPosition));
             tvCont.setText(getChild(groupPosition, childPosition));
             return convertView;

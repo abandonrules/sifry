@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
@@ -32,7 +33,7 @@ public final class KalendarRFragment extends AbstractRFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.gen_exp_list_layout, null);
+        View v = inflater.inflate(R.layout.gen_exp_list_layout, container, false);
         smer = getArguments().getInt(App.SPEC, SMER_JD);
         kalendar = ((KalendarActivity) getActivity()).getKalendar();
         db = Utils.load2DStringArray(kalendar);
@@ -43,6 +44,7 @@ public final class KalendarRFragment extends AbstractRFragment {
         return v;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onResume() {
         super.onResume();
@@ -59,20 +61,20 @@ public final class KalendarRFragment extends AbstractRFragment {
     private final class JmenoDatumELA extends BaseExpandableListAdapter {
 
         @SuppressWarnings("unchecked") // Can't create an array of ArrayList<String>'s
-        private ArrayList<String>[] pismena = new ArrayList[26];
-        private int indexy[] = new int[26];
+        private final ArrayList<String>[] pismena = new ArrayList[26];
+        private final int[] indexy = new int[26];
         private int used;
 
-        public JmenoDatumELA() {
+        JmenoDatumELA() {
             for (int i = 0; i < 26; i++)
-                pismena[i] = new ArrayList<String>();
+                pismena[i] = new ArrayList<>();
             for (int m = 0; m < db.length; m++)
                 for (int d = 0; d < db[m].length; d++) {
                     String jmena = db[m][d].toString();
                     if (jmena.substring(0, 1).equals("*")) continue;
                     for (String jmeno : jmena.split(", ")) {
                         String n = CzechAlphabet.normalize(jmeno);
-                        pismena[n.charAt(0) - 'A'].add(String.format("%s:%d. %d.", jmeno, d + 1, m + 1));
+                        pismena[n.charAt(0) - 'A'].add(String.format(Locale.ROOT, "%s:%d. %d.", jmeno, d + 1, m + 1));
                     }
                 }
             used = 0;
@@ -98,7 +100,7 @@ public final class KalendarRFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -123,9 +125,9 @@ public final class KalendarRFragment extends AbstractRFragment {
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
-            TextView tvDesc = (TextView) convertView.findViewById(R.id.desc);
-            TextView tvCont = (TextView) convertView.findViewById(R.id.cont);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
+            TextView tvDesc = convertView.findViewById(R.id.desc);
+            TextView tvCont = convertView.findViewById(R.id.cont);
             tvDesc.setText(getChildDesc(groupPosition, childPosition));
             tvCont.setText(getChild(groupPosition, childPosition));
             return convertView;
@@ -143,7 +145,7 @@ public final class KalendarRFragment extends AbstractRFragment {
 
     private final class DatumJmenoELA extends BaseExpandableListAdapter {
 
-        private String[] mesice = App.getContext().getResources().getStringArray(R.array.saKDMesice);
+        private final String[] mesice = App.getContext().getResources().getStringArray(R.array.saKDMesice);
 
         public String getChild(int groupPosition, int childPosition) {
             return db[groupPosition][childPosition].toString();
@@ -164,9 +166,9 @@ public final class KalendarRFragment extends AbstractRFragment {
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
-            TextView tvDesc = (TextView) convertView.findViewById(R.id.desc);
-            TextView tvCont = (TextView) convertView.findViewById(R.id.cont);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
+            TextView tvDesc = convertView.findViewById(R.id.desc);
+            TextView tvCont = convertView.findViewById(R.id.cont);
             tvDesc.setText(getChildDesc(groupPosition, childPosition));
             tvCont.setText(getChild(groupPosition, childPosition));
             return convertView;
@@ -186,7 +188,7 @@ public final class KalendarRFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }

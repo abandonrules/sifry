@@ -21,7 +21,7 @@ public final class MorseCFragment extends AbstractCFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.gen_list_c_layout, null);
+        View v = inflater.inflate(R.layout.gen_list_c_layout, container, false);
         adapter = new MorseCLA();
         ((ListView) v.findViewById(R.id.lvCVystup)).setAdapter(adapter);
         ((ListView) v.findViewById(R.id.lvCVystup)).setOnItemClickListener(genItemClickListener);
@@ -44,23 +44,23 @@ public final class MorseCFragment extends AbstractCFragment {
     private static final class MorseCLA extends BaseAdapter {
 
         private String in;
-        private String[] items;
-        private String[] znaky;
-        private int[] itemIDs;
-        private ArrayList<String> bin = new ArrayList<String>();
-        private ArrayList<Integer> trits = new ArrayList<Integer>();
+        private final String[] items;
+        private final String[] znaky;
+        private final int[] itemIDs;
+        private final ArrayList<String> bin = new ArrayList<>();
+        private final ArrayList<Integer> trits = new ArrayList<>();
 
-        private MorseDecoder md;
+        private final MorseDecoder md;
 
-        public MorseCLA() {
+        MorseCLA() {
             items = App.getContext().getResources().getStringArray(R.array.saMCItems);
             itemIDs = Utils.getIdArray(R.array.iaMCItems);
             znaky = App.getContext().getResources().getStringArray(R.array.saMDZnaky);
             md = new MorseDecoder();
         }
 
-        public boolean load(String in) {
-            ArrayList<Integer> raw = new ArrayList<Integer>();
+        boolean load(String in) {
+            ArrayList<Integer> raw = new ArrayList<>();
             boolean res = md.encode(in, raw);
             this.in = md.decode(raw);
             bin.clear();
@@ -79,15 +79,15 @@ public final class MorseCFragment extends AbstractCFragment {
             return res;
         }
 
-        public ArrayList<Integer> getData() {
+        ArrayList<Integer> getData() {
             return trits;
         }
 
-        public String getVstup() {
+        String getVstup() {
             return in;
         }
 
-        public ArrayList<String> getBin() {
+        ArrayList<String> getBin() {
             return bin;
         }
 
@@ -115,6 +115,8 @@ public final class MorseCFragment extends AbstractCFragment {
                     for (Integer i : trits) {
                         if (last >= 0)
                             sb.append("0");
+                        // lint thinks this can never happen
+                        //noinspection ConstantConditions
                         if (last == 2 && i == 2)
                             sb.append("00");
                         switch (i) {
@@ -146,7 +148,7 @@ public final class MorseCFragment extends AbstractCFragment {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_list_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_list_item, parent, false);
             ((TextView) convertView.findViewById(R.id.desc)).setText(getItemDesc(position));
             ((TextView) convertView.findViewById(R.id.cont)).setText(getItem(position));
             return convertView;

@@ -35,7 +35,7 @@ public final class FrekvRFragment extends AbstractRFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.frekvr_layout, null);
+        View v = inflater.inflate(R.layout.frekvr_layout, container, false);
         sortIDs = Utils.getIdArray(R.array.iaFRSort);
         adapter = new FrekvRELA();
         ((Spinner) v.findViewById(R.id.spFRSort)).setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -50,6 +50,7 @@ public final class FrekvRFragment extends AbstractRFragment {
         return v;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onResume() {
         super.onResume();
@@ -82,12 +83,12 @@ public final class FrekvRFragment extends AbstractRFragment {
 
     private static final class FrekvRELA extends BaseExpandableListAdapter {
 
-        private String[] groups;
-        private int[] groupIDs;
-        private FrekvRItem[][] elms;
-        private String patProc, patRel;
+        private final String[] groups;
+        private final int[] groupIDs;
+        private final FrekvRItem[][] elms;
+        private final String patProc, patRel;
 
-        public FrekvRELA() {
+        FrekvRELA() {
             Resources res = App.getContext().getResources();
             groups = res.getStringArray(R.array.saFRGroups);
             groupIDs = Utils.getIdArray(R.array.iaFRGroups);
@@ -100,15 +101,15 @@ public final class FrekvRFragment extends AbstractRFragment {
             Resources res = App.getContext().getResources();
             for (int i = 0; i < groups.length; i++) {
                 String[] in = res.getStringArray(groupIDs[i]);
-                ArrayList<FrekvRItem> list = new ArrayList<FrekvRItem>(in.length);
-                for (int j = 0; j < in.length; j++) {
-                    int ix = in[j].indexOf(':');
-                    float frekv = Float.valueOf(in[j].substring(ix + 1));
+                ArrayList<FrekvRItem> list = new ArrayList<>(in.length);
+                for (String a : in) {
+                    int ix = a.indexOf(':');
+                    float frekv = Float.valueOf(a.substring(ix + 1));
                     if (groupIDs[i] == R.array.saFRFrekvencePis) {
-                        StringParser sp = abc.getStringParser(in[j].substring(0, ix));
+                        StringParser sp = abc.getStringParser(a.substring(0, ix));
                         int ord;
                         int len = 0;
-                        while ((ord = sp.getNextOrd()) != StringParser.EOF)
+                        while ((sp.getNextOrd()) != StringParser.EOF)
                             len++;
                         sp.restart();
                         while ((ord = sp.getNextOrd()) != StringParser.EOF) {
@@ -116,7 +117,7 @@ public final class FrekvRFragment extends AbstractRFragment {
                                 addItem(list, abc.chr(ord), frekv / len);
                         }
                     } else
-                        addItem(list, abc.filter(in[j].substring(0, ix)), frekv);
+                        addItem(list, abc.filter(a.substring(0, ix)), frekv);
                 }
                 elms[i] = list.toArray(new FrekvRItem[list.size()]);
             }
@@ -153,13 +154,13 @@ public final class FrekvRFragment extends AbstractRFragment {
 
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
 
         public int getChildrenCount(int groupPosition) {
-            return elms[groupPosition].length;
+            return elms[groupPosition] != null ? elms[groupPosition].length : 0;
         }
 
         public long getChildId(int groupPosition, int childPosition) {
@@ -172,15 +173,15 @@ public final class FrekvRFragment extends AbstractRFragment {
 
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.frekvr_item, null);
+                convertView = App.getInflater().inflate(R.layout.frekvr_item, parent, false);
             ((TextView) convertView.findViewById(R.id.pism)).setText(getChild(groupPosition, childPosition).str);
             switch (groupIDs[groupPosition]) {
                 case R.array.saFRFrekvenceBi:
                 case R.array.saFRFrekvenceTri:
-                    ((TextView) convertView.findViewById(R.id.frekv)).setText(String.format(patRel, Float.valueOf(getChild(groupPosition, childPosition).frekv)));
+                    ((TextView) convertView.findViewById(R.id.frekv)).setText(String.format(patRel, getChild(groupPosition, childPosition).frekv));
                     break;
                 default:
-                    ((TextView) convertView.findViewById(R.id.frekv)).setText(String.format(patProc, Float.valueOf(getChild(groupPosition, childPosition).frekv)));
+                    ((TextView) convertView.findViewById(R.id.frekv)).setText(String.format(patProc, getChild(groupPosition, childPosition).frekv));
             }
             return convertView;
         }
@@ -196,17 +197,17 @@ public final class FrekvRFragment extends AbstractRFragment {
 
 
     private static final class FrekvRItem {
-        public String str;
-        public float frekv;
+        final String str;
+        float frekv;
 
-        public FrekvRItem(String str, float frekv) {
+        FrekvRItem(String str, float frekv) {
             this.str = str;
             this.frekv = frekv;
         }
     }
 
     private static class AlphComparator implements Comparator<FrekvRItem> {
-        protected final Collator c = Collator.getInstance();
+        final Collator c = Collator.getInstance();
 
         public int compare(FrekvRItem lhs, FrekvRItem rhs) {
             return c.compare(lhs.str, rhs.str);

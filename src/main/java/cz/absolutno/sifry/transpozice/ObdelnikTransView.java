@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.transpozice;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,7 +12,7 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
@@ -23,32 +24,33 @@ public final class ObdelnikTransView extends Trans2DView {
 
     private int col = 0, row = 0;
     private int tmpCol = 0, tmpRow = 0;
-    private Paint p;
+    private final Paint p;
     private float downX, downY;
     private boolean resCallback = false;
     private boolean resize = false;
     private boolean alignRows = false, tmpAlign = false;
     private float resScale;
-    private Path pth = new Path();
-    private Handler h = new Handler();
+    private final Path pth = new Path();
+    private final Handler h = new Handler();
 
     public ObdelnikTransView(Context ctx, AttributeSet as) {
         super(ctx, as);
 
         p = new Paint();
-        p.setColor(getResources().getColor(R.color.mainColor));
+        p.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         p.setStrokeWidth(0);
         p.setStyle(Style.STROKE);
         p.setAntiAlias(true);
         p.setStrokeCap(Cap.BUTT);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         float xo, yo;
         if (e.getPointerCount() > 1)
             return super.onTouchEvent(e);
-        switch (MotionEventCompat.getActionMasked(e)) {
+        switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 xo = untransX(e.getX(), e.getY());
                 yo = untransY(e.getX(), e.getY());
@@ -79,7 +81,8 @@ public final class ObdelnikTransView extends Trans2DView {
                 if (tmpAlign) {
                     yo = untransY(e.getX(), e.getY());
                     int tmpRow = Math.max(Utils.floor(Math.abs(2 * yo / resScale)), 1);
-                    android.util.Log.d("res/a", String.format("%f %d", yo, tmpRow));
+                    if(tmpRow > getLength())
+                        tmpRow = getLength();
                     if (tmpRow != this.tmpRow) {
                         this.tmpRow = tmpRow;
                         invalidate();
@@ -87,6 +90,8 @@ public final class ObdelnikTransView extends Trans2DView {
                 } else {
                     xo = untransX(e.getX(), e.getY());
                     int tmpCol = Math.max(Utils.floor(Math.abs(2 * xo / resScale)), 1);
+                    if(tmpCol > getLength())
+                        tmpCol = getLength();
                     if (tmpCol != this.tmpCol) {
                         this.tmpCol = tmpCol;
                         invalidate();
@@ -114,7 +119,7 @@ public final class ObdelnikTransView extends Trans2DView {
         return super.onTouchEvent(e);
     }
 
-    private Runnable resizeRunnable = new Runnable() {
+    private final Runnable resizeRunnable = new Runnable() {
         public void run() {
             tmpRow = row;
             tmpCol = col;
@@ -159,14 +164,14 @@ public final class ObdelnikTransView extends Trans2DView {
             return new PointF((i % col) - (col - 1) / 2f, (i / col) - (row - 1) / 2f);
     }
 
-    public void setCol(int col) {
+    private void setCol(int col) {
         if (col <= 0) col = 1;
         this.col = col;
         row = Utils.ceil((float) getLength() / col);
         alignRows = false;
     }
 
-    public void setRow(int row) {
+    private void setRow(int row) {
         if (col <= 0) col = 1;
         this.row = row;
         col = Utils.ceil((float) getLength() / row);
@@ -191,7 +196,7 @@ public final class ObdelnikTransView extends Trans2DView {
                 pth.moveTo(0, 0);
                 pth.lineTo(tmpCol, 0);
                 int len = getLength();
-                if (len % tmpCol != 0 && tmpRow > 1) {
+                if (tmpCol > 0 && len % tmpCol != 0 && tmpRow > 1) {
                     int ry = len % tmpRow;
                     pth.lineTo(tmpCol, ry);
                     pth.lineTo(tmpCol - 1, ry);
@@ -209,7 +214,7 @@ public final class ObdelnikTransView extends Trans2DView {
                 pth.moveTo(0, 0);
                 pth.lineTo(tmpCol, 0);
                 int len = getLength();
-                if (len % tmpCol != 0 && tmpRow > 1) {
+                if (tmpCol > 0 && len % tmpCol != 0 && tmpRow > 1) {
                     int rx = len % tmpCol;
                     pth.lineTo(tmpCol, tmpRow - 1);
                     pth.lineTo(rx, tmpRow - 1);
@@ -247,15 +252,15 @@ public final class ObdelnikTransView extends Trans2DView {
 
         int col;
 
-        public SavedState(Parcelable in) {
+        SavedState(Parcelable in) {
             super(in);
         }
 
-        public void read(ObdelnikTransView tv) {
+        void read(ObdelnikTransView tv) {
             col = tv.col;
         }
 
-        public SavedState(Parcel in) {
+        SavedState(Parcel in) {
             super(in);
             col = in.readInt();
         }
@@ -266,7 +271,7 @@ public final class ObdelnikTransView extends Trans2DView {
             dest.writeInt(col);
         }
 
-        public void apply(ObdelnikTransView tv) {
+        void apply(ObdelnikTransView tv) {
             tv.setCol(col);
             tv.invalidate();
         }

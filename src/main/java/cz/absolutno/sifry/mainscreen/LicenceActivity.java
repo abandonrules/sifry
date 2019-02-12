@@ -26,12 +26,12 @@ public final class LicenceActivity extends ExpandableListActivity {
     }
 
 
-    public static final class LicenceELA extends BaseExpandableListAdapter {
+    static final class LicenceELA extends BaseExpandableListAdapter {
 
-        private String[] groups;
-        private int[] groupIDs;
+        private final String[] groups;
+        private final int[] groupIDs;
 
-        public LicenceELA() {
+        LicenceELA() {
             groups = App.getContext().getResources().getStringArray(R.array.saLicence);
             groupIDs = Utils.getIdArray(R.array.iaLicence);
         }
@@ -59,10 +59,9 @@ public final class LicenceActivity extends ExpandableListActivity {
                 return groups[groupPosition];
         }
 
-        public View getGroupView(int groupPosition, boolean isExpanded,
-                                 View convertView, ViewGroup parent) {
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.gen_group_item, null);
+                convertView = App.getInflater().inflate(R.layout.gen_group_item, parent, false);
             ((TextView) convertView).setText(getGroup(groupPosition));
             return convertView;
         }
@@ -92,7 +91,7 @@ public final class LicenceActivity extends ExpandableListActivity {
         public View getChildView(int groupPosition, int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null)
-                convertView = App.getInflater().inflate(R.layout.licence_item, null);
+                convertView = App.getInflater().inflate(R.layout.licence_item, parent, false);
             ((TextView) convertView).setText(getChild(groupPosition, childPosition));
             return convertView;
         }

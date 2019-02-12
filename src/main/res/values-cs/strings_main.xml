@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Šifrovací pomůcky</string>
-    <string name="tExportDir">Šifry</string>
 
     <string name="tVstup">Vstup:</string>
     <string name="tVystup">Výstup:</string>
@@ -12,18 +11,13 @@
     <string name="tEncode">Zašifrovat</string>
     <string name="tDecode">Dešifrovat</string>
     <string name="tCopy">Kopírovat</string>
-    <string name="tSave">Uložit</string>
-    <string name="tSend">Odeslat</string>
-    <string name="tExport">Exportovat</string>
-    <string name="tFilename">Uložit jako:</string>
+    <string name="tShare">Sdílet</string>
     <string name="tCtxCopy">Kopírovat</string>
     <string name="tCtxPaste">Vložit</string>
     <string name="tRef">Reference</string>
     <string name="tVar">Varianty</string>
     <string name="tClose">Zavřít</string>
     <string name="tGo">Zpracovat</string>
-    <string name="tStart">Start</string>
-    <string name="tStop">Stop</string>
 
     <string name="patCopyCap">Text: \"%s\"</string>
     <string name="patBitmapCap">Obrázek: %1$d × %2$d, %3$d B</string>
@@ -42,7 +36,6 @@
     <string name="tErrCopy">Žádný text</string>
     <string name="tErrPaste">Schránka je prázdná</string>
     <string name="tErrEncode">Některé znaky nebyly rozpoznány a byly přeskočeny.</string>
-    <string name="tErrFile">Chyba přístupu k souboru.</string>
     <string name="tErrVar">Je třeba nejprve zadat vstup.</string>
 
 
@@ -177,7 +170,7 @@ Zdrojový kód můžete nalézt na adrese:<br/>
 
 <p>Verze %s</p>
 
-<p>© 2012–2015 Vašek Potoček</p>
+<p>© 2012–2018 Vašek Potoček</p>
 
 <p>Hlavní testeři:<br/>
 – Martin Polívka<br/>
@@ -196,12 +189,18 @@ nyní můžete komponentu používat přímo.</p>
 
 
 <string name="tHelpNews"><![CDATA[
-<h1>Novinky ve verzi 2.1</h1>
+<h1>Novinky ve verzi 2.2</h1>
 
-– Slovníková data přibalena v hlavním APK<br/>
-– Konec podpory systémů Android 2.2 a starších<br/>
+– Minimální verze Androidu 4.0.1 (Ice Cream Sandwich)<br/>
+– Odstraněno vysílání morseovky a export souborů (nejsou nadále vyžadována žádná oprávnění)<br/>
+– Nově podporovány ARM64 procesory<br/>
+– Opravy chyb<br/>
 
 <h3>Starší verze</h3>
+
+<h5>Verze 2.1 (28.7.2015)</h5>
+– Slovníková data přibalena v hlavním APK<br/>
+– Konec podpory systémů Android 2.2 a starších<br/>
 
 <h5>Verze 2.0 (21.1.2014)</h5>
 – Nápověda ke všem položkám<br/>

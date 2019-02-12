@@ -1,5 +1,6 @@
 package cz.absolutno.sifry.braille;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,7 +11,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -21,8 +22,9 @@ import cz.absolutno.sifry.Utils;
 
 public final class BrailleView extends View {
 
-    private float w, h, r, wd;
-    private Paint pDash, pFill, pText;
+    private float w, h, r;
+    private final float wd;
+    private final Paint pDash, pFill, pText;
     private boolean[] in = new boolean[6];
     private OnChangeListener ocl = null;
     private boolean tah = false;
@@ -34,7 +36,7 @@ public final class BrailleView extends View {
         wd = Utils.dpToPix(3);
 
         pDash = new Paint();
-        pDash.setColor(getResources().getColor(R.color.mainColor));
+        pDash.setColor(ContextCompat.getColor(ctx, R.color.mainColor));
         pDash.setAntiAlias(true);
         pDash.setStrokeWidth(wd);
         pDash.setStrokeCap(Cap.ROUND);
@@ -46,15 +48,16 @@ public final class BrailleView extends View {
         pText = new Paint();
         pText.setTextAlign(Paint.Align.CENTER);
         pText.setTypeface(Typeface.DEFAULT_BOLD);
-        pText.setColor(isInEditMode() ? Color.WHITE : getResources().getColor(R.color.priColor));
+        pText.setColor(isInEditMode() ? Color.WHITE : ContextCompat.getColor(ctx, R.color.priColor));
         pText.setAntiAlias(true);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         int cnt = e.getPointerCount();
         int ix;
-        int action = MotionEventCompat.getActionMasked(e);
+        int action = e.getActionMasked();
         if (tah && cnt == 1) {
             if (action == MotionEvent.ACTION_UP) {
                 if (ocl != null) ocl.onChange(getVal(), false);
@@ -80,7 +83,7 @@ public final class BrailleView extends View {
             invalidate();
         } else {
             if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
-                int index = MotionEventCompat.getActionIndex(e);
+                int index = e.getActionIndex();
                 ix = index(e.getX(index), e.getY(index));
                 if (ix >= 0) {
                     in[ix] = !in[ix];
@@ -112,9 +115,10 @@ public final class BrailleView extends View {
         return x;
     }
 
+    @SuppressWarnings("unused")
     public void setVal(int x) {
         for (int i = 0; i < 6; i++) {
-            in[i] = ((x & (1 << i)) != 0) ? true : false;
+            in[i] = ((x & (1 << i)) != 0);
         }
         if (ocl != null) ocl.onChange(x, true);
         lastVal = x;
@@ -165,7 +169,7 @@ public final class BrailleView extends View {
     }
 
     public interface OnChangeListener {
-        public abstract void onChange(int x, boolean down);
+        void onChange(int x, boolean down);
     }
 
     public void setOnChangeListener(OnChangeListener ocl) {
@@ -197,16 +201,16 @@ public final class BrailleView extends View {
         private boolean tah;
         private boolean[] in;
 
-        public SavedState(Parcelable in) {
+        SavedState(Parcelable in) {
             super(in);
         }
 
-        public void read(BrailleView bv) {
+        void read(BrailleView bv) {
             tah = bv.tah;
             in = bv.in;
         }
 
-        public SavedState(Parcel in) {
+        SavedState(Parcel in) {
             super(in);
             tah = (in.readInt() != 0);
             this.in = in.createBooleanArray();
@@ -219,7 +223,7 @@ public final class BrailleView extends View {
             dest.writeBooleanArray(in);
         }
 
-        public void apply(BrailleView bv) {
+        void apply(BrailleView bv) {
             bv.tah = tah;
             bv.in = in;
             bv.invalidate();
