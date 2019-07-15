@@ -1,7 +1,9 @@
 package cz.absolutno.sifry.regexp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +18,7 @@ import android.widget.ToggleButton;
 import cz.absolutno.sifry.R;
 import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
-import cz.absolutno.sifry.regexp.RegExpNative.Progress;
+import cz.absolutno.sifry.regexp.RegExpNative.Report;
 
 public final class RegExpDFragment extends AbstractDFragment {
 
@@ -43,16 +45,6 @@ public final class RegExpDFragment extends AbstractDFragment {
         return v;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public void loadRE(RegExpNative re) {
-        this.re = re;
-        adapter = new RegExpExpListAdapter(re);
-        ((ExpandableListView) getView().findViewById(R.id.elRDResults)).setAdapter(adapter);
-        getView().findViewById(R.id.btRDGo).setEnabled(re != null);
-        if (re != null && re.isRunning())
-            launchRefresh();
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -63,12 +55,15 @@ public final class RegExpDFragment extends AbstractDFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (re == null)
-            return;
-        final int[] progress = re.getProgress();
-        if (progress[Progress.MATCHES] > 0) {
-            int matches = (progress[Progress.MATCHES] <= 10000) ? progress[Progress.MATCHES] : 10000;
-            tvProgress.setText(String.valueOf(progress[1]));
+        re = ((ReferenceFragment)getFragmentManager().findFragmentByTag("ref")).getRE();
+        adapter = new RegExpExpListAdapter(re);
+        ((ExpandableListView) getView().findViewById(R.id.elRDResults)).setAdapter(adapter);
+        if (re.isRunning())
+            launchRefresh();
+        final Report report = re.getProgress();
+        if (report.matches > 0) {
+            int matches = Math.min(report.matches, RegExpNative.MaxListResults);
+            tvProgress.setText(String.valueOf(report.matches));
             adapter.update(matches);
         }
     }
@@ -87,10 +82,20 @@ public final class RegExpDFragment extends AbstractDFragment {
                         ((EditText) getView().findViewById(idET[i])).getText().toString();
             }
             adapter.clear();
-            re.startThread(zad);
+            re.startThread(getContext().getAssets(), getFilename(), zad);
             launchRefresh();
         }
     };
+
+    private String getFilename() {
+        String filename = "";
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if (sp != null)
+            filename = sp.getString("pref_re_dictionary", filename);
+        if (filename.length() == 0)
+            filename = getString(R.string.pref_re_dictionary_default);
+        return "raw/" + filename;
+    }
 
     @SuppressWarnings("ConstantConditions")
     private void updateGoButton() {
@@ -105,18 +110,18 @@ public final class RegExpDFragment extends AbstractDFragment {
                     h.postDelayed(this, matchesDelay);
                     return;
                 }
-                final int[] progress = re.getProgress();
-                if (progress[Progress.ERR] != 0) {
+                final Report report = re.getProgress();
+                if (report.error) {
                     Utils.toast(re.getError());
                     tvProgress.setText("");
                     re.stopThread();
                     updateGoButton();
                     return;
                 }
-                int matches = (progress[Progress.MATCHES] <= 10000) ? progress[Progress.MATCHES] : 10000;
-                if (progress[Progress.RUN] != 0 || matches > 0 || tvProgress.length() > 0)
-                    tvProgress.setText(String.valueOf(progress[Progress.MATCHES]));
-                if (progress[Progress.RUN] != 0)
+                int matches = Math.min(report.matches, RegExpNative.MaxListResults);
+                if (report.running || matches > 0 || tvProgress.length() > 0)
+                    tvProgress.setText(String.valueOf(report.matches));
+                if (report.running)
                     h.postDelayed(this, matchesDelay);
                 adapter.update(matches);
                 updateGoButton();
@@ -128,9 +133,9 @@ public final class RegExpDFragment extends AbstractDFragment {
                     h.postDelayed(this, matchesDelay);
                     return;
                 }
-                final int[] progress = re.getProgress();
-                pbProgress.setProgress((int) ((float) progress[Progress.POS] / progress[Progress.SIZE] * 1000));
-                if (progress[Progress.RUN] != 0)
+                final Report report = re.getProgress();
+                pbProgress.setProgress((int) (report.progress * 1000));
+                if (report.running)
                     h.postDelayed(this, progressDelay);
                 else
                     pbProgress.setVisibility(View.GONE);
@@ -142,11 +147,9 @@ public final class RegExpDFragment extends AbstractDFragment {
         pbProgress.setVisibility(View.VISIBLE);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onClear() {
-        if (re != null)
-            re.free();
+        re.free();
         adapter.clear();
         for (int i = 0; i < 3; i++) {
             ((EditText) getView().findViewById(idET[i])).setText("");
