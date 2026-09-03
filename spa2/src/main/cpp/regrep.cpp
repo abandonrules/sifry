@@ -4,6 +4,7 @@
 #include <utility>
 #include <thread>
 #include <mutex>
+#include <atomic>
 #include <algorithm>
 
 #include <jni.h>
@@ -47,7 +48,8 @@ public:
 
     Report report();
 
-    const std::string& getError() {
+    std::string getError() {
+        std::lock_guard<std::mutex> lock{progressMutex};
         return error;
     }
 
@@ -138,7 +140,9 @@ JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_free(JNIEnv *
 
 JNIEXPORT void JNICALL
 Java_cz_absolutno_sifry_regexp_RegExpNative_nativeFinalize(JNIEnv *env, jobject obj) {
-    delete getContext(env, obj);
+    Context* ctx = getContext(env, obj);
+    ctx->stop();
+    delete ctx;
 }
 
 JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_startThread(JNIEnv *env, jobject obj, jobject jmgr, jstring jfn, jobjectArray joa) {
@@ -214,9 +218,12 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
             REs.push_back({pat, !inv});
         }
 
-        ctx->matches.clear();
-        ctx->matchCount = 0;
-        ctx->running = true;
+        {
+            std::lock_guard<std::mutex> lock{ctx->progressMutex};
+            ctx->matches.clear();
+            ctx->matchCount = 0;
+            ctx->running = true;
+        }
 
         while (!ctx->stopFlag) {
             /* Read one line */
@@ -262,10 +269,17 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
 
             std::size_t assetSize = size_t(AAsset_getLength(asset));
             std::size_t assetPos = assetSize - AAsset_getRemainingLength(asset);
-            ctx->progress = (float)(assetPos) / assetSize;
+            {
+                std::lock_guard<std::mutex> lock{ctx->progressMutex};
+                ctx->progress = (float)(assetPos) / assetSize;
+            }
         }
     } catch (const std::runtime_error& e) {
+        std::lock_guard<std::mutex> lock{ctx->progressMutex};
         ctx->error = e.what();
     }
-    ctx->running = false;
+    {
+        std::lock_guard<std::mutex> lock{ctx->progressMutex};
+        ctx->running = false;
+    }
 }
