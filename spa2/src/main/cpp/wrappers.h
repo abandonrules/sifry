@@ -1,3 +1,6 @@
+#ifndef SIFRY_WRAPPERS_H
+#define SIFRY_WRAPPERS_H
+
 #include <string>
 #include <exception>
 #include <stdexcept>
@@ -90,3 +93,5 @@ public:
         return expected ? (r >= 0) : (r < 0);
     }
 };
+
+#endif /* SIFRY_WRAPPERS_H */
