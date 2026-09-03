@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.4.1)
+# Requires 3.13+ for target_link_options(); Gradle builds this with CMake 3.22.1.
+cmake_minimum_required(VERSION 3.13)
 
 project(SPA2)
 
