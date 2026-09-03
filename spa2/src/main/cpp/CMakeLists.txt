@@ -25,3 +25,10 @@ find_library(android-lib android)
 target_link_libraries( regrep
                        pcre-mini
                        ${android-lib} )
+
+# 16 KB page-size compatibility (Android 15+ / API 35+ devices)
+# Align LOAD segments to 16384 so the linker produces a 0x4000-aligned ELF,
+# avoiding the "Android App Compatibility" dialog on 16 KB-page devices.
+target_link_options( regrep PRIVATE
+                     -Wl,-z,max-page-size=16384
+                     -Wl,-z,common-page-size=16384 )
