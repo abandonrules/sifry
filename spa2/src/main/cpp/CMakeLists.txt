@@ -3,9 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 
 project(SPA2)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_library( regrep
              SHARED
-             regrep.c )
+             regrep.cpp )
 
 file(GLOB pcre_sources "pcre-mini/*.c")
 
