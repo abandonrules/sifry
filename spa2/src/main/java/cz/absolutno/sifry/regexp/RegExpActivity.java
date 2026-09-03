@@ -36,18 +36,4 @@ public final class RegExpActivity extends BottomBarActivity {
     protected void onBottomBarChange(int curIx, int lastIx) {
     }
 
-    public void loadRE(RegExpNative re) {
-        RegExpDFragment frag = (RegExpDFragment) getSupportFragmentManager().findFragmentByTag("D");
-        if (frag != null)
-            frag.loadRE(re);
-    }
-
-    @Override
-    protected void onPreferencesChanged() {
-        super.onPreferencesChanged();
-        ReferenceFragment frag = (ReferenceFragment) getSupportFragmentManager().findFragmentByTag("ref");
-        if (frag != null)
-            frag.updateFilename();
-    }
-
 }
