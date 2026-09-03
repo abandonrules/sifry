@@ -1,7 +1,9 @@
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 #include <android/asset_manager_jni.h>
+#include <jni.h>
 #include "pcre.h"
 
 class AssetRef {
@@ -31,10 +33,17 @@ public:
 
     ~AssetRef() {
         if(valid) {
-            JNIEnv* env;
             AAsset_close(asset);
-            jvm->AttachCurrentThread(&env, NULL);
+            JNIEnv* env = nullptr;
+            bool detach = false;
+            if(jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) == JNI_EDETACHED) {
+                if(jvm->AttachCurrentThread(&env, NULL) != JNI_OK)
+                    return;
+                detach = true;
+            }
             env->DeleteGlobalRef(jamgr);
+            if(detach)
+                jvm->DetachCurrentThread();
         }
     }
 

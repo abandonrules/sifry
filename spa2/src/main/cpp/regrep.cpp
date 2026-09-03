@@ -1,5 +1,8 @@
+#include <cstddef>
 #include <string>
 #include <exception>
+#include <stdexcept>
+#include <system_error>
 #include <vector>
 #include <utility>
 #include <thread>
@@ -37,8 +40,7 @@ public:
     Context(unsigned max) : maxListResults(max) { }
 
     ~Context() {
-        if(worker.joinable())
-            worker.detach();
+        stop();
     }
 
     void start(AssetRef&& asset, std::vector<std::string>&& patterns);
@@ -66,6 +68,7 @@ void Context::start(AssetRef&& asset, std::vector<std::string>&& patterns) {
         worker = std::thread{threadMain, this, std::move(asset), std::move(patterns)};
     }
     catch(const std::system_error&) {
+        std::lock_guard<std::mutex> lock{progressMutex};
         error = "Unable to start thread";
     }
 }
@@ -80,14 +83,17 @@ void Context::stop() {
 
 void Context::free() {
     stop();
+    std::lock_guard<std::mutex> lock{progressMutex};
     matches.clear();
     matchCount = 0;
     progress = 0;
-    error = "";
+    running = false;
+    error.clear();
 }
 
 void Context::fail(const std::string &err) {
     free();
+    std::lock_guard<std::mutex> lock{progressMutex};
     error = err;
 }
 
@@ -141,6 +147,9 @@ JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_free(JNIEnv *
 JNIEXPORT void JNICALL
 Java_cz_absolutno_sifry_regexp_RegExpNative_nativeFinalize(JNIEnv *env, jobject obj) {
     Context* ctx = getContext(env, obj);
+    if(ctx == nullptr)
+        return;
+    storeContext(env, obj, nullptr);
     ctx->stop();
     delete ctx;
 }
@@ -151,9 +160,13 @@ JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_startThread(J
     jsize n = env->GetArrayLength(joa);
     std::vector<std::string> patterns{};
     for(jsize i = 0; i < n; i++) {
-        jobject sobj = env->GetObjectArrayElement(joa, i);
-        jstring* js = reinterpret_cast<jstring*>(&sobj);
-        patterns.push_back(strFromJava(env, *js));
+        jstring js = static_cast<jstring>(env->GetObjectArrayElement(joa, i));
+        if(js == nullptr) {
+            patterns.emplace_back();
+            continue;
+        }
+        patterns.push_back(strFromJava(env, js));
+        env->DeleteLocalRef(js);
     }
     try {
         ctx->start(AssetRef{env, jmgr, strFromJava(env, jfn)}, std::move(patterns));
@@ -208,8 +221,10 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
     try {
         std::vector<PCRE> REs;
         for (auto &pat : patterns) {
+            if (pat.empty())
+                continue;
             bool inv = false;
-            if (pat[0] == '!') {
+            if (pat.front() == '!') {
                 inv = true;
                 pat = pat.substr(1);
             }
@@ -269,9 +284,10 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
 
             std::size_t assetSize = size_t(AAsset_getLength(asset));
             std::size_t assetPos = assetSize - AAsset_getRemainingLength(asset);
+            float progress = assetSize == 0 ? 1.0f : static_cast<float>(assetPos) / static_cast<float>(assetSize);
             {
                 std::lock_guard<std::mutex> lock{ctx->progressMutex};
-                ctx->progress = (float)(assetPos) / assetSize;
+                ctx->progress = progress;
             }
         }
     } catch (const std::runtime_error& e) {
