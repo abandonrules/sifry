@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'cz.absolutno.sifry'
-    compileSdk 35
+    namespace = 'cz.absolutno.sifry'
+    compileSdk = 35
 
     defaultConfig {
-        applicationId 'cz.absolutno.sifry'
-        minSdk 21
-        targetSdk 35
+        applicationId = 'cz.absolutno.sifry'
+        minSdk = 21
+        targetSdk = 35
         externalNativeBuild {
             cmake {
                 arguments '-DANDROID_STL=c++_shared'
@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,13 +30,13 @@ android {
 
     externalNativeBuild {
         cmake {
-            version '3.22.1'
-            path 'src/main/cpp/CMakeLists.txt'
+            version = '3.22.1'
+            path = 'src/main/cpp/CMakeLists.txt'
         }
     }
 
-    buildToolsVersion '36.1.0'
-    ndkVersion '27.0.12077973'
+    buildToolsVersion = '36.1.0'
+    ndkVersion = '27.0.12077973'
 }
 
 dependencies {
