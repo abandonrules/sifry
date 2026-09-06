@@ -1,0 +1,85 @@
+# SPA2 CI — migration contract (issue abandonrules/sifry#8)
+#
+# Every push/PR validates the Phase-1 tiered test suite:
+#   Tier 1+2 (JVM + Robolectric unit tests) run here on linux.
+#   Tier 3 (instrumented, NDK/PCRE on-device) intentionally stays on the
+#   physical Pixel locally (serial 52141FDAS001QF) — see README "Testing".
+#
+# Toolchain tracked here: JDK 17 (temurin), platform android-35,
+# build-tools 36.1.0, CMake 3.22.1, NDK 27.0.12077973, Gradle 9.7.1
+# (wrapper). Robolectric 4.17-beta-4 is the AGP/JDK-sensitive pin that must
+# advance with the migration (see issue notes).
+
+name: build
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-unit-test:
+    name: Assemble + JVM/Robolectric tests (JDK ${{ matrix.jdk }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        jdk: ['17']
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.jdk }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+
+      - name: Set up Gradle (wrapper + dependency cache)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Cache Android NDK and CMake
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.ANDROID_HOME }}/ndk/27.0.12077973
+            ${{ env.ANDROID_HOME }}/cmake/3.22.1
+          key: android-${{ runner.os }}-ndk27-cmake3221
+
+      - name: Accept Android SDK licenses
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+
+      - name: Install Android SDK packages
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          "$SDKMANAGER" \
+            "platforms;android-35" \
+            "build-tools;36.1.0" \
+            "ndk;27.0.12077973" \
+            "cmake;3.22.1"
+
+      - name: Tier 1+2 — JVM + Robolectric unit tests
+        run: ./gradlew :spa2:testDebugUnitTest
+
+      - name: Assemble debug APK (incl. native libregrep)
+        run: ./gradlew :spa2:assembleDebug
+
+      - name: Upload unit test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports-jdk${{ matrix.jdk }}
+          path: |
+            spa2/build/reports/tests/*
+            spa2/build/test-results/**/TEST-*.xml
+          if-no-files-found: ignore
