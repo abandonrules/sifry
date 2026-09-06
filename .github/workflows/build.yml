@@ -57,7 +57,11 @@ jobs:
       - name: Accept Android SDK licenses
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          if [ ! -x "$SDKMANAGER" ]; then
+            echo "sdkmanager not found at $SDKMANAGER" >&2
+            exit 1
+          fi
+          yes | "$SDKMANAGER" --licenses > /dev/null
 
       - name: Install Android SDK packages
         run: |
