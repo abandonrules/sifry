@@ -65,11 +65,16 @@ private:
 void Context::start(AssetRef&& asset, std::vector<std::string>&& patterns) {
     free();
     try {
+        {
+            std::lock_guard<std::mutex> lock{progressMutex};
+            running = true;
+        }
         worker = std::thread{threadMain, this, std::move(asset), std::move(patterns)};
     }
     catch(const std::system_error&) {
         std::lock_guard<std::mutex> lock{progressMutex};
         error = "Unable to start thread";
+        running = false;
     }
 }
 
