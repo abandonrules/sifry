@@ -37,6 +37,12 @@ android {
 
     buildToolsVersion = '36.1.0'
     ndkVersion = '27.0.12077973'
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
 }
 
 dependencies {
