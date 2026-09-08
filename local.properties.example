@@ -1,0 +1,3 @@
+# Copy to local.properties and set your SDK path.
+# Gradle also honors the ANDROID_HOME environment variable instead.
+sdk.dir=/path/to/Android/Sdk
