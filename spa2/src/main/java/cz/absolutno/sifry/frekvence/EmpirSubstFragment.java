@@ -3,7 +3,7 @@ package cz.absolutno.sifry.frekvence;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
