@@ -12,3 +12,4 @@
 .cxx
 local.properties
 sifry-wt/
+gradle-daemon-jvm.properties
