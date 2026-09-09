@@ -931,7 +931,7 @@ public class SVGParser {
 			}
 		}
 
-		private boolean doStroke(Properties atts) {
+		private boolean doStroke(Properties atts, RectF bounding_box) {
 			if (whiteMode) {
 				// Never stroke in white mode
 				return false;
@@ -968,16 +968,43 @@ public class SVGParser {
 
 			String strokeString = atts.getAttr("stroke");
 			if (strokeString != null) {
-				if (strokeString.equalsIgnoreCase("none")) {
+				if (strokeString.startsWith("url(#")) {
+
+					// It's a gradient stroke, look it up in our map
+					String id = strokeString.substring("url(#".length(), strokeString.length() - 1);
+					Gradient g = gradientMap.get(id);
+					Shader shader = null;
+					if (g != null) {
+						shader = g.shader;
+					}
+					if (shader != null) {
+						strokePaint.setShader(shader);
+						gradMatrix.set(g.matrix);
+						if (g.boundingBox && bounding_box != null) {
+							gradMatrix.preTranslate(bounding_box.left, bounding_box.top);
+							gradMatrix.preScale(bounding_box.width(), bounding_box.height());
+						}
+						shader.setLocalMatrix(gradMatrix);
+						return true;
+					} else {
+						Log.w(TAG, "Didn't find shader, using black: " + id);
+						strokePaint.setShader(null);
+						doColor(atts, Color.BLACK, false, strokePaint);
+						return true;
+					}
+				} else if (strokeString.equalsIgnoreCase("none")) {
+					strokePaint.setShader(null);
 					strokePaint.setColor(Color.TRANSPARENT);
 					return false;
 				} else {
+					strokePaint.setShader(null);
 					Integer color = atts.getColor("stroke");
 					if (color != null) {
 						doColor(atts, color, false, strokePaint);
 						return true;
 					} else {
 						Log.w(TAG, "Unrecognized stroke color, using none: " + strokeString);
+						strokePaint.setShader(null);
 						strokePaint.setColor(Color.TRANSPARENT);
 						return false;
 					}
@@ -988,6 +1015,7 @@ public class SVGParser {
 					return strokePaint.getColor() != Color.TRANSPARENT; // optimization
 				} else {
 					// Default is none
+					strokePaint.setShader(null);
 					strokePaint.setColor(Color.TRANSPARENT);
 					return false;
 				}
@@ -1256,7 +1284,7 @@ public class SVGParser {
 				strokeSetStack.push(strokeSet);
 
 				doFill(props, null); // Added by mrn but a boundingBox is now required by josef.
-				doStroke(props);
+				doStroke(props, null);
 
 				fillSet |= (props.getString("fill") != null);
 				strokeSet |= (props.getString("stroke") != null);
@@ -1286,7 +1314,7 @@ public class SVGParser {
 					}
 					doLimits(rect);
 				}
-				if (doStroke(props)) {
+				if (doStroke(props, rect)) {
 					rect.set(x, y, x + width, y + height);
 					if (rx <= 0f && ry <= 0f) {
 						canvas.drawRect(rect, strokePaint);
@@ -1302,9 +1330,9 @@ public class SVGParser {
 				Float y1 = getFloatAttr("y1", atts);
 				Float y2 = getFloatAttr("y2", atts);
 				Properties props = new Properties(atts);
-				if (doStroke(props)) {
+				rect.set(x1, y1, x2, y2);
+				if (doStroke(props, rect)) {
 					pushTransform(atts);
-					rect.set(x1, y1, x2, y2);
 					canvas.drawLine(x1, y1, x2, y2, strokePaint);
 					doLimits(rect, strokePaint);
 					popTransform();
@@ -1329,7 +1357,7 @@ public class SVGParser {
 						canvas.drawOval(rect, fillPaint);
 						doLimits(rect);
 					}
-					if (doStroke(props)) {
+					if (doStroke(props, rect)) {
 						canvas.drawOval(rect, strokePaint);
 						doLimits(rect, strokePaint);
 					}
@@ -1358,7 +1386,7 @@ public class SVGParser {
 							canvas.drawPath(p, fillPaint);
 							doLimits(rect);
 						}
-						if (doStroke(props)) {
+						if (doStroke(props, rect)) {
 							canvas.drawPath(p, strokePaint);
 							doLimits(rect, strokePaint);
 						}
@@ -1374,7 +1402,7 @@ public class SVGParser {
 					canvas.drawPath(p, fillPaint);
 					doLimits(rect);
 				}
-				if (doStroke(props)) {
+				if (doStroke(props, rect)) {
 					canvas.drawPath(p, strokePaint);
 					doLimits(rect, strokePaint);
 				}
