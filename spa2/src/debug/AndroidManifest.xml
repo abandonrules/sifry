@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity android:name="cz.absolutno.sifry.mainscreen.MainActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.mainscreen.LicenceActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.common.activity.HelpActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.common.activity.SettingsActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.morse.MorseActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.braille.BrailleActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.cisla.CislaActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.semafor.SemaforActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.tabulky.TabulkyActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.vlajky.VlajkyActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.substituce.SubstActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.transpozice.TransActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.frekvence.FrekvActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.kalendar.KalendarActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.zapisnik.ZapisnikActivity" android:exported="true" />
+        <activity android:name="cz.absolutno.sifry.regexp.RegExpActivity" android:exported="true" />
+    </application>
+</manifest>
