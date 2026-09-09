@@ -64,6 +64,7 @@ public class RegExpNativeTest {
             assertFalse("cs error: " + rn.getError(), rep.error);
             assertTrue("cs switch lost matches (matches=" + rep.matches + ")", rep.matches >= 2);
             assertEquals("šifry", rn.getResult(0));
+        } finally {
             rn.free();
         }
     }
