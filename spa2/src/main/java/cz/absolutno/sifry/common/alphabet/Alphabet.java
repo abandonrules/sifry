@@ -1,7 +1,7 @@
 package cz.absolutno.sifry.common.alphabet;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import java.util.Locale;
 

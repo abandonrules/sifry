@@ -11,7 +11,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;

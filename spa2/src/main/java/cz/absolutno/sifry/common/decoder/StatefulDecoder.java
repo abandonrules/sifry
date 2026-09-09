@@ -3,7 +3,7 @@ package cz.absolutno.sifry.common.decoder;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.XmlResourceParser;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.SparseArray;
 
 import org.xmlpull.v1.XmlPullParser;

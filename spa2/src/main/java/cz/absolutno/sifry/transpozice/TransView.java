@@ -9,7 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;

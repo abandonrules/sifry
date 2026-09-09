@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
