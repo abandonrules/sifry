@@ -30,7 +30,7 @@ public final class HelpActivity extends Activity {
         setContentView(R.layout.help_layout);
 
         Intent intent = getIntent();
-        int resID = intent.getIntExtra(App.SPEC, 0);
+        int resID = intent.getIntExtra(App.SPEC, R.string.tHelpNews);
 
         try {
             setTitle(getPackageManager().getActivityInfo(getComponentName(), GET_META_DATA).labelRes);
