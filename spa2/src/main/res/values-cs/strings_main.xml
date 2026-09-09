@@ -189,11 +189,18 @@ nyní můžete komponentu používat přímo.</p>
 
 
 <string name="tHelpNews"><![CDATA[
-<h1>Novinky ve verzi 2.3</h1>
-– Opravené nastavení jazyka aplikace
-– Drobné grafické opravy
+<h1>Novinky ve verzi 4.0</h1>
+– Nový vyhledávací (regexp) stroj pro hledání vzorů ve slovnících<br/>
+– Bezpečnost: knihovna PCRE aktualizována na 8.45 (oprava řady známých zranitelností)<br/>
+– Kompatibilita s 16 KB stránkami paměti<br/>
+– Opravy vykreslování ikon menu<br/>
+– Modernizace sestavení a závislostí<br/>
 
 <h3>Starší verze</h3>
+
+<h5>Verze 2.3</h5>
+– Opravené nastavení jazyka aplikace
+– Drobné grafické opravy
 
 <h5>Verze 2.2 (6.5.2018)</h5>
 – Minimální verze Androidu 4.0.1 (Ice Cream Sandwich)<br/>

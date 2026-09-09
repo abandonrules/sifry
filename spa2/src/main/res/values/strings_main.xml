@@ -185,7 +185,7 @@ component directly.</p>
     <string-array name="saLicence" translatable="false">
         <item>%1$s v%2$s</item>
         <item>svg-android v1.1</item>
-        <item>PCRE library v8.31</item>
+        <item>PCRE library v8.45</item>
         <item>%s</item>
     </string-array>
 
@@ -198,11 +198,18 @@ component directly.</p>
 	
 	
 <string name="tHelpNews"><![CDATA[
-<h1>Changes in v2.3</h1>
-– Fixed application language setting
-– Minor graphics fixes
+<h1>Changes in v4.0</h1>
+– New regular-expression (dictionary/pattern search) engine<br/>
+– Security: bundled PCRE library updated to 8.45 (fixes several known vulnerabilities)<br/>
+– 16 KB page-size compatibility<br/>
+– Menu icon rendering fixes<br/>
+– Modernized build and dependencies<br/>
 
 <h3>Older versions</h3>
+
+<h5>Version 2.3</h5>
+– Fixed application language setting
+– Minor graphics fixes
 
 <h5>Version 2.2 (6 May 2018)</h5>
 – Minimum Android version bumped to 4.0.1 (Ice Cream Sandwich)<br/>
