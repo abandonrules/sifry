@@ -189,6 +189,11 @@ nyní můžete komponentu používat přímo.</p>
 
 
 <string name="tHelpNews"><![CDATA[
+<h1>Novinky ve verzi 4.0.1</h1>
+– Zvýšena minimální verze Androidu na 8.0 (API 26)<br/>
+– Sestaveno a otestováno pro Android 16 (API 36)<br/>
+– Sestavovací nástroje převedeny na JDK 26<br/>
+
 <h1>Novinky ve verzi 4.0</h1>
 – Nový vyhledávací (regexp) stroj pro hledání vzorů ve slovnících<br/>
 – Bezpečnost: knihovna PCRE aktualizována na 8.45 (oprava řady známých zranitelností)<br/>

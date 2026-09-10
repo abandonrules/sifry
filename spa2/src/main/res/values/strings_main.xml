@@ -198,6 +198,11 @@ component directly.</p>
 	
 	
 <string name="tHelpNews"><![CDATA[
+<h1>Changes in v4.0.1</h1>
+– Raised minimum Android version to 8.0 (Android 26)<br/>
+– Built and tested against Android 16 (API 36)<br/>
+– Build toolchain moved to JDK 26<br/>
+
 <h1>Changes in v4.0</h1>
 – New regular-expression (dictionary/pattern search) engine<br/>
 – Security: bundled PCRE library updated to 8.45 (fixes several known vulnerabilities)<br/>
