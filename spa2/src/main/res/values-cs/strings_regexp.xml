@@ -7,8 +7,32 @@
     <string name="tRDVysledky">Výsledky hledání:</string>
     <string name="tRDHledej">Hledat</string>
     <string name="tRDStop">Stop</string>
-    <string name="tRDObsahuje">Obsahuje</string>
-    <string name="tRDNeobsahuje">Neobsahuje</string>
+    <string name="tRDYes">Ano</string>
+    <string name="tRDNo">Ne</string>
+    <string name="tReference">Tabulka</string>
+    <string name="tReferenceNote">Zvolený slovník je příliš velký na to, aby se zobrazil celý. Pro použití tabulky zvolte menší zdroj dat.</string>
+
+    <string-array name="saRDKindLabels">
+        <item>obsahuje</item>
+        <item>začíná na</item>
+        <item>končí na</item>
+        <item>rovno</item>
+        <item>mezi slovy</item>
+        <item>délka</item>
+        <item>značka</item>
+        <item>protonové číslo</item>
+        <item>typ</item>
+        <item>číslo Pokédexu</item>
+    </string-array>
+
+    <string-array name="saRDOpLabels">
+        <item>=</item>
+        <item>&lt;</item>
+        <item>&gt;</item>
+        <item>&lt;=</item>
+        <item>&gt;=</item>
+        <item>od–do</item>
+    </string-array>
 
 		
 <string name="tHelpRegExp"><![CDATA[
@@ -27,6 +51,24 @@ o formátu a významu regulárních výrazů doporučuji libovolný internetový
 v nejjednodušší situaci tedy podřetězce, který se má hledat. Regulární výrazy neuzavírejte mezi
 lomítka. Tlačítkem vedle každého z filtrů je možno zvolit, jestli vyhledávaná slova daný výraz
 obsahovat mají nebo nemají. Jestliže chcete filtr deaktivovat, jeho pole vyprázdněte.</p>
+
+<h3>Typy omezení</h3>
+
+<p>Každý řádek filtru má nabídku typu omezení: <i>obsahuje</i> (libovolný regulární výraz),
+<i>začíná na</i>, <i>končí na</i> nebo <i>rovno</i> (celý normalizovaný tvar). Podle zvoleného
+slovníku se nabízejí další typy: <i>mezi slovy</i> a <i>délka</i> pro slovniky slov, <i>značka</i>
+a <i>protonové číslo</i> pro periodickou tabulku, <i>typ</i> a <i>číslo Pokédexu</i> pro Pokémon.
+Číselné typy (délka, protonové číslo, číslo Pokédexu) přidávají nabídku operátoru
+(<tt>=</tt>, <tt>&lt;</tt>, <tt>&gt;</tt>, <tt>&lt;=</tt>, <tt>&gt;=</tt> nebo rozsah mezi dvěma
+hodnotami). Druhé pole hodnoty používá <i>mezi slovy</i> a operátor <i>od–do</i>: určuje všechna
+slova mezi prvním a druhým slovem v abecedním pořadí. Filtr s prázdnou hodnotou (nebo nemožným
+rozsahem) se ignoruje.</p>
+
+<p>Přepínač <i>Ano</i>/<i>Ne</i> vedle každého filtru obrací kritérium, tzn. hledá slova, která
+mu <b>ne</b>vyhovují.</p>
+
+<p>Referenční pohled na aktuálně zvolený slovník lze otevřít z panelu nástrojů
+(akce <i>Tabulka</i>).</p>
 
 <p>V případě příliš velkého počtu nalezených slov se vypíše pouze prvních 10000 shod.</p>
 

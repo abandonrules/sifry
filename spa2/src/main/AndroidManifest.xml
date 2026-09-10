@@ -93,6 +93,9 @@
             android:name="cz.absolutno.sifry.regexp.RegExpActivity"
             android:icon="@drawable/ic_regexp"
             android:label="@string/cptRegExp" />
+        <activity
+            android:name="cz.absolutno.sifry.regexp.RegExpReferenceActivity"
+            android:label="@string/tReference" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

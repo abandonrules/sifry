@@ -11,6 +11,7 @@ public abstract class AbstractDFragment extends Fragment {
     protected static final int HAS_COPY = 0x1;
     protected static final int HAS_PASTE = 0x2;
     protected static final int HAS_CLEAR = 0x4;
+    protected static final int HAS_REFERENCE = 0x8;
 
     protected abstract int getMenuCaps();
 
@@ -22,6 +23,9 @@ public abstract class AbstractDFragment extends Fragment {
     }
 
     protected void onClear() {
+    }
+
+    protected void onOpenReference() {
     }
 
     protected void onPreferencesChanged() {

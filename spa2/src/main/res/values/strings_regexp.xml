@@ -7,8 +7,32 @@
     <string name="tRDVysledky">Search results:</string>
     <string name="tRDHledej">Go</string>
     <string name="tRDStop">Stop</string>
-    <string name="tRDObsahuje">Contains</string>
-    <string name="tRDNeobsahuje">Exclude</string>
+    <string name="tRDYes">Yes</string>
+    <string name="tRDNo">No</string>
+    <string name="tReference">Reference</string>
+    <string name="tReferenceNote">The selected dictionary is too large to display in full. Choose a smaller data source to use the reference.</string>
+
+    <string-array name="saRDKindLabels">
+        <item>Contains</item>
+        <item>Starts with</item>
+        <item>Ends with</item>
+        <item>Equals</item>
+        <item>Between words</item>
+        <item>Length</item>
+        <item>Symbol</item>
+        <item>Atomic number</item>
+        <item>Type</item>
+        <item>Pokémon no.</item>
+    </string-array>
+
+    <string-array name="saRDOpLabels">
+        <item>=</item>
+        <item>&lt;</item>
+        <item>&gt;</item>
+        <item>&lt;=</item>
+        <item>&gt;=</item>
+        <item>from–to</item>
+    </string-array>
 
 
 <string name="tHelpRegExp"><![CDATA[
@@ -28,6 +52,25 @@ The regular expressions should <i>not</i> be enclosed between a pair of slashes 
 some contexts). A toggle button next to each filter can be used to negate the action of the
 regular expression (i.e. to search for words not matching it). In order to remove a filter,
 clear it.</p> 
+
+
+<h3>Constraint kinds</h3>
+
+<p>Each filter row has a constraint-type menu: <i>contains</i> (a free regular expression),
+<i>starts with</i>, <i>ends with</i> or <i>equals</i> (the whole normalized form). Depending on the
+chosen dictionary, further kinds are offered: <i>between words</i> and <i>length</i> for the word
+dictionaries, <i>symbol</i> and <i>atomic number</i> for the periodic table, <i>type</i> and
+<i>Pokémon no.</i> for Pokémon. Numeric kinds (length, atomic number, Pokémon no.) add an operator
+menu (<tt>=</tt>, <tt>&lt;</tt>, <tt>&gt;</tt>, <tt>&lt;=</tt>, <tt>&gt;=</tt> or a range between
+two values). The second value field is used by <i>between words</i> and by the <i>from–to</i>
+operator: it means every word between the first and the second word, in alphabetical order.
+A filter with an empty value (or an impossible range) is ignored.</p>
+
+<p>The <i>Yes</i>/<i>No</i> toggle next to each filter inverts the criterion, i.e. it searches
+for words that do <b>not</b> satisfy it.</p>
+
+<p>A reference view of the currently selected dictionary can be opened from the toolbar
+(the <i>Reference</i> action).</p> 
 
 
 <h3>Regexp implementation</h3>

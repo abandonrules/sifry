@@ -8,4 +8,43 @@
         android:entryValues="@array/saREDictionaryFilenames"
         android:defaultValue="@string/pref_re_dictionary_default" />
 
+    <PreferenceCategory android:title="@string/prefSourcesCat">
+
+        <CheckBoxPreference
+            android:key="pref_source_cs"
+            android:title="@string/prefSourcesCs"
+            android:summary="@string/prefSourcesCsSummary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pref_source_en"
+            android:title="@string/prefSourcesEn"
+            android:summary="@string/prefSourcesEnSummary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pref_source_periodic"
+            android:title="@string/prefSourcesPeriodic"
+            android:summary="@string/prefSourcesPeriodicSummary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pref_source_pokemon"
+            android:title="@string/prefSourcesPokemon"
+            android:summary="@string/prefSourcesPokemonSummary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pref_source_wordle"
+            android:title="@string/prefSourcesWordle"
+            android:summary="@string/prefSourcesWordleSummary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="pref_sources_note"
+        android:title="@string/prefSourcesNote"
+        android:selectable="false" />
+
 </PreferenceScreen>

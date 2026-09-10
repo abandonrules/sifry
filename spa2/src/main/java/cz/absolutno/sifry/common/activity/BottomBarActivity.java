@@ -31,6 +31,7 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
     private static final int HAS_COPY = 0x1;
     private static final int HAS_PASTE = 0x2;
     private static final int HAS_CLEAR = 0x4;
+    private static final int HAS_REFERENCE = 0x8;
 
     private BottomBarView bbar;
 
@@ -83,19 +84,22 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
         inflater.inflate(R.menu.komponenty_menu, menu);
 
         AbstractDFragment currFragment = getCurrFragment();
-        boolean hasCopy, hasPaste, hasClear;
+        boolean hasCopy, hasPaste, hasClear, hasReference;
         if (currFragment != null) {
             int caps = currFragment.getMenuCaps();
             hasCopy = ((caps & HAS_COPY) != 0);
             hasPaste = ((caps & HAS_PASTE) != 0);
             hasClear = ((caps & HAS_CLEAR) != 0);
+            hasReference = ((caps & HAS_REFERENCE) != 0);
         } else {
             hasCopy = false;
             hasPaste = false;
             hasClear = false;
+            hasReference = false;
         }
 
         menu.findItem(R.id.mCtxSettings).setVisible(getPrefID() != 0);
+        menu.findItem(R.id.mCtxReference).setVisible(hasReference);
         menu.findItem(R.id.mCtxCopy).setVisible(hasCopy);
         menu.findItem(R.id.mCtxPaste).setVisible(hasPaste);
         menu.findItem(R.id.mCtxClear).setVisible(hasClear);
@@ -117,6 +121,11 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
             intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, "cz.absolutno.sifry.common.activity.SettingsFragment");
             intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, b);
             startActivity(intent);
+            return true;
+        } else if(id == R.id.mCtxReference) {
+            AbstractDFragment f = getCurrFragment();
+            if (f != null)
+                f.onOpenReference();
             return true;
         } else if(id == R.id.mCtxHelp) {
             intent = new Intent(this, HelpActivity.class);

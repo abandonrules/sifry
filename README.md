@@ -38,11 +38,21 @@ maintained as on-device captures attached to
 
 ## Dictionary data sources
 
-Dictionary Search searches exactly one dictionary at a time, chosen under
-Settings → Dictionary Search. Settings → Data sources has an on/off tickbox
-for every bundled dictionary; unticked sources are skipped even when still
-selected, and an unselected dictionary that becomes disabled falls back to
-the first ticked source.
+ Dictionary Search searches exactly one dictionary at a time, chosen under
+Settings → Dictionary Search, where every dictionary also has an on/off
+tickbox; unticked sources are skipped even when still selected, and an
+unselected dictionary that becomes disabled falls back to the first ticked
+source.
+
+Each of the three filter rows offers a constraint-kind menu (contains, starts
+with, ends with, equals — plus between words and length for the word
+dictionaries; symbol and atomic number for the periodic table; type and
+Pokémon no. for Pokémon). Numeric kinds add an operator menu (`=`, `<`, `>`,
+`<=`, `>=`, or a from–to range between two values); the second value field is
+also used by "between words". A Yes/No toggle inverts a criterion, and an
+empty (or impossible) filter is ignored. The toolbar Reference action opens a
+view of the currently selected source: the full periodic table for the
+periodic dictionary, ordered lists for Pokémon and Wordle.
 
 | Source | Asset | Origin / licence |
 |---|---|---|
