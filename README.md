@@ -39,8 +39,8 @@ maintained as on-device captures attached to
 ## Building
 
 Requirements:
-- JDK 17+ (build validated on JDK 17, 24 and 26)
-- Android SDK with: platform android-35, build-tools 36.1.0, CMake 3.22.1,
+- JDK 26 (primary; build also validated on JDK 17 and 24)
+- Android SDK with: platform android-36, build-tools 36.1.0, CMake 3.22.1,
   NDK 27.0.12077973
 
 Point Gradle at your SDK one of these ways:
@@ -83,10 +83,10 @@ run Tier 3 locally before closing the issue.
 ## CI
 
 `.github/workflows/build.yml` runs Tier 1+2 and `assembleDebug` on every
-push/PR (JDK 17, platform android-35, build-tools 36.1.0, CMake 3.22.1,
+push/PR (JDK 26, platform android-36, build-tools 36.1.0, CMake 3.22.1,
 NDK 27.0.12077973, Gradle 9.7.1 from the wrapper). Robolectric is pinned to
 4.17-beta-4 — an AGP/JDK-sensitive choice that must advance with the
-toolchain (unit tests were validated on JDK 17/26).
+toolchain (unit tests were validated on JDK 17 and 26).
 
 ## Versioning
 

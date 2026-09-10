@@ -5,7 +5,7 @@
 #   Tier 3 (instrumented, NDK/PCRE on-device) intentionally stays on the
 #   physical Pixel locally (serial 52141FDAS001QF) — see README "Testing".
 #
-# Toolchain tracked here: JDK 17 (temurin), platform android-35,
+# Toolchain tracked here: JDK 26 (temurin), platform android-36,
 # build-tools 36.1.0, CMake 3.22.1, NDK 27.0.12077973, Gradle 9.7.1
 # (wrapper). Robolectric 4.17-beta-4 is the AGP/JDK-sensitive pin that must
 # advance with the migration (see issue notes).
@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jdk: ['17']
+        jdk: ['26']
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
     steps:
@@ -67,7 +67,7 @@ jobs:
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           "$SDKMANAGER" \
-            "platforms;android-35" \
+            "platforms;android-36" \
             "build-tools;36.1.0" \
             "ndk;27.0.12077973" \
             "cmake;3.22.1"
