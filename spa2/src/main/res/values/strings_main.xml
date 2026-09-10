@@ -181,11 +181,13 @@ component directly.</p>
 
 
     <string name="tLicDict">English word list (from aspell-en v7.1)</string>
+    <string name="tLicSources">Additional dictionary data sources</string>
 
     <string-array name="saLicence" translatable="false">
         <item>%1$s v%2$s</item>
         <item>svg-android v1.1</item>
         <item>PCRE library v8.45</item>
+        <item>%s</item>
         <item>%s</item>
     </string-array>
 
@@ -194,6 +196,7 @@ component directly.</p>
         <item>@raw/lic_svg</item>
         <item>@raw/lic_pcre</item>
         <item>@raw/lic_dict</item>
+        <item>@raw/lic_sources</item>
     </array>
 	
 	

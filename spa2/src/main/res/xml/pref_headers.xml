@@ -97,6 +97,16 @@
 
     <header
         android:fragment="cz.absolutno.sifry.common.activity.SettingsFragment"
+        android:title="@string/prefSources"
+        android:summary="@string/prefSourcesCat"
+        tools:ignore="UnusedAttribute">
+        <extra
+            android:name="action"
+            android:value="cz.absolutno.sifry.R.xml.pref_sources" />
+    </header>
+
+    <header
+        android:fragment="cz.absolutno.sifry.common.activity.SettingsFragment"
         android:title="@string/prefClearTitle"
         tools:ignore="UnusedAttribute">
         <extra

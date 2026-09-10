@@ -258,5 +258,6 @@ nyní můžete komponentu používat přímo.</p>
 
 
     <string name="tLicDict">Databáze českých slov (z balíčku aspell-cs v0.60)</string>
+    <string name="tLicSources">Další zdroje slovníkových dat</string>
 
 </resources>

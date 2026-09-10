@@ -73,6 +73,8 @@ public final class LicenceActivity extends FragmentActivity {
                 }
             } else if (getGroupId(groupPosition) == R.raw.lic_dict)
                 return String.format(groups[groupPosition], App.getContext().getString(R.string.tLicDict));
+            else if (getGroupId(groupPosition) == R.raw.lic_sources)
+                return String.format(groups[groupPosition], App.getContext().getString(R.string.tLicSources));
             else
                 return groups[groupPosition];
         }

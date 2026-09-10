@@ -15,7 +15,9 @@
 <h1>Databáze slov</h1>
 
 <p>Tato komponenta umožňuje vyhledávání ve speciálním slovníku zhruba 4 milionů českých slov pomocí
-regulárních výrazů. Je určena pro uživatele se zkušenostmi v jejich používání. Pro informace
+regulárních výrazů. Hledaný slovník se volí v Nastavení, kde lze jednotlivé zdroje dat zapínat či
+vypínat (čeština, angličtina, periodická tabulka prvků, Pokémon, Wordle); najednou se prohledává
+jen jeden. Je určena pro uživatele se zkušenostmi v jejich používání. Pro informace
 o formátu a významu regulárních výrazů doporučuji libovolný internetový zdroj.</p>
 
 
@@ -94,12 +96,18 @@ Slova ze samých různých písmen:<br/>
         <item>Automaticky (český)</item>
         <item>Český</item>
         <item>Anglický</item>
+        <item>Periodická tabulka</item>
+        <item>Pokémon</item>
+        <item>Wordle</item>
     </string-array>
 
     <string-array name="saREDictionaryFilenames">
         <item/>
         <item>cs.canon</item>
         <item>en.canon</item>
+        <item>periodic.canon</item>
+        <item>pokemon.canon</item>
+        <item>wordle.canon</item>
     </string-array>
 
     <string name="pref_re_dictionary_default">cs.canon</string>

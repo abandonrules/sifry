@@ -21,7 +21,9 @@ expressions. Some prior knowledge of regular expression syntax is expected of th
 <h3>Basic usage</h3>
 
 <p>There can be up to three concurrent criteria set to filter the overall database counting ca.
-90 thousand English words. Words matching all of the expressions simultaneously will be sought.
+90 thousand English words. The searched dictionary is chosen in Settings, where several data
+sources can be switched on or off (English, Czech, periodic table of elements, Pokémon, Wordle);
+only one is searched at a time. Words matching all of the expressions simultaneously will be sought.
 The regular expressions should <i>not</i> be enclosed between a pair of slashes (as is usual in
 some contexts). A toggle button next to each filter can be used to negate the action of the
 regular expression (i.e. to search for words not matching it). In order to remove a filter,
@@ -93,12 +95,18 @@ Words with no repeating letters:<br/>
         <item>Automatic (English)</item>
         <item>English</item>
         <item>Czech</item>
+        <item>Periodic table</item>
+        <item>Pokémon</item>
+        <item>Wordle</item>
     </string-array>
 
     <string-array name="saREDictionaryFilenames">
         <item/>
         <item>en.canon</item>
         <item>cs.canon</item>
+        <item>periodic.canon</item>
+        <item>pokemon.canon</item>
+        <item>wordle.canon</item>
     </string-array>
 
     <string name="pref_re_dictionary_default">en.canon</string>

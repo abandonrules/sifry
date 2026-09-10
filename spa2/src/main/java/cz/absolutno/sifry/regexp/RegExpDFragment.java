@@ -88,12 +88,13 @@ public final class RegExpDFragment extends AbstractDFragment {
     };
 
     private String getFilename() {
-        String filename = "";
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String selected = "";
         if (sp != null)
-            filename = sp.getString("pref_re_dictionary", filename);
-        if (filename.length() == 0)
-            filename = getString(R.string.pref_re_dictionary_default);
+            selected = sp.getString("pref_re_dictionary", "");
+        String fallback = getString(R.string.pref_re_dictionary_default);
+        String filename = (sp != null) ? DataSources.resolve(sp, selected, fallback)
+                : (selected.isEmpty() ? fallback : selected);
         return "raw/" + filename;
     }
 

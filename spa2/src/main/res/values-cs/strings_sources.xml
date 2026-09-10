@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="prefSources">Zdroje dat</string>
+    <string name="prefSourcesCat">Prohledávané slovníky</string>
+    <string name="prefSourcesNote">Vyhledávání ve slovnících používá pouze zaškrtnuté zdroje. Nezaškrtnuté zdroje se přeskočí, i když jsou stále vybrané v části „Vyhledávání ve slovníku“.</string>
+    <string name="prefSourcesCs">Český</string>
+    <string name="prefSourcesCsSummary">Vestavěný český slovník (aspell-cs)</string>
+    <string name="prefSourcesEn">Anglický</string>
+    <string name="prefSourcesEnSummary">Vestavěný anglický slovník (aspell-en / SCOWL)</string>
+    <string name="prefSourcesPeriodic">Periodická tabulka prvků</string>
+    <string name="prefSourcesPeriodicSummary">118 prvků podle názvu a značky (GoodmanSciences)</string>
+    <string name="prefSourcesPokemon">Pokémon</string>
+    <string name="prefSourcesPokemonSummary">Pokédex – jména a typy (cristobalmitchell/pokedex)</string>
+    <string name="prefSourcesWordle">Wordle</string>
+    <string name="prefSourcesWordleSummary">Oficiální slova Wordle (steve-kasica/wordle-words)</string>
+
+</resources>

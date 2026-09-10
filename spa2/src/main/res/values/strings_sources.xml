@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="prefSources">Data sources</string>
+    <string name="prefSourcesCat">Dictionaries searched</string>
+    <string name="prefSourcesNote">Only the ticked sources take part in Dictionary Search. Unticked sources are skipped even when they are still selected under “Dictionary Search”.</string>
+    <string name="prefSourcesCs">Czech</string>
+    <string name="prefSourcesCsSummary">Bundled Czech word list (aspell-cs)</string>
+    <string name="prefSourcesEn">English</string>
+    <string name="prefSourcesEnSummary">Bundled English word list (aspell-en / SCOWL)</string>
+    <string name="prefSourcesPeriodic">Periodic table of elements</string>
+    <string name="prefSourcesPeriodicSummary">118 elements by name and symbol (GoodmanSciences)</string>
+    <string name="prefSourcesPokemon">Pokémon</string>
+    <string name="prefSourcesPokemonSummary">Pokédex names and types (cristobalmitchell/pokedex)</string>
+    <string name="prefSourcesWordle">Wordle</string>
+    <string name="prefSourcesWordleSummary">Valid Wordle answers and guesses (steve-kasica/wordle-words)</string>
+
+</resources>

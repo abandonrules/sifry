@@ -36,6 +36,27 @@ maintained as on-device captures attached to
 | <img src="https://github.com/user-attachments/assets/cd6c92a3-9c63-448c-8ac0-e7a97794a4f5" width="280"> | **17 · Checkpoint logbook** — the field list of captured checkpoints |
 | <img src="https://github.com/user-attachments/assets/8dc1fca0-251c-4cb1-81dd-a93f447a3f3d" width="280"> | **18 · Dictionary search** — PCRE/regular-expression filter over the bundled dictionary ("sifr" → words) |
 
+## Dictionary data sources
+
+Dictionary Search searches exactly one dictionary at a time, chosen under
+Settings → Dictionary Search. Settings → Data sources has an on/off tickbox
+for every bundled dictionary; unticked sources are skipped even when still
+selected, and an unselected dictionary that becomes disabled falls back to
+the first ticked source.
+
+| Source | Asset | Origin / licence |
+|---|---|---|
+| Czech | `cs.canon` | aspell-cs v0.60 word list |
+| English | `en.canon` | aspell-en v7.1 / SCOWL 7.0 |
+| Periodic table | `periodic.canon` | GoodmanSciences gist, 118 elements by name and symbol, e.g. `^actinium:` or `^he:` |
+| Pokémon | `pokemon.canon` | cristobalmitchell/pokedex (MIT): names/types, e.g. `^pikachu:`, `^mrmime:`, `^flabebe:` |
+| Wordle | `wordle.canon` | steve-kasica/wordle-words: valid answers/guesses, e.g. `^crane:` |
+
+Attribution and licence texts live in app → About → Licence, and in
+`spa2/src/main/res/raw/lic_sources.txt`. The sources are reprocessed into
+canon form (lowercase `[a-z]` key, `:Display`) and gzipped; the build
+unpacks the `.gz` assets (see `tools/canon/gen_canon.py`).
+
 ## Building
 
 Requirements:
