@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = 'cz.absolutno.sifry'
-        minSdk = 21
+        minSdk = 26
         targetSdk = 36
         testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
         externalNativeBuild {
