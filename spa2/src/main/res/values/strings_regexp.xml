@@ -7,6 +7,9 @@
     <string name="tRDVysledky">Search results:</string>
     <string name="tRDHledej">Go</string>
     <string name="tRDStop">Stop</string>
+    <string name="tRDAdd">+</string>
+    <string name="tRDShowAll">Show all</string>
+    <string name="tRDRemove">−</string>
     <string name="tRDYes">Yes</string>
     <string name="tRDNo">No</string>
     <string name="tReference">Reference</string>
@@ -44,14 +47,15 @@ expressions. Some prior knowledge of regular expression syntax is expected of th
 
 <h3>Basic usage</h3>
 
-<p>There can be up to three concurrent criteria set to filter the overall database counting ca.
-90 thousand English words. The searched dictionary is chosen in Settings, where several data
-sources can be switched on or off (English, Czech, periodic table of elements, Pokémon, Wordle);
-only one is searched at a time. Words matching all of the expressions simultaneously will be sought.
-The regular expressions should <i>not</i> be enclosed between a pair of slashes (as is usual in
-some contexts). A toggle button next to each filter can be used to negate the action of the
-regular expression (i.e. to search for words not matching it). In order to remove a filter,
-clear it.</p> 
+<p>Any number of concurrent criteria can be set to filter the database. The <i>+</i> button adds a
+filter row, the <i>−</i> button deletes one (the last row cannot be deleted). The searched data
+sources are chosen in Settings, where several dictionaries can be switched on or off (English,
+Czech, periodic table of elements, Pokémon, Wordle); all toggled-on sources are searched at once
+and the filter menus offer the union of their constraint kinds. Words matching all of the
+expressions simultaneously will be sought. The regular expressions should <i>not</i> be enclosed
+between a pair of slashes (as is usual in some contexts). A toggle button next to each filter can
+be used to negate the action of the regular expression (i.e. to search for words not matching it).
+A filter with an empty value (or an impossible range) is ignored.</p> 
 
 
 <h3>Constraint kinds</h3>
@@ -80,7 +84,9 @@ syntax. The options <tt>PCRE_UTF8</tt> and <tt>PCRE_UCP</tt> are activated to al
 Unicode national characters and alter the behaviour of the <tt>[[:lower:]]</tt>, <tt>[[:upper:]]</tt>
 etc. characters classes accordingly.</p>
 
-<p>If the number of results is too large, only the first 10000 matches will be shown in the list.</p>
+<p>If the number of results is too large, only the first 10000 matches will be shown in the list.
+The <i>Go</i> button shows the first 201 matches; the <i>Show all</i> button repeats the same search
+and lists up to 10000 full records (each prefixed with its normalized form).</p>
 
 
 <h3>Format of the dictionary</h3>

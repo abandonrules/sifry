@@ -23,7 +23,8 @@ class Context {
 
     std::vector<std::string> matches{};
     unsigned maxListResults;
-    unsigned matchCount{0};  // the full count: the vector will only store first maxSavedMatches
+    unsigned matchCount{0};  // the full count: the vector will only store first maxListResults
+    bool full{false};        // true: store the whole line (key + display), false: display only
     std::string error{};
     float progress{0};
 
@@ -43,7 +44,7 @@ public:
         stop();
     }
 
-    void start(AssetRef&& asset, std::vector<std::string>&& patterns);
+    void start(std::vector<AssetRef>&& assets, std::vector<std::string>&& patterns, bool full, unsigned maxListResults);
     void stop();
     void free();
     void fail(const std::string& err);
@@ -58,18 +59,20 @@ public:
     std::string getMatch(std::size_t index);
 
 private:
-    static void threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string>&& patterns);
+    static void threadMain(Context* ctx, std::vector<AssetRef>&& assets, std::vector<std::string>&& patterns);
 };
 
 
-void Context::start(AssetRef&& asset, std::vector<std::string>&& patterns) {
+void Context::start(std::vector<AssetRef>&& assets, std::vector<std::string>&& patterns, bool full, unsigned max) {
     free();
+    this->full = full;
+    maxListResults = max;
     try {
         {
             std::lock_guard<std::mutex> lock{progressMutex};
             running = true;
         }
-        worker = std::thread{threadMain, this, std::move(asset), std::move(patterns)};
+        worker = std::thread{threadMain, this, std::move(assets), std::move(patterns)};
     }
     catch(const std::system_error&) {
         std::lock_guard<std::mutex> lock{progressMutex};
@@ -159,22 +162,32 @@ Java_cz_absolutno_sifry_regexp_RegExpNative_nativeFinalize(JNIEnv *env, jobject 
     delete ctx;
 }
 
-JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_startThread(JNIEnv *env, jobject obj, jobject jmgr, jstring jfn, jobjectArray joa) {
+JNIEXPORT void JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_startThread(JNIEnv *env, jobject obj, jobject jmgr, jobjectArray jfns, jobjectArray joa, jboolean jfull, jint jmax) {
     Context* ctx = getContext(env, obj);
     ctx->stop();
-    jsize n = env->GetArrayLength(joa);
-    std::vector<std::string> patterns{};
-    for(jsize i = 0; i < n; i++) {
-        jstring js = static_cast<jstring>(env->GetObjectArrayElement(joa, i));
-        if(js == nullptr) {
-            patterns.emplace_back();
-            continue;
-        }
-        patterns.push_back(strFromJava(env, js));
-        env->DeleteLocalRef(js);
-    }
     try {
-        ctx->start(AssetRef{env, jmgr, strFromJava(env, jfn)}, std::move(patterns));
+        jsize n = env->GetArrayLength(joa);
+        std::vector<std::string> patterns{};
+        for(jsize i = 0; i < n; i++) {
+            jstring js = static_cast<jstring>(env->GetObjectArrayElement(joa, i));
+            if(js == nullptr) {
+                patterns.emplace_back();
+                continue;
+            }
+            patterns.push_back(strFromJava(env, js));
+            env->DeleteLocalRef(js);
+        }
+        std::vector<AssetRef> assets{};
+        jsize nf = env->GetArrayLength(jfns);
+        for(jsize i = 0; i < nf; i++) {
+            jstring js = static_cast<jstring>(env->GetObjectArrayElement(jfns, i));
+            if(js == nullptr)
+                continue;
+            std::string fn = strFromJava(env, js);
+            env->DeleteLocalRef(js);
+            assets.emplace_back(env, jmgr, fn);
+        }
+        ctx->start(std::move(assets), std::move(patterns), jfull == JNI_TRUE, (unsigned)jmax);
     } catch(std::runtime_error& e) {
         ctx->fail(e.what());
     }
@@ -218,10 +231,8 @@ JNIEXPORT jstring JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_getError(J
 }
 
 
-void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string>&& patterns) {
+void Context::threadMain(Context* ctx, std::vector<AssetRef>&& assets, std::vector<std::string>&& patterns) {
     constexpr unsigned bufAlloc = 1024;
-    char buffer[bufAlloc];
-    unsigned bufPos = 0, bufSize = 0;
 
     try {
         std::vector<PCRE> REs;
@@ -238,6 +249,10 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
             REs.push_back({pat, !inv});
         }
 
+        std::size_t totalSize = 0;
+        for (auto& asset : assets)
+            totalSize += size_t(AAsset_getLength(asset));
+
         {
             std::lock_guard<std::mutex> lock{ctx->progressMutex};
             ctx->matches.clear();
@@ -245,55 +260,68 @@ void Context::threadMain(Context* ctx, AssetRef&& asset, std::vector<std::string
             ctx->running = true;
         }
 
-        while (!ctx->stopFlag) {
-            /* Read one line */
-            std::string line{};
-            for (;;) {
-                unsigned x;
-                for (x = bufPos; x < bufSize; x++)
-                    if (buffer[x] == '\n')
+        std::size_t cumPos = 0;
+        for (auto& asset : assets) {
+            char buffer[bufAlloc];
+            unsigned bufPos = 0, bufSize = 0;
+            std::size_t fileSize = size_t(AAsset_getLength(asset));
+
+            while (!ctx->stopFlag) {
+                /* Read one line */
+                std::string line{};
+                for (;;) {
+                    unsigned x;
+                    for (x = bufPos; x < bufSize; x++)
+                        if (buffer[x] == '\n')
+                            break;
+                    if (x < bufSize) {
+                        line += std::string{buffer + bufPos, x - bufPos};
+                        bufPos = x + 1;
                         break;
-                if (x < bufSize) {
-                    line += std::string{buffer + bufPos, x - bufPos};
-                    bufPos = x + 1;
-                    break;
+                    }
+                    /* else: buffer ended before finding \n */
+                    line += std::string{buffer + bufPos, bufSize - bufPos};
+                    int r = AAsset_read(asset, buffer, bufAlloc);
+                    if (r > 0) /* more data */ {
+                        bufPos = 0;
+                        bufSize = unsigned(r);
+                    } else if (r == 0) /* EOF*/ {
+                        break;
+                    } else /* error */ {
+                        throw std::runtime_error("Can't read asset");
+                    }
                 }
-                /* else: buffer ended before finding \n */
-                line += std::string{buffer + bufPos, bufSize - bufPos};
-                int r = AAsset_read(asset, buffer, bufAlloc);
-                if (r > 0) /* more data */ {
-                    bufPos = 0;
-                    bufSize = unsigned(r);
-                } else if (r == 0) /* EOF*/ {
+
+                if (line.empty() && AAsset_getRemainingLength(asset) == 0) // EOF
                     break;
-                } else /* error */ {
-                    throw std::runtime_error("Can't read asset");
-                }
-            }
+                if (line.empty()) // empty line
+                    continue;
 
-            if (line.empty() && AAsset_getRemainingLength(asset) == 0) // EOF
-                break;
-            if (line.empty()) // empty line
-                continue;
-
-            if(std::all_of(REs.begin(), REs.end(), [&line](PCRE& regex) -> bool {
-                return regex.test(line);
-            })) {
-                auto pos = line.find(':');
-                if(pos != std::string::npos) {
+                if(std::all_of(REs.begin(), REs.end(), [&line](PCRE& regex) -> bool {
+                    return regex.test(line);
+                })) {
                     std::lock_guard<std::mutex> lock{ctx->progressMutex};
-                    if(++ctx->matchCount <= ctx->maxListResults)
-                        ctx->matches.push_back(line.substr(pos + 1));
+                    if(++ctx->matchCount <= ctx->maxListResults) {
+                        if(ctx->full) {
+                            ctx->matches.push_back(line);
+                        } else {
+                            auto pos = line.find(':');
+                            if(pos != std::string::npos)
+                                ctx->matches.push_back(line.substr(pos + 1));
+                        }
+                    }
+                }
+
+                std::size_t filePos = fileSize - size_t(AAsset_getRemainingLength(asset));
+                float progress = totalSize == 0 ? 1.0f : float(cumPos + filePos) / float(totalSize);
+                {
+                    std::lock_guard<std::mutex> lock{ctx->progressMutex};
+                    ctx->progress = progress;
                 }
             }
-
-            std::size_t assetSize = size_t(AAsset_getLength(asset));
-            std::size_t assetPos = assetSize - AAsset_getRemainingLength(asset);
-            float progress = assetSize == 0 ? 1.0f : static_cast<float>(assetPos) / static_cast<float>(assetSize);
-            {
-                std::lock_guard<std::mutex> lock{ctx->progressMutex};
-                ctx->progress = progress;
-            }
+            cumPos += fileSize;
+            if (ctx->stopFlag)
+                break;
         }
     } catch (const std::runtime_error& e) {
         std::lock_guard<std::mutex> lock{ctx->progressMutex};

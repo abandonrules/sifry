@@ -2,6 +2,9 @@ package cz.absolutno.sifry.regexp;
 
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Registry of the searchable dictionary (canon) data sources bundled with the
  * app. Each source has a bundled asset {@code raw/<file>} and a matching
@@ -37,6 +40,15 @@ public final class DataSources {
             if (isEnabled(sp, file))
                 return file;
         return null;
+    }
+
+    /** Every source the user enabled, in the fixed order above. Empty when none. */
+    public static List<String> enabledFilenames(SharedPreferences sp) {
+        List<String> out = new ArrayList<String>();
+        for (String file : FILE_NAMES)
+            if (isEnabled(sp, file))
+                out.add(file);
+        return out;
     }
 
     /**

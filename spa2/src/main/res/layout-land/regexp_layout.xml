@@ -31,25 +31,11 @@
                 tools:ignore="NestedWeights">
 
                 <LinearLayout
+                    android:id="@+id/llRDFilters"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="NestedWeights">
-
-                    <Spinner
-                        android:id="@+id/spRDFiltr1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0" />
-
-                    <ToggleButton
-                        android:id="@+id/cbRDFiltr1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:textOff="@string/tRDNo"
-                        android:textOn="@string/tRDYes" />
-                </LinearLayout>
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,148 +43,27 @@
                     android:orientation="horizontal"
                     tools:ignore="NestedWeights">
 
-                    <Spinner
-                        android:id="@+id/opRDFiltr1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <EditText
-                        android:id="@+id/etRDFiltr1"
+                    <Button
+                        android:id="@+id/btRDAdd"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace">
+                        android:text="@string/tRDAdd" />
 
-                        <requestFocus />
-
-                    </EditText>
-
-                    <EditText
-                        android:id="@+id/et2RDFiltr1"
+                    <Button
+                        android:id="@+id/btRDShowAll"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace"
-                        android:visibility="gone" />
+                        android:layout_weight="2.0"
+                        android:text="@string/tRDShowAll" />
+
+                    <Button
+                        android:id="@+id/btRDGo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.0"
+                        android:text="@string/tRDHledej" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="NestedWeights">
-
-                    <Spinner
-                        android:id="@+id/spRDFiltr2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0" />
-
-                    <ToggleButton
-                        android:id="@+id/cbRDFiltr2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:textOff="@string/tRDNo"
-                        android:textOn="@string/tRDYes" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="NestedWeights">
-
-                    <Spinner
-                        android:id="@+id/opRDFiltr2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <EditText
-                        android:id="@+id/etRDFiltr2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace" />
-
-                    <EditText
-                        android:id="@+id/et2RDFiltr2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="NestedWeights">
-
-                    <Spinner
-                        android:id="@+id/spRDFiltr3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0" />
-
-                    <ToggleButton
-                        android:id="@+id/cbRDFiltr3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:textOff="@string/tRDNo"
-                        android:textOn="@string/tRDYes" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="NestedWeights">
-
-                    <Spinner
-                        android:id="@+id/opRDFiltr3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <EditText
-                        android:id="@+id/etRDFiltr3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace" />
-
-                    <EditText
-                        android:id="@+id/et2RDFiltr3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textNoSuggestions"
-                        android:typeface="monospace"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btRDGo"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/tRDHledej" />
 
             </LinearLayout>
 

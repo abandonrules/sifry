@@ -40,10 +40,25 @@ public class FilterRuleAssetsTest {
     private static long count(String filename, String pattern) throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/" + filename, new String[]{pattern});
+            rn.startThread(assets(), new String[]{"raw/" + filename}, new String[]{pattern},
+                    false, RegExpNative.MaxListResults);
             RegExpNative.Report rep = waitFor(rn, 60000);
             assertFalse("search timed out for " + filename, rep.running);
             assertFalse("error on " + filename + ": " + rn.getError(), rep.error);
+            return rep.matches;
+        } finally {
+            rn.free();
+        }
+    }
+
+    private static long countMulti(String fns[], String pattern) throws Exception {
+        RegExpNative rn = new RegExpNative();
+        try {
+            rn.startThread(assets(), fns, new String[]{pattern}, false,
+                    RegExpNative.MaxListResults);
+            RegExpNative.Report rep = waitFor(rn, 60000);
+            assertFalse("search timed out", rep.running);
+            assertFalse("error: " + rn.getError(), rep.error);
             return rep.matches;
         } finally {
             rn.free();
@@ -56,7 +71,8 @@ public class FilterRuleAssetsTest {
                 n >= 1);
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/" + filename, new String[]{pattern});
+            rn.startThread(assets(), new String[]{"raw/" + filename}, new String[]{pattern},
+                    false, RegExpNative.MaxListResults);
             RegExpNative.Report rep = waitFor(rn, 60000);
             assertFalse("search timed out for " + filename, rep.running);
             assertFalse("error on " + filename + ": " + rn.getError(), rep.error);
@@ -119,5 +135,57 @@ public class FilterRuleAssetsTest {
     public void englishStartsWith() throws Exception {
         assertEquals("hello", first("en.canon", FilterRule.pattern(FilterRule.Kind.STARTS,
                 FilterRule.Op.EQ, "hello", "")));
+    }
+
+    @Test
+    public void multiSourceSearchesAllFiles() throws Exception {
+        assertEquals("periodic(236)+pokemon(1025)",
+                1261, countMulti(new String[]{"raw/periodic.canon", "raw/pokemon.canon"}, ""));
+    }
+
+    @Test
+    public void multiSourcePatternOnlyHitsItsSource() throws Exception {
+        String dex = FilterRule.pattern(FilterRule.Kind.DEX_NUMBER, FilterRule.Op.EQ, "25", "");
+        assertEquals("Dex filter must not match periodic table entries", 0,
+                count("periodic.canon", dex));
+        assertEquals(1, countMulti(new String[]{"raw/periodic.canon", "raw/pokemon.canon"}, dex));
+    }
+
+    @Test
+    public void multiSourceMatchListCappedAtMax() throws Exception {
+        RegExpNative rn = new RegExpNative();
+        try {
+            rn.startThread(assets(), new String[]{"raw/periodic.canon", "raw/pokemon.canon"},
+                    new String[]{""}, false, RegExpNative.MaxListResults);
+            RegExpNative.Report rep = waitFor(rn, 60000);
+            assertFalse("error: " + rn.getError(), rep.error);
+            assertEquals(1261, rep.matches);
+            assertTrue("list should hold exactly MaxListResults",
+                    rep.matches >= RegExpNative.MaxListResults);
+            assertFalse("cap check result must not be a real match",
+                    "".equals(rn.getResult(0)));
+            assertEquals("", rn.getResult(RegExpNative.MaxListResults));
+        } finally {
+            rn.free();
+        }
+    }
+
+    @Test
+    public void verboseModeIncludesCanonicalKey() throws Exception {
+        RegExpNative rn = new RegExpNative();
+        try {
+            rn.startThread(assets(), new String[]{"raw/periodic.canon"},
+                    new String[]{"^he:"}, true, RegExpNative.ShowAllResults);
+            RegExpNative.Report rep = waitFor(rn, 60000);
+            assertFalse("error: " + rn.getError(), rep.error);
+            assertEquals(1, rep.matches);
+            String line = rn.getResult(0);
+            assertTrue("verbose line should carry the key before ':', got '" + line + "'",
+                    line.contains("he:"));
+            assertTrue("verbose line should carry the display after ':', got '" + line + "'",
+                    line.endsWith("Helium (He, 2)"));
+        } finally {
+            rn.free();
+        }
     }
 }

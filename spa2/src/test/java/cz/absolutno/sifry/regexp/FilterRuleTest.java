@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -178,6 +179,32 @@ public class FilterRuleTest {
         assertTrue(pok.contains(FilterRule.Kind.TYPE));
         assertTrue(pok.contains(FilterRule.Kind.DEX_NUMBER));
         assertFalse(pok.contains(FilterRule.Kind.RANGE));
+    }
+
+    @Test
+    public void kindsForAllUnionsTheSearchedSources() {
+        List<FilterRule.Kind> both = FilterRule.kindsForAll(
+                Arrays.asList("periodic.canon", "pokemon.canon"));
+        assertTrue(both.contains(FilterRule.Kind.SYMBOL));
+        assertTrue(both.contains(FilterRule.Kind.ATOMIC_NUMBER));
+        assertTrue(both.contains(FilterRule.Kind.TYPE));
+        assertTrue(both.contains(FilterRule.Kind.DEX_NUMBER));
+        assertFalse(both.contains(FilterRule.Kind.RANGE));
+        assertFalse(both.contains(FilterRule.Kind.LENGTH));
+
+        List<FilterRule.Kind> all = FilterRule.kindsForAll(
+                Arrays.asList("en.canon", "periodic.canon", "pokemon.canon"));
+        assertTrue(all.contains(FilterRule.Kind.RANGE));
+        assertTrue(all.contains(FilterRule.Kind.LENGTH));
+        assertTrue(all.contains(FilterRule.Kind.SYMBOL));
+        assertTrue(all.contains(FilterRule.Kind.TYPE));
+
+        List<FilterRule.Kind> none = FilterRule.kindsForAll(new ArrayList<String>());
+        assertFalse(none.contains(FilterRule.Kind.SYMBOL));
+        assertFalse(none.contains(FilterRule.Kind.RANGE));
+
+        assertTrue(FilterRule.kindsForAll(Arrays.asList("en.canon"))
+                .equals(FilterRule.kindsFor("en.canon")));
     }
 
     @Test

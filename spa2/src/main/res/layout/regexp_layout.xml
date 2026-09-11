@@ -11,186 +11,37 @@
         android:text="@string/tRDFiltry" />
 
     <LinearLayout
+        android:id="@+id/llRDFilters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spRDFiltr1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" />
-
-            <ToggleButton
-                android:id="@+id/cbRDFiltr1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:textOn="@string/tRDYes"
-                android:textOff="@string/tRDNo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/opRDFiltr1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/etRDFiltr1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace">
-
-                <requestFocus />
-
-            </EditText>
-
-            <EditText
-                android:id="@+id/et2RDFiltr1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btRDAdd"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1.0"
+            android:text="@string/tRDAdd" />
 
-            <Spinner
-                android:id="@+id/spRDFiltr2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" />
-
-            <ToggleButton
-                android:id="@+id/cbRDFiltr2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:textOn="@string/tRDYes"
-                android:textOff="@string/tRDNo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btRDShowAll"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="2.0"
+            android:text="@string/tRDShowAll" />
 
-            <Spinner
-                android:id="@+id/opRDFiltr2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/etRDFiltr2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace" />
-
-            <EditText
-                android:id="@+id/et2RDFiltr2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace"
-                android:visibility="gone" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btRDGo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.0"
+            android:text="@string/tRDHledej" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spRDFiltr3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" />
-
-            <ToggleButton
-                android:id="@+id/cbRDFiltr3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:textOn="@string/tRDYes"
-                android:textOff="@string/tRDNo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/opRDFiltr3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/etRDFiltr3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace" />
-
-            <EditText
-                android:id="@+id/et2RDFiltr3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textNoSuggestions"
-                android:typeface="monospace"
-                android:visibility="gone" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btRDGo"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/tRDHledej" />
 
     <TextView
         android:layout_width="match_parent"

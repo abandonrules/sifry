@@ -32,11 +32,15 @@ public class RegExpNativeTest {
         return ApplicationProvider.getApplicationContext().getAssets();
     }
 
+    private static void search(RegExpNative rn, String fns[], String re[]) {
+        rn.startThread(assets(), fns, re, false, RegExpNative.MaxListResults);
+    }
+
     @Test
     public void matchesWord() throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/en.canon", new String[]{"^aardvark:"});
+            search(rn, new String[]{"raw/en.canon"}, new String[]{"^aardvark:"});
             RegExpNative.Report rep = waitFor(rn, 30000);
             assertFalse("regexp search timed out", rep.running);
             assertFalse("error: " + rn.getError(), rep.error);
@@ -51,14 +55,14 @@ public class RegExpNativeTest {
     public void switchDictionaryReplacesResults() throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/en.canon", new String[]{"^aardvark:"});
+            search(rn, new String[]{"raw/en.canon"}, new String[]{"^aardvark:"});
             RegExpNative.Report rep = waitFor(rn, 30000);
             assertFalse("regexp search timed out", rep.running);
             assertFalse("error: " + rn.getError(), rep.error);
             assertEquals("en results: (matches=" + rep.matches + ")", 1, rep.matches);
             assertEquals("aardvark", rn.getResult(0));
 
-            rn.startThread(assets(), "raw/cs.canon", new String[]{"^sifry:"});
+            search(rn, new String[]{"raw/cs.canon"}, new String[]{"^sifry:"});
             rep = waitFor(rn, 60000);
             assertFalse("regexp search timed out", rep.running);
             assertFalse("cs error: " + rn.getError(), rep.error);
@@ -73,7 +77,7 @@ public class RegExpNativeTest {
     public void noMatches() throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/en.canon", new String[]{"^zzzzqqq:"});
+            search(rn, new String[]{"raw/en.canon"}, new String[]{"^zzzzqqq:"});
             RegExpNative.Report rep = waitFor(rn, 30000);
             assertFalse("error: " + rn.getError(), rep.error);
             assertEquals(0, rep.matches);
@@ -86,7 +90,7 @@ public class RegExpNativeTest {
     public void missingAssetFails() throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/no-such.gz", new String[]{"^x:"});
+            search(rn, new String[]{"raw/no-such.gz"}, new String[]{"^x:"});
             RegExpNative.Report rep = rn.getProgress();
             assertTrue(rep.error);
             assertFalse(rep.running);

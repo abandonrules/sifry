@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cz.absolutno.sifry.R;
@@ -39,6 +41,8 @@ public final class RegExpDFragment extends AbstractDFragment {
     private TextView tvProgress;
     private ProgressBar pbProgress;
     private RegExpExpListAdapter adapter;
+    private int currentMaxResults = RegExpNative.MaxListResults;
+    private final List<View> filterRows = new ArrayList<View>();
 
     @Override
     protected int getMenuCaps() {
@@ -52,8 +56,13 @@ public final class RegExpDFragment extends AbstractDFragment {
         pbProgress = v.findViewById(R.id.pbRDProgress);
         ((ExpandableListView) v.findViewById(R.id.elRDResults)).setOnChildClickListener(Utils.copyChildClickListener);
         v.findViewById(R.id.btRDGo).setOnClickListener(goListener);
-        for (int i = 0; i < 3; i++)
-            initRow(i);
+        v.findViewById(R.id.btRDAdd).setOnClickListener(addListener);
+        v.findViewById(R.id.btRDShowAll).setOnClickListener(showAllListener);
+        filterRows.clear();
+        for (int i = 0; i < 3; i++) {
+            filterRows.add(buildRow(v));
+            bindRow(filterRows.get(filterRows.size() - 1));
+        }
         return v;
     }
 
@@ -62,13 +71,13 @@ public final class RegExpDFragment extends AbstractDFragment {
         super.onDestroyView();
         tvProgress = null;
         pbProgress = null;
+        filterRows.clear();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        for (int i = 0; i < 3; i++)
-            initRow(i);
+        rebuildRows();
         re = ((ReferenceFragment) getFragmentManager().findFragmentByTag("ref")).getRE();
         adapter = new RegExpExpListAdapter(re);
         ((ExpandableListView) getView().findViewById(R.id.elRDResults)).setAdapter(adapter);
@@ -76,7 +85,7 @@ public final class RegExpDFragment extends AbstractDFragment {
             launchRefresh();
         final Report report = re.getProgress();
         if (report.matches > 0) {
-            int matches = Math.min(report.matches, RegExpNative.MaxListResults);
+            int matches = Math.min(report.matches, currentMaxResults);
             tvProgress.setText(String.valueOf(report.matches));
             adapter.update(matches);
         }
@@ -84,8 +93,7 @@ public final class RegExpDFragment extends AbstractDFragment {
 
     @Override
     protected void onPreferencesChanged() {
-        for (int i = 0; i < 3; i++)
-            initRow(i);
+        rebuildRows();
     }
 
     @Override
@@ -97,11 +105,35 @@ public final class RegExpDFragment extends AbstractDFragment {
         startActivity(i);
     }
 
-    private void initRow(final int i) {
+    private void rebuildRows() {
         if (getView() == null)
             return;
-        final Spinner sp = (Spinner) getView().findViewById(idSP[i]);
-        final Spinner op = (Spinner) getView().findViewById(idOP[i]);
+        if (filterRows.isEmpty()) {
+            for (int i = 0; i < 3; i++) {
+                filterRows.add(buildRow(getView()));
+                bindRow(filterRows.get(filterRows.size() - 1));
+            }
+        } else {
+            for (View row : filterRows)
+                bindRow(row);
+        }
+    }
+
+    private View buildRow(View root) {
+        return getActivity().getLayoutInflater()
+                .inflate(R.layout.filter_row, root.findViewById(R.id.llRDFilters), false);
+    }
+
+    private void removeRow(final View row) {
+        if (filterRows.size() <= 1)
+            return;
+        filterRows.remove(row);
+        ((ViewGroup) getView().findViewById(R.id.llRDFilters)).removeView(row);
+    }
+
+    private void bindRow(final View row) {
+        final Spinner sp = (Spinner) row.findViewById(R.id.spRDFiltr);
+        final Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
         spinnerGuard = true;
         ArrayAdapter<Kind> ka = kindAdapter(kinds());
         sp.setAdapter(ka);
@@ -112,11 +144,11 @@ public final class RegExpDFragment extends AbstractDFragment {
         sp.setSelection(0);
         op.setSelection(0);
         spinnerGuard = false;
-        updateRow(i);
+        updateRow(row);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (!spinnerGuard)
-                    updateRow(i);
+                    updateRow(row);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -125,10 +157,15 @@ public final class RegExpDFragment extends AbstractDFragment {
         op.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (!spinnerGuard)
-                    updateRow(i);
+                    updateRow(row);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        row.findViewById(R.id.btRDRemove).setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                removeRow(row);
             }
         });
     }
@@ -161,18 +198,17 @@ public final class RegExpDFragment extends AbstractDFragment {
     }
 
     private List<Kind> kinds() {
-        return FilterRule.kindsFor(sourceFilename());
+        return FilterRule.kindsForAll(enabledFilenames());
     }
 
     @SuppressWarnings("ConstantConditions")
-    private Kind kindAt(int i) {
-        Spinner sp = (Spinner) getView().findViewById(idSP[i]);
+    private Kind kindAt(View row) {
+        Spinner sp = (Spinner) row.findViewById(R.id.spRDFiltr);
         return (Kind) sp.getAdapter().getItem(sp.getSelectedItemPosition());
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private Op opAt(int i) {
-        Spinner op = (Spinner) getView().findViewById(idOP[i]);
+    private Op opAt(View row) {
+        Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
         return Op.values()[op.getSelectedItemPosition()];
     }
 
@@ -181,41 +217,75 @@ public final class RegExpDFragment extends AbstractDFragment {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void updateRow(int i) {
-        Spinner op = (Spinner) getView().findViewById(idOP[i]);
-        Kind kind = kindAt(i);
+    private void updateRow(View row) {
+        Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
+        Kind kind = kindAt(row);
         boolean numeric = FilterRule.isNumeric(kind);
         op.setVisibility(numeric ? View.VISIBLE : View.GONE);
-        Op o = opAt(i);
+        Op o = opAt(row);
         boolean two = FilterRule.needsSecondValue(kind, o);
-        getView().findViewById(idET2[i]).setVisibility(two ? View.VISIBLE : View.GONE);
+        row.findViewById(R.id.et2RDFiltr).setVisibility(two ? View.VISIBLE : View.GONE);
     }
 
     private final OnClickListener goListener = new OnClickListener() {
-        @SuppressWarnings("ConstantConditions")
         public void onClick(View v) {
-            if (re.isRunning()) {
-                re.stopThread();
-                updateGoButton();
-                return;
-            }
-            String zad[] = new String[3];
-            for (int i = 0; i < 3; i++) {
-                Kind kind = kindAt(i);
-                Op o = opAt(i);
-                String v1 = ((EditText) getView().findViewById(idET[i])).getText().toString();
-                String v2 = ((EditText) getView().findViewById(idET2[i])).getText().toString();
-                String pat = FilterRule.pattern(kind, o, v1, v2);
-                if (pat == null)
-                    zad[i] = "";
-                else
-                    zad[i] = (((ToggleButton) getView().findViewById(idCB[i])).isChecked() ? "" : "!") + pat;
-            }
-            adapter.clear();
-            re.startThread(getContext().getAssets(), getFilename(), zad);
-            launchRefresh();
+            runSearch(false);
         }
     };
+
+    private final OnClickListener showAllListener = new OnClickListener() {
+        public void onClick(View v) {
+            runSearch(true);
+        }
+    };
+
+    private final OnClickListener addListener = new OnClickListener() {
+        public void onClick(View v) {
+if (getView() == null)
+            return;
+            filterRows.add(buildRow(getView()));
+            ((ViewGroup) getView().findViewById(R.id.llRDFilters)).addView(filterRows.get(filterRows.size() - 1));
+            bindRow(filterRows.get(filterRows.size() - 1));
+        }
+    };
+
+    private void runSearch(final boolean showAll) {
+        if (re.isRunning()) {
+            re.stopThread();
+            updateGoButton();
+            return;
+        }
+        String zad[] = new String[filterRows.size()];
+        for (int i = 0; i < filterRows.size(); i++) {
+            View row = filterRows.get(i);
+            Kind kind = kindAt(row);
+            Op o = opAt(row);
+            String v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
+            String v2 = ((EditText) row.findViewById(R.id.et2RDFiltr)).getText().toString();
+            String pat = FilterRule.pattern(kind, o, v1, v2);
+            if (pat == null)
+                zad[i] = "";
+            else
+                zad[i] = (((ToggleButton) row.findViewById(R.id.cbRDFiltr)).isChecked() ? "" : "!") + pat;
+        }
+        adapter.clear();
+        List<String> fns = enabledFilenames();
+        String rawFns[] = new String[fns.size()];
+        for (int i = 0; i < fns.size(); i++)
+            rawFns[i] = "raw/" + fns.get(i);
+        currentMaxResults = showAll ? RegExpNative.ShowAllResults : RegExpNative.MaxListResults;
+        re.startThread(getContext().getAssets(), rawFns, zad, showAll, currentMaxResults);
+        adapter.setVerbose(showAll);
+        launchRefresh();
+    }
+
+    private List<String> enabledFilenames() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        List<String> fns = (sp == null) ? new ArrayList<String>() : DataSources.enabledFilenames(sp);
+        if (fns.isEmpty())
+            return Collections.singletonList(sourceFilename());
+        return fns;
+    }
 
     private String sourceFilename() {
         return getFilename().replaceFirst("^raw/", "");
@@ -253,7 +323,7 @@ public final class RegExpDFragment extends AbstractDFragment {
                     updateGoButton();
                     return;
                 }
-                int matches = Math.min(report.matches, RegExpNative.MaxListResults);
+                int matches = Math.min(report.matches, currentMaxResults);
                 if (report.running || matches > 0 || tvProgress.length() > 0)
                     tvProgress.setText(String.valueOf(report.matches));
                 if (report.running)
@@ -286,18 +356,12 @@ public final class RegExpDFragment extends AbstractDFragment {
     protected void onClear() {
         re.free();
         adapter.clear();
-        for (int i = 0; i < 3; i++) {
-            ((EditText) getView().findViewById(idET[i])).setText("");
-            ((EditText) getView().findViewById(idET2[i])).setText("");
-            ((ToggleButton) getView().findViewById(idCB[i])).setChecked(true);
+        for (View row : filterRows) {
+            ((EditText) row.findViewById(R.id.etRDFiltr)).setText("");
+            ((EditText) row.findViewById(R.id.et2RDFiltr)).setText("");
+            ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).setChecked(true);
         }
         tvProgress.setText("");
         updateGoButton();
     }
-
-    private final int[] idET = {R.id.etRDFiltr1, R.id.etRDFiltr2, R.id.etRDFiltr3};
-    private final int[] idET2 = {R.id.et2RDFiltr1, R.id.et2RDFiltr2, R.id.et2RDFiltr3};
-    private final int[] idSP = {R.id.spRDFiltr1, R.id.spRDFiltr2, R.id.spRDFiltr3};
-    private final int[] idOP = {R.id.opRDFiltr1, R.id.opRDFiltr2, R.id.opRDFiltr3};
-    private final int[] idCB = {R.id.cbRDFiltr1, R.id.cbRDFiltr2, R.id.cbRDFiltr3};
 }

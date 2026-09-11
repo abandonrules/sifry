@@ -38,7 +38,8 @@ public class DictionaryAssetsTest {
     private static String first(String filename, String pattern) throws Exception {
         RegExpNative rn = new RegExpNative();
         try {
-            rn.startThread(assets(), "raw/" + filename, new String[]{pattern});
+            rn.startThread(assets(), new String[]{"raw/" + filename}, new String[]{pattern},
+                    false, RegExpNative.MaxListResults);
             RegExpNative.Report rep = waitFor(rn, 60000);
             assertFalse("search timed out for " + filename, rep.running);
             assertFalse("error on " + filename + ": " + rn.getError(), rep.error);

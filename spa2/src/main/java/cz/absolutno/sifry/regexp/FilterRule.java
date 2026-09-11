@@ -36,6 +36,38 @@ public final class FilterRule {
         return kinds;
     }
 
+    /**
+     * Union of the constraint kinds offered by all searched sources, in the
+     * canonical label order: the four text kinds always, then word-dictionary
+     * kinds, then periodic-table and Pokemon-specific kinds.
+     */
+    public static List<Kind> kindsForAll(List<String> filenames) {
+        List<Kind> kinds = new ArrayList<Kind>();
+        Collections.addAll(kinds, Kind.CONTAINS, Kind.STARTS, Kind.ENDS, Kind.EQUALS);
+        boolean word = false, periodic = false, pokemon = false;
+        for (String f : filenames) {
+            if ("periodic.canon".equals(f))
+                periodic = true;
+            else if ("pokemon.canon".equals(f))
+                pokemon = true;
+            else
+                word = true;
+        }
+        if (word) {
+            kinds.add(Kind.RANGE);
+            kinds.add(Kind.LENGTH);
+        }
+        if (periodic) {
+            kinds.add(Kind.SYMBOL);
+            kinds.add(Kind.ATOMIC_NUMBER);
+        }
+        if (pokemon) {
+            kinds.add(Kind.TYPE);
+            kinds.add(Kind.DEX_NUMBER);
+        }
+        return kinds;
+    }
+
     public static boolean isNumeric(Kind kind) {
         return kind == Kind.LENGTH || kind == Kind.ATOMIC_NUMBER || kind == Kind.DEX_NUMBER;
     }

@@ -11,6 +11,7 @@ import cz.absolutno.sifry.R;
 final class RegExpExpListAdapter extends BaseExpandableListAdapter {
 
     private int matches = 0;
+    private boolean verbose = false;
     private final RegExpNative re;
 
     RegExpExpListAdapter(RegExpNative re) {
@@ -27,6 +28,11 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+        notifyDataSetChanged();
+    }
+
     public int getGroupCount() {
         return (matches + 99) / 100;
     }
@@ -34,7 +40,7 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
     public String getGroup(int groupPosition) {
         int ub = groupPosition * 100 + 99;
         if (ub >= matches) ub = matches - 1;
-        return String.format("%s – %s", re.getResult(groupPosition * 100), re.getResult(ub));
+        return String.format("%s – %s", displayOf(re.getResult(groupPosition * 100)), displayOf(re.getResult(ub)));
     }
 
     public long getGroupId(int groupPosition) {
@@ -54,7 +60,11 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
     }
 
     public String getChild(int groupPosition, int childPosition) {
-        return re.getResult(groupPosition * 100 + childPosition);
+        String result = re.getResult(groupPosition * 100 + childPosition);
+        if (!verbose)
+            return result;
+        int p = result.indexOf(':');
+        return p < 0 ? result : result.substring(0, p) + " — " + result.substring(p + 1);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
@@ -66,6 +76,11 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
             convertView = App.getInflater().inflate(R.layout.simple_list_item, parent, false);
         ((TextView) convertView).setText(getChild(groupPosition, childPosition));
         return convertView;
+    }
+
+    private String displayOf(String result) {
+        int p = result.indexOf(':');
+        return p < 0 ? result : result.substring(p + 1);
     }
 
 

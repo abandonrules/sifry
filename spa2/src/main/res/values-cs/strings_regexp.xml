@@ -7,6 +7,9 @@
     <string name="tRDVysledky">Výsledky hledání:</string>
     <string name="tRDHledej">Hledat</string>
     <string name="tRDStop">Stop</string>
+    <string name="tRDAdd">+</string>
+    <string name="tRDShowAll">Zobrazit vše</string>
+    <string name="tRDRemove">−</string>
     <string name="tRDYes">Ano</string>
     <string name="tRDNo">Ne</string>
     <string name="tReference">Tabulka</string>
@@ -39,18 +42,21 @@
 <h1>Databáze slov</h1>
 
 <p>Tato komponenta umožňuje vyhledávání ve speciálním slovníku zhruba 4 milionů českých slov pomocí
-regulárních výrazů. Hledaný slovník se volí v Nastavení, kde lze jednotlivé zdroje dat zapínat či
-vypínat (čeština, angličtina, periodická tabulka prvků, Pokémon, Wordle); najednou se prohledává
-jen jeden. Je určena pro uživatele se zkušenostmi v jejich používání. Pro informace
-o formátu a významu regulárních výrazů doporučuji libovolný internetový zdroj.</p>
+regulárních výrazů. Hledané zdroje dat se volí v Nastavení, kde lze jednotlivé slovníky zapínat či
+vypínat (čeština, angličtina, periodická tabulka prvků, Pokémon, Wordle); najednou se prohledávají
+všechny zapnuté a nabídky filtrů nabízejí sjednocení jejich typů omezení. Je určena pro uživatele se
+zkušenostmi v jejich používání. Pro informace o formátu a významu regulárních výrazů doporučuji
+libovolný internetový zdroj.</p>
 
 
 <h3>Základní ovládání</h3>
 
-<p>Aplikace umožňuje v seznamu vyhledávat pomocí až tří filtrů. Každý filtr má tvar regulárního výrazu,
-v nejjednodušší situaci tedy podřetězce, který se má hledat. Regulární výrazy neuzavírejte mezi
-lomítka. Tlačítkem vedle každého z filtrů je možno zvolit, jestli vyhledávaná slova daný výraz
-obsahovat mají nebo nemají. Jestliže chcete filtr deaktivovat, jeho pole vyprázdněte.</p>
+<p>Aplikace umožňuje v seznamu vyhledávat podle libovolného počtu filtrů. Tlačítko <i>+</i> přidá
+řádek filtru, tlačítko <i>−</i> ho smaže (poslední řádek smazat nelze). Každý filtr má tvar
+regulárního výrazu, v nejjednodušší situaci tedy podřetězce, který se má hledat. Regulární výrazy
+neuzavírejte mezi lomítka. Tlačítkem vedle každého z filtrů je možno zvolit, jestli vyhledávaná slova
+daný výraz obsahovat mají nebo nemají. Filtr s prázdnou hodnotou (nebo nemožným rozsahem) se
+ignoruje.</p>
 
 <h3>Typy omezení</h3>
 
@@ -70,7 +76,9 @@ mu <b>ne</b>vyhovují.</p>
 <p>Referenční pohled na aktuálně zvolený slovník lze otevřít z panelu nástrojů
 (akce <i>Tabulka</i>).</p>
 
-<p>V případě příliš velkého počtu nalezených slov se vypíše pouze prvních 10000 shod.</p>
+<p>V případě příliš velkého počtu nalezených slov se vypíše pouze prvních 10000 shod. Tlačítko
+<i>Hledat</i> zobrazí prvních 201 shod; tlačítko <i>Zobrazit vše</i> zopakuje stejné hledání a vypíše
+až 10000 úplných záznamů (každý s normalizovaným tvarem před dvojtečkou).</p>
 
 
 <h3>Implementace regulárních výrazů</h3>

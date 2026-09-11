@@ -9,6 +9,7 @@ public final class RegExpNative {
     }
 
     public static final int MaxListResults = 201;
+    public static final int ShowAllResults = 10000;
 
     private long nativeContext;
 
@@ -18,7 +19,7 @@ public final class RegExpNative {
 
     private native void nativeFinalize();
 
-    public native void startThread(AssetManager mgr, String fn, String re[]);
+    public native void startThread(AssetManager mgr, String fns[], String re[], boolean full, int maxResults);
 
     public native void stopThread();
 
