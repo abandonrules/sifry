@@ -79,6 +79,10 @@ public final class BottomBarView extends View {
         return entries;
     }
 
+    public int getCurrent() {
+        return index;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {

@@ -154,6 +154,42 @@ public final class KalendarDFragment extends AbstractDFragment {
         kalMain.clear();
     }
 
+    private static final String KAL_YEAR = "y", KAL_MONTH = "m", KAL_DAYOFYEAR = "dy";
+
+    @Override
+    public boolean saveData(Bundle data) {
+        if (getView() == null)
+            return false;
+        int y, m, dy;
+        try {
+            y = Integer.valueOf(etYear.getText().toString());
+            m = Integer.valueOf(etMonth.getText().toString()) - 1;
+            dy = Integer.valueOf(etDay.getText().toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        Calendar today = Calendar.getInstance();
+        if (y == today.get(Calendar.YEAR) && m == today.get(Calendar.MONTH) && dy == today.get(Calendar.DAY_OF_YEAR))
+            return false;
+        data.putInt(KAL_YEAR, y);
+        data.putInt(KAL_MONTH, m);
+        data.putInt(KAL_DAYOFYEAR, dy);
+        return true;
+    }
+
+    @Override
+    public void loadData(Bundle data) {
+        if (getView() == null)
+            return;
+        if (data.containsKey(KAL_YEAR))
+            kalMain.set(Calendar.YEAR, data.getInt(KAL_YEAR));
+        if (data.containsKey(KAL_MONTH))
+            kalMain.set(Calendar.MONTH, data.getInt(KAL_MONTH));
+        if (data.containsKey(KAL_DAYOFYEAR))
+            kalMain.set(Calendar.DAY_OF_YEAR, data.getInt(KAL_DAYOFYEAR));
+        kalMain.requestListener();
+    }
+
     private final KalendarView.OnChangeListener kalendarListener = new KalendarView.OnChangeListener() {
         @SuppressLint("SetTextI18n")
         public void onChange(int year, int month, int day, int dayYear, int daysSince) {

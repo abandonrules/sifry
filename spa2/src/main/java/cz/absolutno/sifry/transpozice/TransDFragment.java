@@ -146,6 +146,37 @@ public final class TransDFragment extends AbstractDFragment {
     }
 
     @Override
+    public boolean saveData(Bundle data) {
+        if (text.getText().length() == 0 && reseni.length() == 0)
+            return false;
+        data.putString(App.VSTUP, text.getText().toString());
+        data.putInt(App.VAR, selItem);
+        data.putString(App.RESENI, reseni);
+        return true;
+    }
+
+    @Override
+    public void loadData(Bundle data) {
+        if (getView() == null)
+            return;
+        if (data.containsKey(App.VSTUP))
+            text.setText(data.getString(App.VSTUP));
+        if (data.containsKey(App.VAR)) {
+            int sel = data.getInt(App.VAR);
+            for (int i = 0; i < tvarIDs.length; i++) {
+                if (tvarIDs[i] == sel) {
+                    ((Spinner) getView().findViewById(R.id.spTTvar)).setSelection(i);
+                    break;
+                }
+            }
+        }
+        if (data.containsKey(App.RESENI)) {
+            reseni = data.getString(App.RESENI);
+            tvRes.setText(reseni);
+        }
+    }
+
+    @Override
     protected String onCopy() {
         return text.getText().toString();
     }

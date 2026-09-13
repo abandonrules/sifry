@@ -23,10 +23,12 @@ public final class SemaforActivity extends BottomBarActivity {
         getBBar().setEntries(new String[]{getString(R.string.tRef), getString(R.string.tEncode), getString(R.string.tDecode), getString(R.string.tVar)}, DECODE);
 
         if (state == null) {
-            AbstractDFragment frag = new SemaforDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, frag, "D");
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment frag = new SemaforDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, frag, "D");
+                trans.commit();
+            }
         }
     }
 

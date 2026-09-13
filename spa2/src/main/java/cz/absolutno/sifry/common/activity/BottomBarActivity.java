@@ -14,7 +14,9 @@ import android.preference.PreferenceActivity;
 import androidx.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentManager.OnBackStackChangedListener;
+import androidx.fragment.app.FragmentTransaction;
 import android.text.ClipboardManager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +40,103 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
     protected abstract int getPrefID();
 
     protected abstract int getHelpID();
+
+    protected String getStateKey() {
+        return getClass().getName();
+    }
+
+    /**
+     * Restores a previously saved workbench session (tab + input/progress) when the
+     * activity is being created with no saved instance state. Must be called from the
+     * subclass {@code onCreate} after the bottom bar entries have been set up; it
+     * returns {@code true} when a session was restored, in which case the subclass
+     * should skip creating its default screen.
+     */
+    protected final boolean restoreWorkbench() {
+        WorkbenchStateStore.WorkbenchState wbs = WorkbenchStateStore.read(getStateKey());
+        if (wbs == null)
+            return false;
+
+        FragmentManager fm = getSupportFragmentManager();
+        boolean created = false;
+        AbstractDFragment base = null;
+        if (wbs.baseClass != null) {
+            base = instantiate(wbs.baseClass);
+            if (base != null) {
+                fm.beginTransaction().replace(R.id.content, base, "D").commit();
+                fm.executePendingTransactions();
+                if (wbs.baseData != null && wbs.baseData.size() > 0 && !(base instanceof AbstractCFragment))
+                    deliverData(base, wbs.baseData);
+                created = true;
+            }
+        }
+
+        boolean pushed = false;
+        if (wbs.hasActiveData && wbs.activeClass != null && !wbs.activeClass.equals(wbs.baseClass)) {
+            AbstractDFragment active = instantiate(wbs.activeClass);
+            if (active != null) {
+                FragmentTransaction trans = fm.beginTransaction();
+                if (wbs.activeData.size() > 0 && active instanceof AbstractCFragment)
+                    active.setArguments(wbs.activeData);
+                trans.replace(R.id.content, active, wbs.activeTag != null ? wbs.activeTag : "D");
+                trans.addToBackStack(null);
+                trans.commit();
+                fm.executePendingTransactions();
+                if (wbs.activeData.size() > 0 && !(active instanceof AbstractCFragment))
+                    deliverData(active, wbs.activeData);
+                pushed = true;
+                created = true;
+            }
+        }
+
+        if (!created)
+            return false;
+
+        if (pushed) {
+            String[] entries = bbar.getEntries();
+            if (entries != null) {
+                int ix = wbs.barIx;
+                if (ix < 0 || ix >= entries.length)
+                    ix = 0;
+                bbar.setEntries(entries, ix);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Applies a fragment's saved state, waiting for the fragment's view to be
+     * created if necessary. A newly instanced fragment's view may not exist yet
+     * right after {@link FragmentManager#executePendingTransactions()} (its
+     * {@code onCreateView} can run a frame later), and the D-fragments' own
+     * {@code loadData} guards skip restoration while the view is still null.
+     */
+    private void deliverData(final AbstractDFragment f, final Bundle data) {
+        if (f.getView() != null) {
+            f.loadData(data);
+            return;
+        }
+        f.getViewLifecycleOwnerLiveData().observeForever(new androidx.lifecycle.Observer<androidx.lifecycle.LifecycleOwner>() {
+            @Override
+            public void onChanged(androidx.lifecycle.LifecycleOwner lifecycleOwner) {
+                f.getViewLifecycleOwnerLiveData().removeObserver(this);
+                if (f.getView() != null)
+                    f.loadData(data);
+            }
+        });
+    }
+
+    private AbstractDFragment instantiate(String cls) {
+        try {
+            Class<?> c = Class.forName(cls, false, App.getContext().getClassLoader());
+            Object o = c.getDeclaredConstructor().newInstance();
+            if (o instanceof AbstractDFragment)
+                return (AbstractDFragment) o;
+        } catch (Exception e) {
+            /* stale state from an older / different build, fall back to the default screen */
+        }
+        return null;
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -174,6 +273,34 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
     protected void onPause() {
         super.onPause();
         getSupportFragmentManager().removeOnBackStackChangedListener(this);
+        saveWorkbenchState();
+    }
+
+    protected void saveWorkbenchState() {
+        if (bbar == null)
+            return;
+        FragmentManager fm = getSupportFragmentManager();
+        AbstractDFragment active = getCurrFragment();
+        if (active == null || active.getView() == null)
+            return;
+        WorkbenchStateStore.WorkbenchState wbs = new WorkbenchStateStore.WorkbenchState();
+        wbs.activeClass = active.getClass().getName();
+        wbs.activeTag = active.getTag();
+        wbs.hasActiveData = active.saveData(wbs.activeData);
+        AbstractDFragment base = (AbstractDFragment) fm.findFragmentByTag("D");
+        if (base != null) {
+            wbs.baseClass = base.getClass().getName();
+            if (base != active) {
+                Bundle bd = new Bundle();
+                if (base.saveData(bd))
+                    wbs.baseData = bd;
+            } else {
+                wbs.baseData = wbs.activeData;
+                wbs.hasActiveData = true;
+            }
+        }
+        wbs.barIx = bbar.getCurrent();
+        WorkbenchStateStore.write(getStateKey(), wbs);
     }
 
     protected void onPreferencesChanged() {

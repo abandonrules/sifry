@@ -135,6 +135,7 @@ public final class BrailleDFragment extends AbstractDFragment {
         if (raw.size() == 0)
             return false;
         data.putString(App.VSTUP, reseni.getText().toString());
+        data.putIntegerArrayList(App.DATA, raw);
         return true;
     }
 

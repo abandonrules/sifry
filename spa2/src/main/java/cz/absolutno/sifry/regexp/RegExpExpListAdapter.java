@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 
@@ -13,6 +15,7 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
     private int matches = 0;
     private boolean verbose = false;
     private final RegExpNative re;
+    private ArrayList<String> snap = null;
 
     RegExpExpListAdapter(RegExpNative re) {
         this.re = re;
@@ -25,12 +28,34 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
 
     public void clear() {
         matches = 0;
+        snap = null;
         notifyDataSetChanged();
     }
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
         notifyDataSetChanged();
+    }
+
+    public int getMatchCount() {
+        return matches;
+    }
+
+    public void setSnapshot(ArrayList<String> snapshot) {
+        snap = snapshot;
+        matches = (snapshot == null) ? 0 : snapshot.size();
+        notifyDataSetChanged();
+    }
+
+    public void snapshotTo(ArrayList<String> out) {
+        if (matches == 0)
+            return;
+        for (int i = 0; i < matches; i++)
+            out.add(raw(i));
+    }
+
+    private String raw(int ix) {
+        return (snap != null) ? snap.get(ix) : re.getResult(ix);
     }
 
     public int getGroupCount() {
@@ -40,7 +65,7 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
     public String getGroup(int groupPosition) {
         int ub = groupPosition * 100 + 99;
         if (ub >= matches) ub = matches - 1;
-        return String.format("%s – %s", displayOf(re.getResult(groupPosition * 100)), displayOf(re.getResult(ub)));
+        return String.format("%s – %s", displayOf(raw(groupPosition * 100)), displayOf(raw(ub)));
     }
 
     public long getGroupId(int groupPosition) {
@@ -60,11 +85,16 @@ final class RegExpExpListAdapter extends BaseExpandableListAdapter {
     }
 
     public String getChild(int groupPosition, int childPosition) {
-        String result = re.getResult(groupPosition * 100 + childPosition);
+        int ix = groupPosition * 100 + childPosition;
+        if (snap != null)
+            return snap.get(ix);
+        String result = re.getResult(ix);
         if (!verbose)
             return result;
+        String source = re.getResultSource(ix).replaceFirst("^raw/", "").replaceFirst("\\.canon$", "");
         int p = result.indexOf(':');
-        return p < 0 ? result : result.substring(0, p) + " — " + result.substring(p + 1);
+        String extra = p < 0 ? result : result.substring(0, p) + " — " + result.substring(p + 1);
+        return source.isEmpty() ? extra : extra + " (" + source + ")";
     }
 
     public long getChildId(int groupPosition, int childPosition) {

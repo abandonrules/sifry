@@ -17,8 +17,13 @@ public final class RegExpActivity extends BottomBarActivity {
 
             FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
             trans.add(new ReferenceFragment(), "ref");
-            trans.replace(R.id.content, new RegExpDFragment(), "D");
             trans.commit();
+
+            if (!restoreWorkbench()) {
+                FragmentTransaction trans2 = getSupportFragmentManager().beginTransaction();
+                trans2.replace(R.id.content, new RegExpDFragment(), "D");
+                trans2.commit();
+            }
         }
     }
 
