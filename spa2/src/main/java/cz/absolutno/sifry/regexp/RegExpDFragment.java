@@ -27,6 +27,8 @@ import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
+import cz.absolutno.sifry.common.dictionary.DictionaryQueryCompiler;
+import cz.absolutno.sifry.common.dictionary.WordPatternQuery;
 import cz.absolutno.sifry.regexp.FilterRule.Kind;
 import cz.absolutno.sifry.regexp.FilterRule.Op;
 import cz.absolutno.sifry.regexp.RegExpNative.Report;
@@ -366,8 +368,8 @@ if (getView() == null)
             Op o = opAt(row);
             String v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
             String v2 = ((EditText) row.findViewById(R.id.et2RDFiltr)).getText().toString();
-            String pat = FilterRule.pattern(kind, o, v1, v2);
-            if (pat == null)
+            String pat = buildPattern(kind, o, v1, v2);
+            if (pat == null || pat.length() == 0)
                 zad[i] = "";
             else
                 zad[i] = (((ToggleButton) row.findViewById(R.id.cbRDFiltr)).isChecked() ? "" : "!") + pat;
@@ -381,6 +383,23 @@ if (getView() == null)
         re.startThread(getContext().getAssets(), rawFns, zad, showAll, currentMaxResults);
         adapter.setVerbose(showAll);
         launchRefresh();
+    }
+
+    private String buildPattern(Kind kind, Op o, String v1, String v2) {
+        if (kind == Kind.EQUALS || kind == Kind.STARTS || kind == Kind.ENDS) {
+            String a = v1 == null ? "" : v1.trim().toLowerCase();
+            if (a.isEmpty())
+                return "";
+            if (kind == Kind.EQUALS)
+                return DictionaryQueryCompiler.exactKeyPattern(a);
+            WordPatternQuery.Builder q = WordPatternQuery.builder();
+            if (kind == Kind.STARTS)
+                q.prefix(a);
+            else
+                q.suffix(a);
+            return DictionaryQueryCompiler.compile(q.build());
+        }
+        return FilterRule.pattern(kind, o, v1, v2);
     }
 
     private List<String> enabledFilenames() {
