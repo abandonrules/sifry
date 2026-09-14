@@ -60,8 +60,10 @@ public final class RegExpDFragment extends AbstractDFragment {
         v.findViewById(R.id.btRDShowAll).setOnClickListener(showAllListener);
         filterRows.clear();
         for (int i = 0; i < 3; i++) {
-            filterRows.add(buildRow(v));
-            bindRow(filterRows.get(filterRows.size() - 1));
+            View row = buildRow(v);
+            filterRows.add(row);
+            ((ViewGroup) v.findViewById(R.id.llRDFilters)).addView(row);
+            bindRow(row);
         }
         return v;
     }
@@ -110,8 +112,10 @@ public final class RegExpDFragment extends AbstractDFragment {
             return;
         if (filterRows.isEmpty()) {
             for (int i = 0; i < 3; i++) {
-                filterRows.add(buildRow(getView()));
-                bindRow(filterRows.get(filterRows.size() - 1));
+                View row = buildRow(getView());
+                filterRows.add(row);
+                ((ViewGroup) getView().findViewById(R.id.llRDFilters)).addView(row);
+                bindRow(row);
             }
         } else {
             for (View row : filterRows)
@@ -216,6 +220,10 @@ public final class RegExpDFragment extends AbstractDFragment {
         return getResources().getStringArray(R.array.saRDOpLabels);
     }
 
+    private static final int TEXT_INPUT = android.text.InputType.TYPE_CLASS_TEXT
+            | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+    private static final int NUMERIC_INPUT = android.text.InputType.TYPE_CLASS_NUMBER;
+
     @SuppressWarnings("ConstantConditions")
     private void updateRow(View row) {
         Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
@@ -224,7 +232,11 @@ public final class RegExpDFragment extends AbstractDFragment {
         op.setVisibility(numeric ? View.VISIBLE : View.GONE);
         Op o = opAt(row);
         boolean two = FilterRule.needsSecondValue(kind, o);
-        row.findViewById(R.id.et2RDFiltr).setVisibility(two ? View.VISIBLE : View.GONE);
+        EditText value = (EditText) row.findViewById(R.id.etRDFiltr);
+        EditText value2 = (EditText) row.findViewById(R.id.et2RDFiltr);
+        value2.setVisibility(two ? View.VISIBLE : View.GONE);
+        value.setInputType(numeric ? NUMERIC_INPUT : TEXT_INPUT);
+        value2.setInputType(numeric ? NUMERIC_INPUT : TEXT_INPUT);
     }
 
     private final OnClickListener goListener = new OnClickListener() {
