@@ -66,7 +66,7 @@ public class RegExpNativeTest {
             rep = waitFor(rn, 60000);
             assertFalse("regexp search timed out", rep.running);
             assertFalse("cs error: " + rn.getError(), rep.error);
-            assertTrue("cs switch lost matches (matches=" + rep.matches + ")", rep.matches >= 2);
+            assertEquals("cs dedup: only the first 'sifry:' line is kept (matches=" + rep.matches + ")", 1, rep.matches);
             assertEquals("šifry", rn.getResult(0));
         } finally {
             rn.free();

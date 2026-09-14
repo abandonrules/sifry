@@ -9,6 +9,7 @@
 #include <mutex>
 #include <atomic>
 #include <algorithm>
+#include <set>
 
 #include <jni.h>
 
@@ -22,6 +23,7 @@ class Context {
     bool running{false};
 
     std::vector<std::string> matches{};
+    std::vector<std::string> matchSources{};
     unsigned maxListResults;
     unsigned matchCount{0};  // the full count: the vector will only store first maxListResults
     bool full{false};        // true: store the whole line (key + display), false: display only
@@ -58,6 +60,8 @@ public:
 
     std::string getMatch(std::size_t index);
 
+    std::string getMatchSource(std::size_t index);
+
 private:
     static void threadMain(Context* ctx, std::vector<AssetRef>&& assets, std::vector<std::string>&& patterns);
 };
@@ -93,6 +97,7 @@ void Context::free() {
     stop();
     std::lock_guard<std::mutex> lock{progressMutex};
     matches.clear();
+    matchSources.clear();
     matchCount = 0;
     progress = 0;
     running = false;
@@ -113,6 +118,11 @@ Context::Report Context::report() {
 std::string Context::getMatch(std::size_t index) {
     std::lock_guard<std::mutex> lock{progressMutex};
     return index < matches.size() ? matches[index] : "";
+}
+
+std::string Context::getMatchSource(std::size_t index) {
+    std::lock_guard<std::mutex> lock{progressMutex};
+    return index < matchSources.size() ? matchSources[index] : "";
 }
 
 
@@ -223,6 +233,11 @@ JNIEXPORT jstring JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_getResult(
     return env->NewStringUTF(ctx->getMatch(std::size_t(index)).c_str());
 }
 
+JNIEXPORT jstring JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_getResultSource(JNIEnv *env, jobject obj, jint index) {
+    Context* ctx = getContext(env, obj);
+    return env->NewStringUTF(ctx->getMatchSource(std::size_t(index)).c_str());
+}
+
 JNIEXPORT jstring JNICALL Java_cz_absolutno_sifry_regexp_RegExpNative_getError(JNIEnv *env, jobject obj) {
     Context* ctx = getContext(env, obj);
     return env->NewStringUTF(ctx->getError().c_str());
@@ -256,12 +271,14 @@ void Context::threadMain(Context* ctx, std::vector<AssetRef>&& assets, std::vect
         {
             std::lock_guard<std::mutex> lock{ctx->progressMutex};
             ctx->matches.clear();
+            ctx->matchSources.clear();
             ctx->matchCount = 0;
             ctx->running = true;
         }
 
         std::size_t cumPos = 0;
         for (auto& asset : assets) {
+            std::set<std::string> seenKeys;
             char buffer[bufAlloc];
             unsigned bufPos = 0, bufSize = 0;
             std::size_t fileSize = size_t(AAsset_getLength(asset));
@@ -300,8 +317,13 @@ void Context::threadMain(Context* ctx, std::vector<AssetRef>&& assets, std::vect
                 if(std::all_of(REs.begin(), REs.end(), [&line](PCRE& regex) -> bool {
                     return regex.test(line);
                 })) {
+                    auto keyPos = line.find(':');
+                    std::string key = keyPos == std::string::npos ? line : line.substr(0, keyPos);
+                    if(!seenKeys.insert(key).second)  // one entry per key per source
+                        continue;
                     std::lock_guard<std::mutex> lock{ctx->progressMutex};
                     if(++ctx->matchCount <= ctx->maxListResults) {
+                        ctx->matchSources.push_back(asset.file);
                         if(ctx->full) {
                             ctx->matches.push_back(line);
                         } else {

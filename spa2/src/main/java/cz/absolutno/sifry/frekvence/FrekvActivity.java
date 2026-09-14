@@ -21,10 +21,12 @@ public final class FrekvActivity extends BottomBarActivity {
         super.onCreate(state);
         if (state == null) {
             getBBar().setEntries(new String[]{getString(R.string.tRef), getString(R.string.tFDAnalyza), getString(R.string.tFDESubs), getString(R.string.tRef)}, ANALYZA);
-            AbstractDFragment frag = new FrekvDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, frag, "D");
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment frag = new FrekvDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, frag, "D");
+                trans.commit();
+            }
         }
     }
 

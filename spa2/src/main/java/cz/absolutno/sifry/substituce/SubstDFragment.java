@@ -34,6 +34,7 @@ public final class SubstDFragment extends AbstractDFragment {
     private Alphabet abc;
     private String patKoef;
     private int[] savedTr = null;
+    private Bundle restored = null;
 
     @Override
     protected int getMenuCaps() {
@@ -258,6 +259,58 @@ public final class SubstDFragment extends AbstractDFragment {
         super.onResume();
         if (abc == null)
             loadAbc();
+        updateLayout();
+        applyRestored();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public boolean saveData(Bundle data) {
+        String sifra = ((EditText) getView().findViewById(R.id.etSDSifra)).getText().toString();
+        if (sifra.length() == 0)
+            return false;
+        int selGroup = groupIDs[((Spinner) getView().findViewById(R.id.spSDTyp)).getSelectedItemPosition()];
+        data.putInt(App.SPEC, selGroup);
+        data.putString(App.VSTUP, sifra);
+        data.putString(App.VSTUP1, ((EditText) getView().findViewById(R.id.etSDHeslo)).getText().toString());
+        data.putString(App.VSTUP2, ((EditText) getView().findViewById(R.id.etSDKlic)).getText().toString());
+        if (adapter instanceof TranslateAdapter)
+            data.putIntArray(App.DATA, ((TranslateAdapter) adapter).getTr());
+        return true;
+    }
+
+    @Override
+    public void loadData(Bundle data) {
+        restored = data;
+        if (getView() != null && abc != null)
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    applyRestored();
+                }
+            });
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void applyRestored() {
+        if (restored == null)
+            return;
+        final Bundle d = restored;
+        restored = null;
+        ((EditText) getView().findViewById(R.id.etSDSifra)).setText(d.getString(App.VSTUP));
+        ((EditText) getView().findViewById(R.id.etSDHeslo)).setText(d.getString(App.VSTUP1));
+        ((EditText) getView().findViewById(R.id.etSDKlic)).setText(d.getString(App.VSTUP2));
+        int[] tr = d.getIntArray(App.DATA);
+        if (tr != null)
+            savedTr = tr;
+        Spinner spTyp = getView().findViewById(R.id.spSDTyp);
+        int selGroup = d.getInt(App.SPEC, groupIDs[0]);
+        for (int i = 0; i < groupIDs.length; i++) {
+            if (groupIDs[i] == selGroup) {
+                spTyp.setSelection(i);
+                break;
+            }
+        }
         updateLayout();
     }
 

@@ -66,6 +66,12 @@ public final class FrekvDFragment extends AbstractDFragment {
         return true;
     }
 
+    @Override
+    public void loadData(Bundle data) {
+        vstup.setText(data.getString(App.VSTUP));
+        zpracuj();
+    }
+
     @SuppressLint("InlinedApi")
     private final OnClickListener autoListener = new OnClickListener() {
         public void onClick(View v) {

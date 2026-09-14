@@ -31,6 +31,8 @@ public final class RegExpNative {
 
     public native String getResult(int ix);
 
+    public native String getResultSource(int ix);
+
     RegExpNative() {
         init();
     }

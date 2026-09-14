@@ -25,10 +25,12 @@ public final class KalendarActivity extends BottomBarActivity {
         updatePrefs();
         if (state == null) {
             setBBar();
-            AbstractDFragment frag = new KalendarDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, frag, "D");
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment frag = new KalendarDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, frag, "D");
+                trans.commit();
+            }
         }
     }
 

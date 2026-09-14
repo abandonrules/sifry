@@ -139,8 +139,8 @@ public class FilterRuleAssetsTest {
 
     @Test
     public void multiSourceSearchesAllFiles() throws Exception {
-        assertEquals("periodic(236)+pokemon(1025)",
-                1261, countMulti(new String[]{"raw/periodic.canon", "raw/pokemon.canon"}, ""));
+        assertEquals("periodic(236)+pokemon(1023 unique keys)",
+                1259, countMulti(new String[]{"raw/periodic.canon", "raw/pokemon.canon"}, ""));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class FilterRuleAssetsTest {
                     new String[]{""}, false, RegExpNative.MaxListResults);
             RegExpNative.Report rep = waitFor(rn, 60000);
             assertFalse("error: " + rn.getError(), rep.error);
-            assertEquals(1261, rep.matches);
+            assertEquals(1259, rep.matches);
             assertTrue("list should hold exactly MaxListResults",
                     rep.matches >= RegExpNative.MaxListResults);
             assertFalse("cap check result must not be a real match",
@@ -184,6 +184,7 @@ public class FilterRuleAssetsTest {
                     line.contains("he:"));
             assertTrue("verbose line should carry the display after ':', got '" + line + "'",
                     line.endsWith("Helium (He, 2)"));
+            assertEquals("raw/periodic.canon", rn.getResultSource(0));
         } finally {
             rn.free();
         }

@@ -197,6 +197,14 @@ public final class ZapisnikDFragment extends AbstractDFragment {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void loadData(Bundle data) {
+        stan = data.getParcelableArrayList(App.DATA);
+        if (lvMain != null)
+            lvMain.invalidateViews();
+    }
+
     @Override
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);

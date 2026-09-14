@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
 import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
@@ -43,10 +44,100 @@ public final class RegExpDFragment extends AbstractDFragment {
     private RegExpExpListAdapter adapter;
     private int currentMaxResults = RegExpNative.MaxListResults;
     private final List<View> filterRows = new ArrayList<View>();
+    private List<String> pendingResults = null;
 
     @Override
     protected int getMenuCaps() {
         return HAS_CLEAR | HAS_REFERENCE;
+    }
+
+    private static final String SEP = "\u001F";
+    private static final String K_RESULTS = "res";
+
+    @Override
+    public boolean saveData(Bundle data) {
+        if (getView() == null)
+            return false;
+        ArrayList<String> rows = new ArrayList<String>();
+        boolean meaningful = false;
+        for (View row : filterRows) {
+            String v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
+            String v2 = ((EditText) row.findViewById(R.id.et2RDFiltr)).getText().toString();
+            boolean cb = ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).isChecked();
+            if (v1.length() > 0 || v2.length() > 0 || !cb)
+                meaningful = true;
+            rows.add(kindAt(row).ordinal() + SEP + opAt(row).ordinal() + SEP + v1 + SEP + v2 + SEP + (cb ? "1" : "0"));
+        }
+        boolean hasResults = adapter != null && adapter.getMatchCount() > 0;
+        if (!meaningful && !hasResults)
+            return false;
+        if (meaningful)
+            data.putStringArrayList(App.VSTUP2, rows);
+        if (hasResults) {
+            ArrayList<String> res = new ArrayList<String>();
+            adapter.snapshotTo(res);
+            data.putStringArrayList(K_RESULTS, res);
+        }
+        return true;
+    }
+
+    @Override
+    public void loadData(Bundle data) {
+        if (getView() == null)
+            return;
+        ArrayList<String> rows = data.getStringArrayList(App.VSTUP2);
+        if (rows == null || rows.isEmpty())
+            return;
+        ViewGroup ll = (ViewGroup) getView().findViewById(R.id.llRDFilters);
+        while (filterRows.size() < rows.size()) {
+            View row = buildRow(getView());
+            filterRows.add(row);
+            ll.addView(row);
+            bindRow(row);
+        }
+        while (filterRows.size() > rows.size()) {
+            View row = filterRows.get(filterRows.size() - 1);
+            filterRows.remove(row);
+            ll.removeView(row);
+        }
+        spinnerGuard = true;
+        for (int i = 0; i < rows.size(); i++) {
+            String[] parts = rows.get(i).split(SEP, -1);
+            if (parts.length < 5)
+                continue;
+            try {
+                View row = filterRows.get(i);
+                Spinner sp = (Spinner) row.findViewById(R.id.spRDFiltr);
+                int ki = Integer.parseInt(parts[0]);
+                if (ki >= 0 && ki < sp.getAdapter().getCount())
+                    sp.setSelection(ki);
+                Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
+                int oi = Integer.parseInt(parts[1]);
+                if (oi >= 0 && oi < op.getAdapter().getCount())
+                    op.setSelection(oi);
+                ((EditText) row.findViewById(R.id.etRDFiltr)).setText(parts[2]);
+                ((EditText) row.findViewById(R.id.et2RDFiltr)).setText(parts[3]);
+                ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).setChecked(parts[4].equals("1"));
+            } catch (NumberFormatException e) {
+                /* stale/corrupt row, keep defaults */
+            }
+        }
+        spinnerGuard = false;
+        for (View row : filterRows)
+            updateRow(row);
+        if (data.containsKey(K_RESULTS)) {
+            pendingResults = data.getStringArrayList(K_RESULTS);
+            applyResults();
+        }
+    }
+
+    private void applyResults() {
+        if (adapter == null || pendingResults == null)
+            return;
+        adapter.setSnapshot(new ArrayList<String>(pendingResults));
+        if (tvProgress != null)
+            tvProgress.setText(String.valueOf(pendingResults.size()));
+        pendingResults = null;
     }
 
     @Override
@@ -83,6 +174,7 @@ public final class RegExpDFragment extends AbstractDFragment {
         re = ((ReferenceFragment) getFragmentManager().findFragmentByTag("ref")).getRE();
         adapter = new RegExpExpListAdapter(re);
         ((ExpandableListView) getView().findViewById(R.id.elRDResults)).setAdapter(adapter);
+        applyResults();
         if (re.isRunning())
             launchRefresh();
         final Report report = re.getProgress();
@@ -366,6 +458,7 @@ if (getView() == null)
 
     @Override
     protected void onClear() {
+        pendingResults = null;
         re.free();
         adapter.clear();
         for (View row : filterRows) {

@@ -176,6 +176,9 @@ Zdrojový kód můžete nalézt na adrese:<br/>
 – Martin Polívka<br/>
 – Vítězslav Plachý<br/>
 – Michal Přibyl</p>
+
+<p>Verze v4.x přidal v roce 2026<br/>
+<b>Christopher Mayfield · AbandonRules</b></p>
 ]]></string>
 
 
@@ -189,6 +192,10 @@ nyní můžete komponentu používat přímo.</p>
 
 
 <string name="tHelpNews"><![CDATA[
+<h1>Novinky ve verzi 4.1</h1>
+– Stav pracovních ploch se nyní ukládá mezi restartováním aplikace (nastavení šifer, reference a upravené hodnoty)<br/>
+– Databáze slov: nové zdroje dat (periodická tabulka, Pokémon, Wordle), typy filtrů pro jednotlivé řádky, nabídka operátorů, prohlížeč referencí, režim zobrazení všeho, vyhledávání ve všech zapnutých zdrojích a výsledky podle zdroje s odstraněním duplicit napříč zdroji<br/>
+
 <h1>Novinky ve verzi 4.0.1</h1>
 – Zvýšena minimální verze Androidu na 8.0 (API 26)<br/>
 – Sestaveno a otestováno pro Android 16 (API 36)<br/>

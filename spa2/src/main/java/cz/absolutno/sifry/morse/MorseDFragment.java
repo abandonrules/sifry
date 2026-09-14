@@ -97,7 +97,7 @@ public final class MorseDFragment extends AbstractDFragment {
     public boolean saveData(Bundle data) {
         if (adapter.getCount() == 0)
             return false;
-        data.putString(App.VSTUP, adapter.getItem(0));
+        data.putIntegerArrayList(App.VSTUP2, new ArrayList<Integer>(adapter.getData()));
         return true;
     }
 

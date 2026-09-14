@@ -19,10 +19,12 @@ public final class MorseActivity extends BottomBarActivity {
         super.onCreate(state);
         if (state == null) {
             getBBar().setEntries(new String[]{getString(R.string.tEncode), getString(R.string.tDecode), getString(R.string.tRef)}, DECODE);
-            AbstractDFragment frag = new MorseDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, frag, "D");
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment frag = new MorseDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, frag, "D");
+                trans.commit();
+            }
         }
     }
 

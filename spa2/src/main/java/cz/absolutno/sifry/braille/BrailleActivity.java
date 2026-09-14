@@ -23,10 +23,12 @@ public final class BrailleActivity extends BottomBarActivity {
         super.onCreate(state);
         if (state == null) {
             getBBar().setEntries(new String[]{getString(R.string.tEncode), getString(R.string.tDecode), getString(R.string.tRef)}, DECODE);
-            AbstractDFragment frag = new BrailleDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, frag, "D");
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment frag = new BrailleDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, frag, "D");
+                trans.commit();
+            }
         }
     }
 

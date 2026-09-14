@@ -14,10 +14,12 @@ public final class SubstActivity extends BottomBarActivity {
         super.onCreate(state);
         if (state == null) {
             getBBar().setEntries(null, 0);
-            AbstractDFragment fragment = new SubstDFragment();
-            FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-            trans.replace(R.id.content, fragment);
-            trans.commit();
+            if (!restoreWorkbench()) {
+                AbstractDFragment fragment = new SubstDFragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.content, fragment);
+                trans.commit();
+            }
         }
     }
 
