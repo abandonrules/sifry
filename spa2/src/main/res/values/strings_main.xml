@@ -204,6 +204,10 @@ component directly.</p>
 	
 	
 <string name="tHelpNews"><![CDATA[
+<h1>Changes in v4.1</h1>
+– Workbench state is now saved across app restarts (cipher settings, references and edited values)<br/>
+– Dictionary Search: new periodic-table, Pokemon and Wordle data sources, per-row filter kinds, operator menu, reference viewer, Show-all mode, search across all enabled sources, and per-source results with cross-source de-duplication<br/>
+
 <h1>Changes in v4.0.1</h1>
 – Raised minimum Android version to 8.0 (Android 26)<br/>
 – Built and tested against Android 16 (API 36)<br/>
