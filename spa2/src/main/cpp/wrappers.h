@@ -4,6 +4,7 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
+#include <utility>
 
 #include <android/asset_manager_jni.h>
 #include <jni.h>
@@ -16,9 +17,11 @@ class AssetRef {
     bool valid;
 
 public:
+    std::string file;
+
     AssetRef() : valid(false) { }
 
-    AssetRef(JNIEnv* env, jobject jamgr_, const std::string& fname) : valid(true) {
+    AssetRef(JNIEnv* env, jobject jamgr_, const std::string& fname) : valid(true), file(fname) {
         env->GetJavaVM(&jvm);
         jamgr = env->NewGlobalRef(jamgr_);
         asset = AAssetManager_open(AAssetManager_fromJava(env, jamgr), fname.c_str(), AASSET_MODE_STREAMING);
@@ -30,7 +33,7 @@ public:
 
     AssetRef(const AssetRef&) = delete;
 
-    AssetRef(AssetRef&& other) : jvm(other.jvm), jamgr(other.jamgr), asset(other.asset), valid(other.valid) {
+    AssetRef(AssetRef&& other) : jvm(other.jvm), jamgr(other.jamgr), asset(other.asset), valid(other.valid), file(std::move(other.file)) {
         other.valid = false;
     }
 
