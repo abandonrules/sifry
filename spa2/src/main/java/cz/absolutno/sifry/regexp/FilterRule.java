@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public final class FilterRule {
 
     public enum Kind {
-        CONTAINS, STARTS, ENDS, EQUALS, RANGE, LENGTH, SYMBOL, ATOMIC_NUMBER, TYPE, DEX_NUMBER
+        CONTAINS, STARTS, ENDS, EQUALS, RANGE, LENGTH, SYMBOL, ATOMIC_NUMBER, TYPE, DEX_NUMBER, DATASET
     }
 
     public enum Op { EQ, LT, GT, LE, GE, BETWEEN }
@@ -16,6 +16,10 @@ public final class FilterRule {
     public static final int ATOMIC_UPPER = 118;
     public static final int DEX_UPPER = 1025;
     public static final int LENGTH_CAP = 40;
+
+    public static final int ST_YES = 1;
+    public static final int ST_NO = 0;
+    public static final int ST_OR = 2;
 
     private FilterRule() {
     }
@@ -33,6 +37,7 @@ public final class FilterRule {
             kinds.add(Kind.RANGE);
             kinds.add(Kind.LENGTH);
         }
+        kinds.add(Kind.DATASET);
         return kinds;
     }
 
@@ -65,6 +70,7 @@ public final class FilterRule {
             kinds.add(Kind.TYPE);
             kinds.add(Kind.DEX_NUMBER);
         }
+        kinds.add(Kind.DATASET);
         return kinds;
     }
 
@@ -126,6 +132,45 @@ public final class FilterRule {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Folds per-row patterns and their Yes/No/Or states into the native AND
+     * array. Consecutive Or rows join the immediately preceding constraint as
+     * PCRE alternatives (wrapped in {@code (?:...)} when merged); Yes/No start
+     * a fresh constraint, with No expressing the whole constraint (incl. any
+     * merged alternatives) as negated. Empty patterns contribute nothing.
+     */
+    public static List<String> foldPatterns(List<String> pats, List<Integer> states) {
+        List<String> out = new ArrayList<String>();
+        StringBuilder cur = null;
+        boolean joined = false;
+        boolean neg = false;
+        for (int i = 0; i < pats.size(); i++) {
+            String p = pats.get(i);
+            if (p == null || p.length() == 0)
+                continue;
+            int st = (i < states.size() && states.get(i) != null) ? states.get(i).intValue() : ST_YES;
+            if (st == ST_OR && cur != null) {
+                if (joined)
+                    cur.append('|');
+                else {
+                    cur.insert(0, "(?:");
+                    cur.append('|');
+                    joined = true;
+                }
+                cur.append(p);
+                continue;
+            }
+            if (cur != null)
+                out.add((neg ? "!" : "") + (joined ? cur.toString() + ")" : cur.toString()));
+            cur = new StringBuilder(p);
+            joined = false;
+            neg = (st == ST_NO);
+        }
+        if (cur != null)
+            out.add((neg ? "!" : "") + (joined ? cur.toString() + ")" : cur.toString()));
+        return out;
     }
 
     private static int[] numericBounds(Kind kind, Op op, int n, String b) {

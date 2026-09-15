@@ -182,6 +182,18 @@ public class FilterRuleTest {
     }
 
     @Test
+    public void datasetKindAlwaysOffered() {
+        assertTrue(FilterRule.kindsFor("wordle.canon").contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsFor("periodic.canon").contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsForAll(Arrays.asList("en.canon")).contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsForAll(new ArrayList<String>()).contains(FilterRule.Kind.DATASET));
+        assertFalse(FilterRule.isNumeric(FilterRule.Kind.DATASET));
+        assertFalse(FilterRule.needsSecondValue(FilterRule.Kind.DATASET, FilterRule.Op.EQ));
+        assertNull(FilterRule.pattern(FilterRule.Kind.DATASET, null, "en.canon", null));
+        assertNull(FilterRule.pattern(FilterRule.Kind.DATASET, FilterRule.Op.EQ, "en.canon", null));
+    }
+
+    @Test
     public void kindsForAllUnionsTheSearchedSources() {
         List<FilterRule.Kind> both = FilterRule.kindsForAll(
                 Arrays.asList("periodic.canon", "pokemon.canon"));
@@ -222,5 +234,61 @@ public class FilterRuleTest {
         assertNull(FilterRule.pattern(FilterRule.Kind.LENGTH, FilterRule.Op.BETWEEN, "40", "1"));
         assertNull(FilterRule.pattern(FilterRule.Kind.ATOMIC_NUMBER, FilterRule.Op.GT, "118", null));
         assertNull(FilterRule.pattern(FilterRule.Kind.DEX_NUMBER, FilterRule.Op.GT, "1025", null));
+    }
+
+    @Test
+    public void foldMergesConsecutiveOrRowsIntoOneAlternation() {
+        assertEquals(Arrays.asList("(?:a|b|c)"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldKeepsYesAndNoRowsAsSeparateConstraints() {
+        assertEquals(Arrays.asList("a", "b", "!c"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_YES, FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void foldReadsPreviousOrGroupAsAlternation() {
+        assertEquals(Arrays.asList("(?:a|b)", "c"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void foldNegatesWholeAlternationWhenGroupStartsWithNo() {
+        assertEquals(Arrays.asList("!(?:a|b)"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b"),
+                        Arrays.asList(FilterRule.ST_NO, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldNegatesLeadingNoRowAlone() {
+        assertEquals(Arrays.asList("!a"),
+                FilterRule.foldPatterns(Arrays.asList("a"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void foldSkipsEmptyPatternsButKeepsOrChain() {
+        assertEquals(Arrays.asList("(?:b|c)", "a"),
+                FilterRule.foldPatterns(Arrays.asList(null, "b", "c", "a"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_OR, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void foldTreatsLeadingOrRowAsPlainConstraint() {
+        assertEquals(Arrays.asList("a"),
+                FilterRule.foldPatterns(Arrays.asList("a"),
+                        Arrays.asList(FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldOfAllEmptyPatternsProducesNoConstraints() {
+        assertEquals(Arrays.asList(),
+                FilterRule.foldPatterns(Arrays.asList("", "", ""),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO, FilterRule.ST_OR)));
     }
 }

@@ -17,7 +17,6 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,12 +62,16 @@ public final class RegExpDFragment extends AbstractDFragment {
         ArrayList<String> rows = new ArrayList<String>();
         boolean meaningful = false;
         for (View row : filterRows) {
-            String v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
+            String v1;
+            if (kindAt(row) == Kind.DATASET)
+                v1 = selectedDataset(row);
+            else
+                v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
             String v2 = ((EditText) row.findViewById(R.id.et2RDFiltr)).getText().toString();
-            boolean cb = ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).isChecked();
-            if (v1.length() > 0 || v2.length() > 0 || !cb)
+            int st = statePosToDegree(((Spinner) row.findViewById(R.id.cbRDFiltr)).getSelectedItemPosition());
+            if (v1.length() > 0 || v2.length() > 0 || st != FilterRule.ST_YES)
                 meaningful = true;
-            rows.add(kindAt(row).ordinal() + SEP + opAt(row).ordinal() + SEP + v1 + SEP + v2 + SEP + (cb ? "1" : "0"));
+            rows.add(kindAt(row).ordinal() + SEP + opAt(row).ordinal() + SEP + v1 + SEP + v2 + SEP + st);
         }
         boolean hasResults = adapter != null && adapter.getMatchCount() > 0;
         if (!meaningful && !hasResults)
@@ -117,9 +120,20 @@ public final class RegExpDFragment extends AbstractDFragment {
                 int oi = Integer.parseInt(parts[1]);
                 if (oi >= 0 && oi < op.getAdapter().getCount())
                     op.setSelection(oi);
-                ((EditText) row.findViewById(R.id.etRDFiltr)).setText(parts[2]);
+                if (kindAt(row) == Kind.DATASET)
+                    setSelectedDataset(row, parts[2]);
+                else
+                    ((EditText) row.findViewById(R.id.etRDFiltr)).setText(parts[2]);
                 ((EditText) row.findViewById(R.id.et2RDFiltr)).setText(parts[3]);
-                ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).setChecked(parts[4].equals("1"));
+                int st = 1;
+                try {
+                    st = Integer.parseInt(parts[4]);
+                } catch (NumberFormatException e) {
+                    /* stale/corrupt state, default to Yes */
+                }
+                if (st != FilterRule.ST_NO && st != FilterRule.ST_OR)
+                    st = FilterRule.ST_YES;
+                ((Spinner) row.findViewById(R.id.cbRDFiltr)).setSelection(degreeToStatePos(st));
             } catch (NumberFormatException e) {
                 /* stale/corrupt row, keep defaults */
             }
@@ -232,15 +246,29 @@ public final class RegExpDFragment extends AbstractDFragment {
     private void bindRow(final View row) {
         final Spinner sp = (Spinner) row.findViewById(R.id.spRDFiltr);
         final Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
+        final Spinner cb = (Spinner) row.findViewById(R.id.cbRDFiltr);
+        final Spinner ds = (Spinner) row.findViewById(R.id.spRDDataset);
         spinnerGuard = true;
+        int spPos = sp.getSelectedItemPosition();
+        int opPos = op.getSelectedItemPosition();
+        int cbPos = cb.getSelectedItemPosition();
+        int dsPos = ds.getSelectedItemPosition();
         ArrayAdapter<Kind> ka = kindAdapter(kinds());
         sp.setAdapter(ka);
         ArrayAdapter<CharSequence> oa = new ArrayAdapter<CharSequence>(getActivity(),
                 android.R.layout.simple_spinner_item, opLabels());
         oa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         op.setAdapter(oa);
-        sp.setSelection(0);
-        op.setSelection(0);
+        ArrayAdapter<String> ca = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, stateLabels());
+        ca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cb.setAdapter(ca);
+        ArrayAdapter<String> da = datasetAdapter(buildDatasetEntries());
+        ds.setAdapter(da);
+        sp.setSelection(spPos >= 0 && spPos < ka.getCount() ? spPos : 0);
+        op.setSelection(opPos >= 0 && opPos < oa.getCount() ? opPos : 0);
+        cb.setSelection(cbPos >= 0 && cbPos < ca.getCount() ? cbPos : 0);
+        ds.setSelection(dsPos >= 0 && dsPos < da.getCount() ? dsPos : 0);
         spinnerGuard = false;
         updateRow(row);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -310,8 +338,102 @@ public final class RegExpDFragment extends AbstractDFragment {
         return Op.values()[op.getSelectedItemPosition()];
     }
 
+    private int statePosToDegree(int pos) {
+        if (pos == 2)
+            return FilterRule.ST_OR;
+        return pos == 1 ? FilterRule.ST_NO : FilterRule.ST_YES;
+    }
+
+    private int degreeToStatePos(int degree) {
+        if (degree == FilterRule.ST_OR)
+            return 2;
+        return degree == FilterRule.ST_NO ? 1 : 0;
+    }
+
+    private String[] stateLabels() {
+        return new String[]{
+                getString(R.string.tRDYes),
+                getString(R.string.tRDNo),
+                getString(R.string.tRDOr)
+        };
+    }
+
     private String[] opLabels() {
         return getResources().getStringArray(R.array.saRDOpLabels);
+    }
+
+    private static final class DatasetEntry implements Comparable<DatasetEntry> {
+        private static final java.text.Collator COLLATOR = java.text.Collator.getInstance();
+        final String file;
+        final String display;
+        DatasetEntry(String file, String display) { this.file = file; this.display = display; }
+        public int compareTo(DatasetEntry other) { return COLLATOR.compare(display, other.display); }
+    }
+
+    private List<DatasetEntry> buildDatasetEntries() {
+        String[] files = getResources().getStringArray(R.array.saREDictionaryFilenames);
+        String[] names = getResources().getStringArray(R.array.saREDictionaries);
+        List<DatasetEntry> entries = new ArrayList<DatasetEntry>();
+        for (int i = 1; i < Math.min(files.length, names.length); i++)
+            if (files[i] != null && files[i].length() > 0)
+                entries.add(new DatasetEntry(files[i], names[i] + " (" + files[i] + ")"));
+        Collections.sort(entries);
+        return entries;
+    }
+
+    private ArrayAdapter<String> datasetAdapter(List<DatasetEntry> entries) {
+        final String[] fileNames = new String[entries.size()];
+        final String[] displays = new String[entries.size()];
+        for (int i = 0; i < entries.size(); i++) {
+            fileNames[i] = entries.get(i).file;
+            displays[i] = entries.get(i).display;
+        }
+        return new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, fileNames) {
+            @Override
+            public View getView(int pos, View convertView, ViewGroup parent) {
+                return labelView(pos, convertView, parent);
+            }
+
+            @Override
+            public View getDropDownView(int pos, View convertView, ViewGroup parent) {
+                return labelView(pos, convertView, parent);
+            }
+
+            private View labelView(int pos, View convertView, ViewGroup parent) {
+                TextView tv;
+                if (convertView != null)
+                    tv = (TextView) convertView;
+                else {
+                    tv = new TextView(getActivity());
+                    tv.setTextColor(getResources().getColor(android.R.color.white));
+                }
+                tv.setText(displays[pos]);
+                float density = getResources().getDisplayMetrics().density;
+                tv.setPadding(0, (int) (12 * density), 0, (int) (12 * density));
+                return tv;
+            }
+        };
+    }
+
+    private String selectedDataset(View row) {
+        Spinner ds = (Spinner) row.findViewById(R.id.spRDDataset);
+        if (ds.getAdapter() == null || ds.getAdapter().getCount() == 0)
+            return "";
+        Object item = ds.getAdapter().getItem(ds.getSelectedItemPosition());
+        return item == null ? "" : item.toString();
+    }
+
+    private void setSelectedDataset(View row, String filename) {
+        Spinner ds = (Spinner) row.findViewById(R.id.spRDDataset);
+        if (ds.getAdapter() == null)
+            return;
+        for (int i = 0; i < ds.getAdapter().getCount(); i++) {
+            Object item = ds.getAdapter().getItem(i);
+            if (item != null && item.toString().equals(filename)) {
+                ds.setSelection(i);
+                return;
+            }
+        }
     }
 
     private static final int TEXT_INPUT = android.text.InputType.TYPE_CLASS_TEXT
@@ -323,12 +445,16 @@ public final class RegExpDFragment extends AbstractDFragment {
         Spinner op = (Spinner) row.findViewById(R.id.opRDFiltr);
         Kind kind = kindAt(row);
         boolean numeric = FilterRule.isNumeric(kind);
+        boolean dataset = (kind == Kind.DATASET);
         op.setVisibility(numeric ? View.VISIBLE : View.GONE);
         Op o = opAt(row);
         boolean two = FilterRule.needsSecondValue(kind, o);
         EditText value = (EditText) row.findViewById(R.id.etRDFiltr);
         EditText value2 = (EditText) row.findViewById(R.id.et2RDFiltr);
-        value2.setVisibility(two ? View.VISIBLE : View.GONE);
+        Spinner ds = (Spinner) row.findViewById(R.id.spRDDataset);
+        value2.setVisibility(two && !dataset ? View.VISIBLE : View.GONE);
+        value.setVisibility(dataset ? View.GONE : View.VISIBLE);
+        ds.setVisibility(dataset ? View.VISIBLE : View.GONE);
         value.setInputType(numeric ? NUMERIC_INPUT : TEXT_INPUT);
         value2.setInputType(numeric ? NUMERIC_INPUT : TEXT_INPUT);
     }
@@ -361,21 +487,32 @@ if (getView() == null)
             updateGoButton();
             return;
         }
-        String zad[] = new String[filterRows.size()];
-        for (int i = 0; i < filterRows.size(); i++) {
-            View row = filterRows.get(i);
+        List<String> pats = new ArrayList<String>();
+        List<Integer> states = new ArrayList<Integer>();
+        List<String> narrowed = new ArrayList<String>();
+        for (View row : filterRows) {
             Kind kind = kindAt(row);
             Op o = opAt(row);
+            int st = statePosToDegree(((Spinner) row.findViewById(R.id.cbRDFiltr)).getSelectedItemPosition());
+            if (kind == Kind.DATASET) {
+                String file = selectedDataset(row);
+                if (file.length() > 0 && !narrowed.contains(file))
+                    narrowed.add(file);
+                pats.add(null);
+                states.add(st);
+                continue;
+            }
             String v1 = ((EditText) row.findViewById(R.id.etRDFiltr)).getText().toString();
             String v2 = ((EditText) row.findViewById(R.id.et2RDFiltr)).getText().toString();
-            String pat = buildPattern(kind, o, v1, v2);
-            if (pat == null || pat.length() == 0)
-                zad[i] = "";
-            else
-                zad[i] = (((ToggleButton) row.findViewById(R.id.cbRDFiltr)).isChecked() ? "" : "!") + pat;
+            pats.add(buildPattern(kind, o, v1, v2));
+            states.add(st);
         }
+        List<String> folded = FilterRule.foldPatterns(pats, states);
+        String zad[] = folded.toArray(new String[folded.size()]);
         adapter.clear();
         List<String> fns = enabledFilenames();
+        if (!narrowed.isEmpty())
+            fns = narrowed;
         String rawFns[] = new String[fns.size()];
         for (int i = 0; i < fns.size(); i++)
             rawFns[i] = "raw/" + fns.get(i);
@@ -483,7 +620,10 @@ if (getView() == null)
         for (View row : filterRows) {
             ((EditText) row.findViewById(R.id.etRDFiltr)).setText("");
             ((EditText) row.findViewById(R.id.et2RDFiltr)).setText("");
-            ((ToggleButton) row.findViewById(R.id.cbRDFiltr)).setChecked(true);
+            Spinner ds = (Spinner) row.findViewById(R.id.spRDDataset);
+            if (ds.getAdapter() != null && ds.getAdapter().getCount() > 0)
+                ds.setSelection(0);
+            ((Spinner) row.findViewById(R.id.cbRDFiltr)).setSelection(0);
         }
         tvProgress.setText("");
         updateGoButton();

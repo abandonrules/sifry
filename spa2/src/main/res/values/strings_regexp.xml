@@ -12,6 +12,7 @@
     <string name="tRDRemove">−</string>
     <string name="tRDYes">Yes</string>
     <string name="tRDNo">No</string>
+    <string name="tRDOr">Or</string>
     <string name="tReference">Reference</string>
     <string name="tReferenceNote">The selected dictionary is too large to display in full. Choose a smaller data source to use the reference.</string>
 
@@ -26,6 +27,7 @@
         <item>Atomic number</item>
         <item>Type</item>
         <item>Pokémon no.</item>
+        <item>Dataset</item>
     </string-array>
 
     <string-array name="saRDOpLabels">
