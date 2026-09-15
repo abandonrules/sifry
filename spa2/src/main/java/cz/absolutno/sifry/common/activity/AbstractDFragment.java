@@ -12,6 +12,7 @@ public abstract class AbstractDFragment extends Fragment {
     protected static final int HAS_PASTE = 0x2;
     protected static final int HAS_CLEAR = 0x4;
     protected static final int HAS_REFERENCE = 0x8;
+    protected static final int HAS_PACKS = 0x10;
 
     protected abstract int getMenuCaps();
 
@@ -26,6 +27,9 @@ public abstract class AbstractDFragment extends Fragment {
     }
 
     protected void onOpenReference() {
+    }
+
+    protected void onOpenPacks() {
     }
 
     protected void onPreferencesChanged() {

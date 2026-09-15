@@ -103,4 +103,12 @@ public class GreekDataPackTest {
     public void searchByOrdinal() {
         assertEquals("Pi", pack.search(FilterSpec.identity("16")).results().get(0).displayText());
     }
+
+    @Test
+    public void emptyQueryListsAll() {
+        SearchResult r = pack.search(FilterSpec.identity(""));
+        assertEquals(r.scanned(), r.matched());
+        assertEquals(r.matched(), r.results().size());
+        assertTrue(r.matched() > 0);
+    }
 }

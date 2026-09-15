@@ -1,6 +1,8 @@
 package cz.absolutno.sifry.common.datapack;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -156,5 +158,34 @@ public abstract class BaseDataPack implements DataPack {
 
     protected SearchResult wrap(List<EntityResult> hits, int scanned) {
         return new SearchResult(hits, hits.size(), scanned);
+    }
+
+    /** Lists the whole pack as results (empty identity query). */
+    protected SearchResult listAll() {
+        List<EntityResult> out = new ArrayList<EntityResult>();
+        for (PackRecord r : records)
+            out.add(toResult(r));
+        return wrap(out, records.size());
+    }
+
+    @Override
+    public List<String> distinctValues(String field) {
+        List<String> out = new ArrayList<String>();
+        for (PackRecord r : records) {
+            String v = r.property(field);
+            if (v == null || v.isEmpty() || out.contains(v))
+                continue;
+            out.add(v);
+        }
+        Collections.sort(out, new Comparator<String>() {
+            public int compare(String a, String b) {
+                Integer ia = parseInt(a);
+                Integer ib = parseInt(b);
+                if (ia != null && ib != null)
+                    return ia.compareTo(ib);
+                return a.compareToIgnoreCase(b);
+            }
+        });
+        return out;
     }
 }

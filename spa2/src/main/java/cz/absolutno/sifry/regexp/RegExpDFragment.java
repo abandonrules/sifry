@@ -28,6 +28,7 @@ import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
 import cz.absolutno.sifry.common.dictionary.DictionaryQueryCompiler;
 import cz.absolutno.sifry.common.dictionary.WordPatternQuery;
+import cz.absolutno.sifry.lookup.LookupPackActivity;
 import cz.absolutno.sifry.regexp.FilterRule.Kind;
 import cz.absolutno.sifry.regexp.FilterRule.Op;
 import cz.absolutno.sifry.regexp.RegExpNative.Report;
@@ -49,7 +50,7 @@ public final class RegExpDFragment extends AbstractDFragment {
 
     @Override
     protected int getMenuCaps() {
-        return HAS_CLEAR | HAS_REFERENCE;
+        return HAS_CLEAR | HAS_REFERENCE | HAS_PACKS;
     }
 
     private static final String SEP = "\u001F";
@@ -213,6 +214,13 @@ public final class RegExpDFragment extends AbstractDFragment {
         Intent i = new Intent(getActivity(), RegExpReferenceActivity.class);
         i.putExtra(RegExpReferenceActivity.EXTRA_FILENAME, sourceFilename());
         startActivity(i);
+    }
+
+    @Override
+    protected void onOpenPacks() {
+        if (getActivity() == null)
+            return;
+        startActivity(new Intent(getActivity(), LookupPackActivity.class));
     }
 
     private void rebuildRows() {

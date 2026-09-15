@@ -93,4 +93,12 @@ public class NatoDataPackTest {
         assertTrue(pack.search(FilterSpec.identity("4")).results().get(0).displayText()
                 .equals("Four"));
     }
+
+    @Test
+    public void emptyQueryListsAll() {
+        SearchResult r = pack.search(FilterSpec.identity(""));
+        assertEquals(r.scanned(), r.matched());
+        assertEquals(r.matched(), r.results().size());
+        assertTrue(r.matched() > 0);
+    }
 }

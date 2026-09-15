@@ -16,5 +16,12 @@ public interface DataPack {
 
     java.util.List<FieldDefinition> fields();
 
+    /**
+     * Distinct non-empty values a field actually holds across the pack,
+     * sorted (numbers numerically, text case-insensitively). Empty when the
+     * field has no values — e.g. a numeric field that is a formula result.
+     */
+    java.util.List<String> distinctValues(String field);
+
     SearchResult search(FilterSpec spec);
 }

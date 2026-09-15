@@ -133,7 +133,7 @@ public final class ZodiacDataPack extends BaseDataPack {
             String q = spec.value() == null ? "" : spec.value().trim();
             List<EntityResult> hits = new ArrayList<EntityResult>();
             if (q.isEmpty())
-                return wrap(hits, records().size());
+                return listAll();
             PackRecord bySymbol = signBySymbol(q);
             if (bySymbol != null) {
                 hits.add(toResult(bySymbol));

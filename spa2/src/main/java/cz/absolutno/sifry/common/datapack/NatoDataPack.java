@@ -168,7 +168,7 @@ public final class NatoDataPack extends BaseDataPack {
         if (spec.isIdentity()) {
             String q = spec.value() == null ? "" : spec.value().trim();
             if (q.isEmpty())
-                return wrap(hits, records().size());
+                return listAll();
             if (q.length() == 1 && Character.isDigit(q.charAt(0)))
                 hits = single(digitSpelling(q));
             else if (q.length() == 1 && Character.isLetter(q.charAt(0)))

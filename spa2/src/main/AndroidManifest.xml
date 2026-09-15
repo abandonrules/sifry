@@ -96,6 +96,9 @@
         <activity
             android:name="cz.absolutno.sifry.regexp.RegExpReferenceActivity"
             android:label="@string/tReference" />
+        <activity
+            android:name="cz.absolutno.sifry.lookup.LookupPackActivity"
+            android:label="@string/tLookupPacks" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

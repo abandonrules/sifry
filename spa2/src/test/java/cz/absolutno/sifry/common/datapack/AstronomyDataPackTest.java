@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import android.content.res.AssetManager;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -129,5 +130,30 @@ public class AstronomyDataPackTest {
     public void constellationIdentity() {
         assertEquals("constellation", pack.byIdentity("Orion").category());
         assertNotNull(pack.byIdentity("Ursa Major"));
+    }
+
+    @Test
+    public void emptyQueryListsAll() {
+        SearchResult r = pack.search(FilterSpec.identity(""));
+        assertEquals(r.scanned(), r.matched());
+        assertEquals(r.matched(), r.results().size());
+        assertTrue(r.matched() > 0);
+    }
+
+    @Test
+    public void distinctParentBodies() {
+        List<String> v = pack.distinctValues("parentBody");
+        assertEquals(Arrays.asList("Earth", "Jupiter", "Mars", "Neptune", "Pluto", "Saturn"), v);
+    }
+
+    @Test
+    public void distinctPlanetTypesSorted() {
+        assertEquals(Arrays.asList("Dwarf Planet", "Gas Giant", "Ice Giant", "Rocky", "Star"),
+                pack.distinctValues("planetType"));
+    }
+
+    @Test
+    public void absentFieldHasNoDistinctValues() {
+        assertTrue(pack.distinctValues("noSuchField").isEmpty());
     }
 }

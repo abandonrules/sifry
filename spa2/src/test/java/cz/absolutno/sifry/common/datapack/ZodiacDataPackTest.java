@@ -3,10 +3,12 @@ package cz.absolutno.sifry.common.datapack;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import android.content.res.AssetManager;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -95,8 +97,24 @@ public class ZodiacDataPackTest {
     }
 
     @Test
-    public void importDoesNotMatch() {
-        // no sign record exists for the import keyword; identity search should not throw
-        assertEquals(0, pack.search(FilterSpec.identity("")) .results().size());
+    public void emptyQueryListsAll() {
+        SearchResult r = pack.search(FilterSpec.identity(""));
+        assertEquals(r.scanned(), r.matched());
+        assertEquals(r.matched(), r.results().size());
+        assertTrue(r.matched() > 0);
+    }
+
+    @Test
+    public void distinctElementsSorted() {
+        assertEquals(java.util.Arrays.asList("Air", "Earth", "Fire", "Water"),
+                pack.distinctValues("element"));
+    }
+
+    @Test
+    public void distinctMonthsNumericSorted() {
+        List<String> v = pack.distinctValues("month");
+        assertEquals(12, v.size());
+        assertEquals("1", v.get(0));
+        assertEquals("12", v.get(11));
     }
 }

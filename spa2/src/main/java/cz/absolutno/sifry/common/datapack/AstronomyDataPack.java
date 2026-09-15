@@ -114,7 +114,7 @@ public final class AstronomyDataPack extends BaseDataPack {
         if (spec.isIdentity()) {
             String q = spec.value() == null ? "" : spec.value().trim();
             if (q.isEmpty())
-                return wrap(hits, records().size());
+                return listAll();
             PackRecord byIdentity = byIdentity(q);
             if (byIdentity != null) {
                 hits.add(toResult(byIdentity));

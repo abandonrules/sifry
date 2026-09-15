@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tLookupPacks">Databáze</string>
+    <string name="tLUPack">Balíček:</string>
+    <string name="tLUField">Pole:</string>
+    <string name="tLUQuery">Dotaz</string>
+    <string name="tLUAllFields">Všechna pole</string>
+    <string name="tLUAllValues">Všechny hodnoty</string>
+    <string name="tLUName">Název</string>
+    <string name="tLUPocet">Nalezeno:</string>
+    <string name="tLUSpell">Napsáno hláskově:</string>
+    <string name="tLUUnspell">Rozluštěno:</string>
+    <string name="tLUNoMatch">Žádná shoda.</string>
+
+<string name="tHelpLookupPacks"><![CDATA[
+<h1>Databáze</h1>
+
+<p>Tato komponenta umožňuje vyhledávání v sadě menších strukturovaných databází:
+astronomie, znamení zvěrokruhu a měsíční kameny, hláskovací abeceda NATO a řecká písmena.</p>
+
+<p>Zvolte balíček a v nabídce pole sloupec, podle kterého se řadí (nebo
+<i>Všechna pole</i>). S prázdným dotazem zobrazí <i>Hledat</i> celý balíček jako
+tabulku: každý záznam je řádek a každé pole sloupec. Klepnutím na záhlaví sloupce
+se podle něj řadí; klepnutím znovu se pořadí obrátí.</p>
+
+<p>Chcete-li řádky filtrovat, napište hodnotu a stiskněte <i>Hledat</i>.
+Identifikace používá zobrazovaná jména, aliasy a symboly. Textová pole se
+prohledávají jako podřetězec; číselná a datová pole hledají rovnost. Datum
+narození, např. <tt>21. 3.</tt> nebo <tt>3/21</tt>, vrátí příslušné znamení.</p>
+
+<p>V balíčku NATO lze běžným dotazem jít oběma směry i přes celá slova: slovo jako
+<tt>SIFRY</tt> vrátí jeho hláskování <tt>Sierra India Foxtrot Romeo Yankee</tt>.</p>
+]]></string>
+
+</resources>

@@ -102,7 +102,7 @@ public final class GreekDataPack extends BaseDataPack {
         if (spec.isIdentity()) {
             String q = spec.value() == null ? "" : spec.value().trim();
             if (q.isEmpty())
-                return wrap(hits, records().size());
+                return listAll();
             EntityResult bySymbol = bySymbol(q);
             if (bySymbol != null) {
                 hits.add(bySymbol);
