@@ -489,15 +489,18 @@ if (getView() == null)
         }
         List<String> pats = new ArrayList<String>();
         List<Integer> states = new ArrayList<Integer>();
-        List<String> narrowed = new ArrayList<String>();
+        List<String> dsFiles = new ArrayList<String>();
+        List<Integer> dsStates = new ArrayList<Integer>();
         for (View row : filterRows) {
             Kind kind = kindAt(row);
             Op o = opAt(row);
             int st = statePosToDegree(((Spinner) row.findViewById(R.id.cbRDFiltr)).getSelectedItemPosition());
             if (kind == Kind.DATASET) {
                 String file = selectedDataset(row);
-                if (file.length() > 0 && !narrowed.contains(file))
-                    narrowed.add(file);
+                if (file.length() > 0) {
+                    dsFiles.add(file);
+                    dsStates.add(st);
+                }
                 pats.add(null);
                 states.add(st);
                 continue;
@@ -510,9 +513,7 @@ if (getView() == null)
         List<String> folded = FilterRule.foldPatterns(pats, states);
         String zad[] = folded.toArray(new String[folded.size()]);
         adapter.clear();
-        List<String> fns = enabledFilenames();
-        if (!narrowed.isEmpty())
-            fns = narrowed;
+        List<String> fns = FilterRule.narrowSources(enabledFilenames(), dsFiles, dsStates);
         String rawFns[] = new String[fns.size()];
         for (int i = 0; i < fns.size(); i++)
             rawFns[i] = "raw/" + fns.get(i);

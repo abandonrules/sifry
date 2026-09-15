@@ -2,6 +2,7 @@ package cz.absolutno.sifry.regexp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -307,5 +308,40 @@ public final class FilterRule {
         String tail = atMost(x.substring(1));
         String below = (c == 'a') ? "" : "|[a-" + (char) (c - 1) + "][a-z]*";
         return "(?:|" + c + tail + below + ")";
+    }
+
+    /**
+     * Resolves the list of canon sources actually searched, from the default
+     * {@code enabled} set plus the dataset filter rows. Yes rows narrow the
+     * search to exactly those sources, Or rows add theirs as alternatives on
+     * top of the current set, and No rows remove sources from the result.
+     * An exclusion always wins over an inclusion of the same file.
+     */
+    public static List<String> narrowSources(List<String> enabled, List<String> files, List<Integer> states) {
+        LinkedHashSet<String> yes = new LinkedHashSet<String>();
+        LinkedHashSet<String> or = new LinkedHashSet<String>();
+        LinkedHashSet<String> excluded = new LinkedHashSet<String>();
+        int n = Math.min(files.size(), states == null ? 0 : states.size());
+        for (int i = 0; i < n; i++) {
+            String f = files.get(i);
+            if (f == null || f.length() == 0)
+                continue;
+            int st = states.get(i).intValue();
+            if (st == ST_NO) {
+                excluded.add(f);
+            } else if (st == ST_OR) {
+                or.add(f);
+            } else {
+                yes.add(f);
+            }
+        }
+        LinkedHashSet<String> set = new LinkedHashSet<String>();
+        if (yes.isEmpty())
+            set.addAll(enabled);
+        else
+            set.addAll(yes);
+        set.addAll(or);
+        set.removeAll(excluded);
+        return new ArrayList<String>(set);
     }
 }

@@ -291,4 +291,92 @@ public class FilterRuleTest {
                 FilterRule.foldPatterns(Arrays.asList("", "", ""),
                         Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO, FilterRule.ST_OR)));
     }
+
+    private static List<String> strings(String... s) {
+        return new ArrayList<String>(Arrays.asList(s));
+    }
+
+    @Test
+    public void narrowWithNoDatasetRowsKeepsTheEnabledSet() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon"),
+                FilterRule.narrowSources(
+                        strings("cs.canon", "en.canon", "periodic.canon"),
+                        new ArrayList<String>(), new ArrayList<Integer>()));
+    }
+
+    @Test
+    public void narrowYesRowRestrictsToThatSource() {
+        assertEquals(strings("en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon"),
+                        Arrays.asList(FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void narrowTwoYesRowsSearchBoth() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("cs.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void narrowNoRowExcludesItFromTheEnabledSet() {
+        assertEquals(strings("cs.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowNoRowForAbsentSourceIsANoOp() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowOrRowAddsItsSourceWithoutDroppingTheRest() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon"),
+                        Arrays.asList(FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowOrRowsUnionWithTheEnabledSet() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon", "pokemon.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon", "pokemon.canon"),
+                        Arrays.asList(FilterRule.ST_OR, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowOrRowAddsAlternativesOnTopOfYesNarrow() {
+        assertEquals(strings("en.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon", "periodic.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowExclusionWinsOverInclusion() {
+        assertEquals(strings(),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("en.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO)));
+        assertEquals(strings("cs.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("en.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_OR, FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowSkipsEmptyDatasetNames() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("", ""),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO)));
+    }
 }
