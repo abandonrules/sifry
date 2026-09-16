@@ -1,5 +1,9 @@
 package cz.absolutno.sifry.regexp;
 
+import cz.absolutno.sifry.common.dictionary.DictionaryQueryNormalizer;
+
+import static cz.absolutno.sifry.common.dictionary.DictionaryQueryNormalizer.canonicalFragment;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -93,13 +97,14 @@ public final class FilterRule {
         int lo, hi;
         switch (kind) {
             case CONTAINS:
-                return a.isEmpty() ? null : a;
+                String frag = DictionaryQueryNormalizer.canonicalFragment(a);
+                return frag.isEmpty() ? null : frag;
             case STARTS:
-                return a.isEmpty() ? null : "^" + quote(a.toLowerCase());
+                return a.isEmpty() ? null : "^" + quote(canonicalFragment(a));
             case ENDS:
-                return a.isEmpty() ? null : quote(a.toLowerCase()) + ":";
+                return a.isEmpty() ? null : quote(canonicalFragment(a)) + ":";
             case EQUALS:
-                return a.isEmpty() ? null : "^" + quote(a.toLowerCase()) + ":";
+                return a.isEmpty() ? null : "^" + quote(canonicalFragment(a)) + ":";
             case RANGE:
                 if (a.isEmpty() || b.isEmpty())
                     return null;

@@ -134,6 +134,39 @@ public class DictionaryQueryCompilerTest {
     }
 
     @Test
+    public void prefixSuffixContainsFoldCaseAtBoundary() {
+        String upper = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .prefix("STR").suffix("ING").contains("N F O R M A T").build());
+        String lower = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .prefix("str").suffix("ing").contains("nformat").build());
+        assertEquals(lower, upper);
+        assertTrue(matchesKey(upper, "strnformatzing"));
+        assertFalse(matchesKey(upper, "straw"));
+        assertFalse(matchesKey(upper, "nformat"));
+        assertFalse(matchesKey(lower, "nformat"));
+    }
+
+    @Test
+    public void containsFramesNformatFixtureFromAnyCaseSpacing() {
+        String p = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .contains("N F O R M A T").build());
+        assertTrue(matchesKey(p, "information"));
+        assertTrue(matchesKey(p, "disinformation"));
+        assertEquals(p, DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .contains("nFoRmAt").build()));
+    }
+
+    @Test
+    public void boundedContainsFoldsCase() {
+        String upper = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .length(11).contains("NFORMAT").build());
+        String lower = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
+                .length(11).contains("nformat").build());
+        assertEquals(lower, upper);
+        assertTrue(matchesKey(upper, "information"));
+    }
+
+    @Test
     public void containsCombinedWithLength() {
         String p = DictionaryQueryCompiler.compile(WordPatternQuery.builder()
                 .length(5).contains("qu").build());

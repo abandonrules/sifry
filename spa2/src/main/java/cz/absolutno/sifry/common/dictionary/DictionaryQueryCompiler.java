@@ -60,14 +60,14 @@ public final class DictionaryQueryCompiler {
 
     private static String compileUnbounded(WordPatternQuery query) {
         StringBuilder body = new StringBuilder("^");
-        String contains = query.getContains();
+        String contains = DictionaryQueryNormalizer.canonicalFragment(query.getContains());
         if (contains != null && !contains.isEmpty())
             body.append("(?=.*").append(esc(contains)).append(')');
-        String prefix = query.getPrefix();
+        String prefix = DictionaryQueryNormalizer.canonicalFragment(query.getPrefix());
         if (prefix != null && !prefix.isEmpty())
             body.append(esc(prefix));
         body.append("[a-z]*");
-        String suffix = query.getSuffix();
+        String suffix = DictionaryQueryNormalizer.canonicalFragment(query.getSuffix());
         if (suffix != null && !suffix.isEmpty())
             body.append(esc(suffix));
         return body.append(':').toString();
@@ -85,7 +85,7 @@ public final class DictionaryQueryCompiler {
 
         StringBuilder lookaheads = new StringBuilder();
         int[] groups = {0};
-        String contains = query.getContains();
+        String contains = DictionaryQueryNormalizer.canonicalFragment(query.getContains());
         if (contains != null && !contains.isEmpty())
             lookaheads.append("(?=.*").append(esc(contains)).append(')');
         for (Set<Integer> group : query.getEqualityGroups()) {

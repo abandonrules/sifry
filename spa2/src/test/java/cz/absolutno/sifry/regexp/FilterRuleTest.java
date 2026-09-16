@@ -87,6 +87,50 @@ public class FilterRuleTest {
     }
 
     @Test
+    public void containsFoldsCaseToCanonicalQuery() {
+        String canonical = "nformat";
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, canonical, null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "Nformat", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "nFoRmAt", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "N F O R M A T", null));
+    }
+
+    @Test
+    public void containsUppercaseEqualsLowercasePattern() {
+        String upper = FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null);
+        String lower = FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "nformat", null);
+        assertEquals(upper, lower);
+        assertTrue(upper.contains("nformat"));
+    }
+
+    @Test
+    public void containsSpacedRunsCollapseLikeContiguousFragment() {
+        assertEquals(FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null),
+                FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "\tN  F\nO R M A T", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "abcdef", null),
+                FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "a b c d e f", null));
+    }
+
+    @Test
+    public void nonContainsKindsStillEscapeLiteralInput() {
+        assertEquals("^\\Qcrane\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "CRANE", null));
+        assertEquals("\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.ENDS, null, "CRANE", null));
+        assertEquals("^\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.EQUALS, null, "CRANE", null));
+    }
+
+    @Test
+    public void anchorKindsFoldSpacedUppercaseLikeCanonicalWord() {
+        assertEquals(FilterRule.pattern(FilterRule.Kind.STARTS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.STARTS, null, "C R A N E", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.ENDS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.ENDS, null, "C R A N E", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.EQUALS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.EQUALS, null, "C R A N E", null));
+        assertEquals("^\\Qnformat\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "N F O R M A T", null));
+    }
+
+    @Test
     public void anchorKindsEscapeLiteralInput() {
         assertEquals("^\\Qcrane\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "crane", null));
         assertEquals("^\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.EQUALS, null, "crane", null));
