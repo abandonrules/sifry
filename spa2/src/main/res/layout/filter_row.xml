@@ -16,13 +16,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.0" />
 
-        <ToggleButton
+        <Spinner
             android:id="@+id/cbRDFiltr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:textOff="@string/tRDNo"
-            android:textOn="@string/tRDYes" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,6 +31,13 @@
             android:id="@+id/opRDFiltr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spRDDataset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
             android:visibility="gone" />
 
         <EditText

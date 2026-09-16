@@ -34,6 +34,7 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
     private static final int HAS_PASTE = 0x2;
     private static final int HAS_CLEAR = 0x4;
     private static final int HAS_REFERENCE = 0x8;
+    private static final int HAS_PACKS = 0x10;
 
     private BottomBarView bbar;
 
@@ -183,22 +184,25 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
         inflater.inflate(R.menu.komponenty_menu, menu);
 
         AbstractDFragment currFragment = getCurrFragment();
-        boolean hasCopy, hasPaste, hasClear, hasReference;
+        boolean hasCopy, hasPaste, hasClear, hasReference, hasPacks;
         if (currFragment != null) {
             int caps = currFragment.getMenuCaps();
             hasCopy = ((caps & HAS_COPY) != 0);
             hasPaste = ((caps & HAS_PASTE) != 0);
             hasClear = ((caps & HAS_CLEAR) != 0);
             hasReference = ((caps & HAS_REFERENCE) != 0);
+            hasPacks = ((caps & HAS_PACKS) != 0);
         } else {
             hasCopy = false;
             hasPaste = false;
             hasClear = false;
             hasReference = false;
+            hasPacks = false;
         }
 
         menu.findItem(R.id.mCtxSettings).setVisible(getPrefID() != 0);
         menu.findItem(R.id.mCtxReference).setVisible(hasReference);
+        menu.findItem(R.id.mCtxPacks).setVisible(hasPacks);
         menu.findItem(R.id.mCtxCopy).setVisible(hasCopy);
         menu.findItem(R.id.mCtxPaste).setVisible(hasPaste);
         menu.findItem(R.id.mCtxClear).setVisible(hasClear);
@@ -225,6 +229,11 @@ public abstract class BottomBarActivity extends FragmentActivity implements OnBa
             AbstractDFragment f = getCurrFragment();
             if (f != null)
                 f.onOpenReference();
+            return true;
+        } else if(id == R.id.mCtxPacks) {
+            AbstractDFragment f = getCurrFragment();
+            if (f != null)
+                f.onOpenPacks();
             return true;
         } else if(id == R.id.mCtxHelp) {
             intent = new Intent(this, HelpActivity.class);

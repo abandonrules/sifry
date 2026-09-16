@@ -1,14 +1,19 @@
 package cz.absolutno.sifry.regexp;
 
+import cz.absolutno.sifry.common.dictionary.DictionaryQueryNormalizer;
+
+import static cz.absolutno.sifry.common.dictionary.DictionaryQueryNormalizer.canonicalFragment;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public final class FilterRule {
 
     public enum Kind {
-        CONTAINS, STARTS, ENDS, EQUALS, RANGE, LENGTH, SYMBOL, ATOMIC_NUMBER, TYPE, DEX_NUMBER
+        CONTAINS, STARTS, ENDS, EQUALS, RANGE, LENGTH, SYMBOL, ATOMIC_NUMBER, TYPE, DEX_NUMBER, DATASET
     }
 
     public enum Op { EQ, LT, GT, LE, GE, BETWEEN }
@@ -16,6 +21,10 @@ public final class FilterRule {
     public static final int ATOMIC_UPPER = 118;
     public static final int DEX_UPPER = 1025;
     public static final int LENGTH_CAP = 40;
+
+    public static final int ST_YES = 1;
+    public static final int ST_NO = 0;
+    public static final int ST_OR = 2;
 
     private FilterRule() {
     }
@@ -33,6 +42,7 @@ public final class FilterRule {
             kinds.add(Kind.RANGE);
             kinds.add(Kind.LENGTH);
         }
+        kinds.add(Kind.DATASET);
         return kinds;
     }
 
@@ -65,6 +75,7 @@ public final class FilterRule {
             kinds.add(Kind.TYPE);
             kinds.add(Kind.DEX_NUMBER);
         }
+        kinds.add(Kind.DATASET);
         return kinds;
     }
 
@@ -86,13 +97,14 @@ public final class FilterRule {
         int lo, hi;
         switch (kind) {
             case CONTAINS:
-                return a.isEmpty() ? null : a;
+                String frag = DictionaryQueryNormalizer.canonicalFragment(a);
+                return frag.isEmpty() ? null : frag;
             case STARTS:
-                return a.isEmpty() ? null : "^" + quote(a.toLowerCase());
+                return a.isEmpty() ? null : "^" + quote(canonicalFragment(a));
             case ENDS:
-                return a.isEmpty() ? null : quote(a.toLowerCase()) + ":";
+                return a.isEmpty() ? null : quote(canonicalFragment(a)) + ":";
             case EQUALS:
-                return a.isEmpty() ? null : "^" + quote(a.toLowerCase()) + ":";
+                return a.isEmpty() ? null : "^" + quote(canonicalFragment(a)) + ":";
             case RANGE:
                 if (a.isEmpty() || b.isEmpty())
                     return null;
@@ -126,6 +138,45 @@ public final class FilterRule {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Folds per-row patterns and their Yes/No/Or states into the native AND
+     * array. Consecutive Or rows join the immediately preceding constraint as
+     * PCRE alternatives (wrapped in {@code (?:...)} when merged); Yes/No start
+     * a fresh constraint, with No expressing the whole constraint (incl. any
+     * merged alternatives) as negated. Empty patterns contribute nothing.
+     */
+    public static List<String> foldPatterns(List<String> pats, List<Integer> states) {
+        List<String> out = new ArrayList<String>();
+        StringBuilder cur = null;
+        boolean joined = false;
+        boolean neg = false;
+        for (int i = 0; i < pats.size(); i++) {
+            String p = pats.get(i);
+            if (p == null || p.length() == 0)
+                continue;
+            int st = (i < states.size() && states.get(i) != null) ? states.get(i).intValue() : ST_YES;
+            if (st == ST_OR && cur != null) {
+                if (joined)
+                    cur.append('|');
+                else {
+                    cur.insert(0, "(?:");
+                    cur.append('|');
+                    joined = true;
+                }
+                cur.append(p);
+                continue;
+            }
+            if (cur != null)
+                out.add((neg ? "!" : "") + (joined ? cur.toString() + ")" : cur.toString()));
+            cur = new StringBuilder(p);
+            joined = false;
+            neg = (st == ST_NO);
+        }
+        if (cur != null)
+            out.add((neg ? "!" : "") + (joined ? cur.toString() + ")" : cur.toString()));
+        return out;
     }
 
     private static int[] numericBounds(Kind kind, Op op, int n, String b) {
@@ -262,5 +313,40 @@ public final class FilterRule {
         String tail = atMost(x.substring(1));
         String below = (c == 'a') ? "" : "|[a-" + (char) (c - 1) + "][a-z]*";
         return "(?:|" + c + tail + below + ")";
+    }
+
+    /**
+     * Resolves the list of canon sources actually searched, from the default
+     * {@code enabled} set plus the dataset filter rows. Yes rows narrow the
+     * search to exactly those sources, Or rows add theirs as alternatives on
+     * top of the current set, and No rows remove sources from the result.
+     * An exclusion always wins over an inclusion of the same file.
+     */
+    public static List<String> narrowSources(List<String> enabled, List<String> files, List<Integer> states) {
+        LinkedHashSet<String> yes = new LinkedHashSet<String>();
+        LinkedHashSet<String> or = new LinkedHashSet<String>();
+        LinkedHashSet<String> excluded = new LinkedHashSet<String>();
+        int n = Math.min(files.size(), states == null ? 0 : states.size());
+        for (int i = 0; i < n; i++) {
+            String f = files.get(i);
+            if (f == null || f.length() == 0)
+                continue;
+            int st = states.get(i).intValue();
+            if (st == ST_NO) {
+                excluded.add(f);
+            } else if (st == ST_OR) {
+                or.add(f);
+            } else {
+                yes.add(f);
+            }
+        }
+        LinkedHashSet<String> set = new LinkedHashSet<String>();
+        if (yes.isEmpty())
+            set.addAll(enabled);
+        else
+            set.addAll(yes);
+        set.addAll(or);
+        set.removeAll(excluded);
+        return new ArrayList<String>(set);
     }
 }

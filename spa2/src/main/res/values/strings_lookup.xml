@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tLookupPacks">Lookup packs</string>
+    <string name="tLUPack">Pack:</string>
+    <string name="tLUField">Field:</string>
+    <string name="tLUQuery">Query</string>
+    <string name="tLUAllFields">All fields</string>
+    <string name="tLUAllValues">All values</string>
+    <string name="tLUName">Name</string>
+    <string name="tLUPocet">Found:</string>
+    <string name="tLUSpell">Spelled:</string>
+    <string name="tLUUnspell">Unspelled:</string>
+    <string name="tLUNoMatch">No match.</string>
+
+<string name="tHelpLookupPacks"><![CDATA[
+<h1>Lookup packs</h1>
+
+<p>This component offers lookups in a set of small structured databases: Astronomy,
+Zodiac signs and birthstones, the NATO phonetic alphabet, and Greek letters.</p>
+
+<p>Choose the pack and, in the field menu, the sort column (or <i>All fields</i>).
+With an empty query, <i>Search</i> lists the whole pack as a table: one row per
+record and one column per field. Tap a column header to sort by that column;
+tap again to reverse the order.</p>
+
+<p>Type a value and press <i>Search</i> to filter the rows instead. Identity
+lookups use display names, aliases and symbols; text fields match as substrings
+and numeric or date fields compare as equal values. A birth date such as
+<tt>Mar 21</tt> or <tt>3/21</tt> yields the corresponding zodiac sign.</p>
+
+<p>In the NATO pack a plain identity query can also go both ways over whole strings:
+a word such as <tt>SIFRY</tt> returns its spelling
+<tt>Sierra India Foxtrot Romeo Yankee</tt>.</p>
+]]></string>
+
+</resources>

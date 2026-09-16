@@ -12,6 +12,7 @@
     <string name="tRDRemove">−</string>
     <string name="tRDYes">Ano</string>
     <string name="tRDNo">Ne</string>
+    <string name="tRDOr">Nebo</string>
     <string name="tReference">Tabulka</string>
     <string name="tReferenceNote">Zvolený slovník je příliš velký na to, aby se zobrazil celý. Pro použití tabulky zvolte menší zdroj dat.</string>
 
@@ -26,6 +27,7 @@
         <item>protonové číslo</item>
         <item>typ</item>
         <item>číslo Pokédexu</item>
+        <item>datová sada</item>
     </string-array>
 
     <string-array name="saRDOpLabels">

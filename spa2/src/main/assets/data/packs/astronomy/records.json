@@ -1,0 +1,360 @@
+[
+  {
+    "id": "sun",
+    "displayName": "Sun",
+    "aliases": [
+      "Sol"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "☉",
+      "orderFromSun": "0",
+      "planetType": "Star",
+      "diameterKm": "1392700",
+      "knownMoonCount": "0"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "mercury",
+    "displayName": "Mercury",
+    "aliases": [
+      "Mercury"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "☿",
+      "orderFromSun": "1",
+      "planetType": "Rocky",
+      "diameterKm": "4879",
+      "rotationHours": "1407",
+      "orbitalPeriodDays": "88",
+      "knownMoonCount": "0"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "venus",
+    "displayName": "Venus",
+    "aliases": [
+      "Venus"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "♀",
+      "orderFromSun": "2",
+      "planetType": "Rocky",
+      "diameterKm": "12104",
+      "rotationHours": "-5832",
+      "orbitalPeriodDays": "225",
+      "knownMoonCount": "0"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "earth",
+    "displayName": "Earth",
+    "aliases": [
+      "Terra"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "⊕",
+      "orderFromSun": "3",
+      "planetType": "Rocky",
+      "diameterKm": "12756",
+      "rotationHours": "24",
+      "orbitalPeriodDays": "365",
+      "knownMoonCount": "1"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "mars",
+    "displayName": "Mars",
+    "aliases": [
+      "Mars"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "♂",
+      "orderFromSun": "4",
+      "planetType": "Rocky",
+      "diameterKm": "6792",
+      "rotationHours": "24.6",
+      "orbitalPeriodDays": "687",
+      "knownMoonCount": "2"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "jupiter",
+    "displayName": "Jupiter",
+    "aliases": [
+      "Jupiter"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "♃",
+      "orderFromSun": "5",
+      "planetType": "Gas Giant",
+      "diameterKm": "142984",
+      "rotationHours": "9.9",
+      "orbitalPeriodDays": "4333",
+      "ringCount": "4",
+      "knownMoonCount": "95"
+    },
+    "validFrom": "2023-03-14",
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "saturn",
+    "displayName": "Saturn",
+    "aliases": [
+      "Saturn"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "♄",
+      "orderFromSun": "6",
+      "planetType": "Gas Giant",
+      "diameterKm": "120536",
+      "rotationHours": "10.7",
+      "orbitalPeriodDays": "10759",
+      "ringCount": "7",
+      "knownMoonCount": "146"
+    },
+    "validFrom": "2023-05-16",
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "uranus",
+    "displayName": "Uranus",
+    "aliases": [
+      "Uranus"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "⛢",
+      "orderFromSun": "7",
+      "planetType": "Ice Giant",
+      "diameterKm": "51118",
+      "rotationHours": "-17.2",
+      "orbitalPeriodDays": "30687",
+      "ringCount": "13",
+      "knownMoonCount": "28"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "neptune",
+    "displayName": "Neptune",
+    "aliases": [
+      "Neptune"
+    ],
+    "category": "planet",
+    "properties": {
+      "symbol": "♆",
+      "orderFromSun": "8",
+      "planetType": "Ice Giant",
+      "diameterKm": "49528",
+      "rotationHours": "16.1",
+      "orbitalPeriodDays": "60190",
+      "ringCount": "5",
+      "knownMoonCount": "16"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "pluto",
+    "displayName": "Pluto",
+    "aliases": [
+      "Pluto"
+    ],
+    "category": "dwarf",
+    "properties": {
+      "symbol": "♇",
+      "orderFromSun": "9",
+      "planetType": "Dwarf Planet",
+      "diameterKm": "2376",
+      "rotationHours": "-153.3",
+      "orbitalPeriodDays": "90560",
+      "knownMoonCount": "5"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "ceres",
+    "displayName": "Ceres",
+    "aliases": [
+      "Ceres"
+    ],
+    "category": "dwarf",
+    "properties": {
+      "symbol": "⚳",
+      "orderFromSun": "9",
+      "planetType": "Dwarf Planet",
+      "diameterKm": "940",
+      "rotationHours": "9.1",
+      "orbitalPeriodDays": "1680",
+      "knownMoonCount": "0"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "eris",
+    "displayName": "Eris",
+    "aliases": [
+      "Eris"
+    ],
+    "category": "dwarf",
+    "properties": {
+      "symbol": "⯰",
+      "orderFromSun": "9",
+      "planetType": "Dwarf Planet",
+      "diameterKm": "2326",
+      "rotationHours": "25.9",
+      "orbitalPeriodDays": "204600",
+      "knownMoonCount": "1"
+    },
+    "sourceDate": "2023-01-01"
+  },
+  {
+    "id": "luna",
+    "displayName": "Moon",
+    "aliases": [
+      "Luna"
+    ],
+    "category": "moon",
+    "properties": {
+      "symbol": "☾",
+      "parentBody": "Earth",
+      "diameterKm": "3474",
+      "orbitalPeriodDays": "27.3"
+    }
+  },
+  {
+    "id": "phobos",
+    "displayName": "Phobos",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Mars",
+      "diameterKm": "22.4",
+      "orbitalPeriodDays": "0.32"
+    }
+  },
+  {
+    "id": "deimos",
+    "displayName": "Deimos",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Mars",
+      "diameterKm": "12.4",
+      "orbitalPeriodDays": "1.26"
+    }
+  },
+  {
+    "id": "io",
+    "displayName": "Io",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Jupiter",
+      "diameterKm": "3643",
+      "orbitalPeriodDays": "1.77"
+    }
+  },
+  {
+    "id": "europa",
+    "displayName": "Europa",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Jupiter",
+      "diameterKm": "3122",
+      "orbitalPeriodDays": "3.55"
+    }
+  },
+  {
+    "id": "ganymede",
+    "displayName": "Ganymede",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Jupiter",
+      "diameterKm": "5262",
+      "orbitalPeriodDays": "7.15"
+    }
+  },
+  {
+    "id": "callisto",
+    "displayName": "Callisto",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Jupiter",
+      "diameterKm": "4821",
+      "orbitalPeriodDays": "16.69"
+    }
+  },
+  {
+    "id": "titan",
+    "displayName": "Titan",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Saturn",
+      "diameterKm": "5150",
+      "orbitalPeriodDays": "15.95"
+    }
+  },
+  {
+    "id": "enceladus",
+    "displayName": "Enceladus",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Saturn",
+      "diameterKm": "504",
+      "orbitalPeriodDays": "1.37"
+    }
+  },
+  {
+    "id": "triton",
+    "displayName": "Triton",
+    "category": "moon",
+    "properties": {
+      "parentBody": "Neptune",
+      "diameterKm": "2707",
+      "orbitalPeriodDays": "-5.88"
+    }
+  },
+  {
+    "id": "charon",
+    "displayName": "Charon",
+    "aliases": [
+      "1 Pluto I"
+    ],
+    "category": "moon",
+    "properties": {
+      "parentBody": "Pluto",
+      "diameterKm": "1212",
+      "orbitalPeriodDays": "6.39"
+    }
+  },
+  {
+    "id": "ursa-major",
+    "displayName": "Ursa Major",
+    "aliases": [
+      "Big Dipper"
+    ],
+    "category": "constellation",
+    "properties": {
+      "abbreviation": "UMa",
+      "hemisphere": "Northern"
+    }
+  },
+  {
+    "id": "orion",
+    "displayName": "Orion",
+    "category": "constellation",
+    "properties": {
+      "abbreviation": "Ori",
+      "hemisphere": "Equatorial"
+    }
+  }
+]

@@ -87,6 +87,50 @@ public class FilterRuleTest {
     }
 
     @Test
+    public void containsFoldsCaseToCanonicalQuery() {
+        String canonical = "nformat";
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, canonical, null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "Nformat", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "nFoRmAt", null));
+        assertEquals(canonical, FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "N F O R M A T", null));
+    }
+
+    @Test
+    public void containsUppercaseEqualsLowercasePattern() {
+        String upper = FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null);
+        String lower = FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "nformat", null);
+        assertEquals(upper, lower);
+        assertTrue(upper.contains("nformat"));
+    }
+
+    @Test
+    public void containsSpacedRunsCollapseLikeContiguousFragment() {
+        assertEquals(FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "NFORMAT", null),
+                FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "\tN  F\nO R M A T", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "abcdef", null),
+                FilterRule.pattern(FilterRule.Kind.CONTAINS, null, "a b c d e f", null));
+    }
+
+    @Test
+    public void nonContainsKindsStillEscapeLiteralInput() {
+        assertEquals("^\\Qcrane\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "CRANE", null));
+        assertEquals("\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.ENDS, null, "CRANE", null));
+        assertEquals("^\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.EQUALS, null, "CRANE", null));
+    }
+
+    @Test
+    public void anchorKindsFoldSpacedUppercaseLikeCanonicalWord() {
+        assertEquals(FilterRule.pattern(FilterRule.Kind.STARTS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.STARTS, null, "C R A N E", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.ENDS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.ENDS, null, "C R A N E", null));
+        assertEquals(FilterRule.pattern(FilterRule.Kind.EQUALS, null, "crane", null),
+                FilterRule.pattern(FilterRule.Kind.EQUALS, null, "C R A N E", null));
+        assertEquals("^\\Qnformat\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "N F O R M A T", null));
+    }
+
+    @Test
     public void anchorKindsEscapeLiteralInput() {
         assertEquals("^\\Qcrane\\E", FilterRule.pattern(FilterRule.Kind.STARTS, null, "crane", null));
         assertEquals("^\\Qcrane\\E:", FilterRule.pattern(FilterRule.Kind.EQUALS, null, "crane", null));
@@ -182,6 +226,18 @@ public class FilterRuleTest {
     }
 
     @Test
+    public void datasetKindAlwaysOffered() {
+        assertTrue(FilterRule.kindsFor("wordle.canon").contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsFor("periodic.canon").contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsForAll(Arrays.asList("en.canon")).contains(FilterRule.Kind.DATASET));
+        assertTrue(FilterRule.kindsForAll(new ArrayList<String>()).contains(FilterRule.Kind.DATASET));
+        assertFalse(FilterRule.isNumeric(FilterRule.Kind.DATASET));
+        assertFalse(FilterRule.needsSecondValue(FilterRule.Kind.DATASET, FilterRule.Op.EQ));
+        assertNull(FilterRule.pattern(FilterRule.Kind.DATASET, null, "en.canon", null));
+        assertNull(FilterRule.pattern(FilterRule.Kind.DATASET, FilterRule.Op.EQ, "en.canon", null));
+    }
+
+    @Test
     public void kindsForAllUnionsTheSearchedSources() {
         List<FilterRule.Kind> both = FilterRule.kindsForAll(
                 Arrays.asList("periodic.canon", "pokemon.canon"));
@@ -222,5 +278,149 @@ public class FilterRuleTest {
         assertNull(FilterRule.pattern(FilterRule.Kind.LENGTH, FilterRule.Op.BETWEEN, "40", "1"));
         assertNull(FilterRule.pattern(FilterRule.Kind.ATOMIC_NUMBER, FilterRule.Op.GT, "118", null));
         assertNull(FilterRule.pattern(FilterRule.Kind.DEX_NUMBER, FilterRule.Op.GT, "1025", null));
+    }
+
+    @Test
+    public void foldMergesConsecutiveOrRowsIntoOneAlternation() {
+        assertEquals(Arrays.asList("(?:a|b|c)"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldKeepsYesAndNoRowsAsSeparateConstraints() {
+        assertEquals(Arrays.asList("a", "b", "!c"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_YES, FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void foldReadsPreviousOrGroupAsAlternation() {
+        assertEquals(Arrays.asList("(?:a|b)", "c"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b", "c"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void foldNegatesWholeAlternationWhenGroupStartsWithNo() {
+        assertEquals(Arrays.asList("!(?:a|b)"),
+                FilterRule.foldPatterns(Arrays.asList("a", "b"),
+                        Arrays.asList(FilterRule.ST_NO, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldNegatesLeadingNoRowAlone() {
+        assertEquals(Arrays.asList("!a"),
+                FilterRule.foldPatterns(Arrays.asList("a"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void foldSkipsEmptyPatternsButKeepsOrChain() {
+        assertEquals(Arrays.asList("(?:b|c)", "a"),
+                FilterRule.foldPatterns(Arrays.asList(null, "b", "c", "a"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR, FilterRule.ST_OR, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void foldTreatsLeadingOrRowAsPlainConstraint() {
+        assertEquals(Arrays.asList("a"),
+                FilterRule.foldPatterns(Arrays.asList("a"),
+                        Arrays.asList(FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void foldOfAllEmptyPatternsProducesNoConstraints() {
+        assertEquals(Arrays.asList(),
+                FilterRule.foldPatterns(Arrays.asList("", "", ""),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO, FilterRule.ST_OR)));
+    }
+
+    private static List<String> strings(String... s) {
+        return new ArrayList<String>(Arrays.asList(s));
+    }
+
+    @Test
+    public void narrowWithNoDatasetRowsKeepsTheEnabledSet() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon"),
+                FilterRule.narrowSources(
+                        strings("cs.canon", "en.canon", "periodic.canon"),
+                        new ArrayList<String>(), new ArrayList<Integer>()));
+    }
+
+    @Test
+    public void narrowYesRowRestrictsToThatSource() {
+        assertEquals(strings("en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon"),
+                        Arrays.asList(FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void narrowTwoYesRowsSearchBoth() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("cs.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_YES)));
+    }
+
+    @Test
+    public void narrowNoRowExcludesItFromTheEnabledSet() {
+        assertEquals(strings("cs.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowNoRowForAbsentSourceIsANoOp() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon"),
+                        Arrays.asList(FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowOrRowAddsItsSourceWithoutDroppingTheRest() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon"),
+                        Arrays.asList(FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowOrRowsUnionWithTheEnabledSet() {
+        assertEquals(strings("cs.canon", "en.canon", "periodic.canon", "pokemon.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("periodic.canon", "pokemon.canon"),
+                        Arrays.asList(FilterRule.ST_OR, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowOrRowAddsAlternativesOnTopOfYesNarrow() {
+        assertEquals(strings("en.canon", "periodic.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon", "periodic.canon"),
+                        strings("en.canon", "periodic.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_OR)));
+    }
+
+    @Test
+    public void narrowExclusionWinsOverInclusion() {
+        assertEquals(strings(),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("en.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO)));
+        assertEquals(strings("cs.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("en.canon", "en.canon"),
+                        Arrays.asList(FilterRule.ST_OR, FilterRule.ST_NO)));
+    }
+
+    @Test
+    public void narrowSkipsEmptyDatasetNames() {
+        assertEquals(strings("cs.canon", "en.canon"),
+                FilterRule.narrowSources(strings("cs.canon", "en.canon"),
+                        strings("", ""),
+                        Arrays.asList(FilterRule.ST_YES, FilterRule.ST_NO)));
     }
 }

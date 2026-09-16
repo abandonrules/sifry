@@ -17,6 +17,13 @@
         tools:ignore="UnusedAttribute"/>
 
     <item
+        android:id="@+id/mCtxPacks"
+        android:title="@string/tLookupPacks"
+        android:icon="@drawable/ic_menu_revert"
+        android:showAsAction="ifRoom"
+        tools:ignore="UnusedAttribute"/>
+
+    <item
         android:id="@+id/mCtxCopy"
         android:title="@string/tCtxCopy"
         android:icon="@drawable/ic_menu_copy"
