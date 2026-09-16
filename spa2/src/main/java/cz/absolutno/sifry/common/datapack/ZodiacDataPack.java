@@ -27,7 +27,7 @@ public final class ZodiacDataPack extends BaseDataPack {
 
     public ZodiacDataPack(PackManifest manifest, List<PackRecord> records) {
         super(manifest, records, Arrays.asList(
-                new FieldDefinition("date", "Birth date", FieldDefinition.Kind.DATE),
+                new FieldDefinition("rangeText", "Date range", FieldDefinition.Kind.TEXT),
                 new FieldDefinition("ordinal", "Sign order", FieldDefinition.Kind.NUMERIC),
                 new FieldDefinition("element", "Element", FieldDefinition.Kind.TEXT),
                 new FieldDefinition("month", "Month", FieldDefinition.Kind.NUMERIC)));
@@ -161,11 +161,7 @@ public final class ZodiacDataPack extends BaseDataPack {
                     return wrap(hits, records().size());
                 }
             }
-            return wrap(hits, records().size());
-        }
-        if ("date".equals(spec.field()) && spec.op() == FilterSpec.Op.EQ) {
-            int[] md = parseMonthDay(spec.value());
-            List<EntityResult> hits = new ArrayList<EntityResult>();
+            int[] md = parseMonthDay(q);
             if (md != null) {
                 PackRecord sign = signForDate(md[0], md[1]);
                 if (sign != null) {
@@ -175,7 +171,7 @@ public final class ZodiacDataPack extends BaseDataPack {
             }
             return wrap(hits, records().size());
         }
-        return wrap(matchNumericField(spec.field(), spec), records().size());
+        return wrap(matchField(spec.field(), spec), records().size());
     }
 
     private PackRecord signByName(String name) {

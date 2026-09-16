@@ -26,9 +26,7 @@ public final class NatoDataPack extends BaseDataPack {
     private final Map<String, PackRecord> byId;
 
     public NatoDataPack(PackManifest manifest, List<PackRecord> records) {
-        super(manifest, records, Arrays.asList(
-                new FieldDefinition("word", "Spelling word", FieldDefinition.Kind.TEXT),
-                new FieldDefinition("property", "Spoken digit word", FieldDefinition.Kind.TEXT)));
+        super(manifest, records, new ArrayList<FieldDefinition>());
         this.wordToLetter = new HashMap<String, String>();
         this.letterToWord = new HashMap<String, String>();
         this.digitWordToDigit = new HashMap<String, String>();

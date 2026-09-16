@@ -23,8 +23,8 @@ public final class GreekDataPack extends BaseDataPack {
     public GreekDataPack(PackManifest manifest, List<PackRecord> records) {
         super(manifest, records, Arrays.asList(
                 new FieldDefinition("ordinal", "Position", FieldDefinition.Kind.NUMERIC),
-                new FieldDefinition("upperCase", "Uppercase", FieldDefinition.Kind.TEXT),
-                new FieldDefinition("lowerCase", "Lowercase", FieldDefinition.Kind.TEXT),
+                new FieldDefinition("uppercase", "Uppercase", FieldDefinition.Kind.TEXT),
+                new FieldDefinition("lowercase", "Lowercase", FieldDefinition.Kind.TEXT),
                 new FieldDefinition("transliterations", "Transliteration", FieldDefinition.Kind.TEXT)));
         this.symbolToName = new HashMap<String, String>();
         this.ordinalToRecord = new HashMap<Integer, PackRecord>();

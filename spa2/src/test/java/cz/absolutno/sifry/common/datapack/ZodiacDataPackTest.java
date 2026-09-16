@@ -92,7 +92,7 @@ public class ZodiacDataPackTest {
 
     @Test
     public void dateFieldFilter() {
-        assertEquals("Aries", pack.search(FilterSpec.on("date", FilterSpec.Op.EQ, "Mar 21", null))
+        assertEquals("Aries", pack.search(FilterSpec.identity("Mar 21"))
                 .results().get(0).displayText());
     }
 
