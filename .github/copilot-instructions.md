@@ -14,5 +14,5 @@ Native code is only exercised by Tier 3, so native changes must not regress the 
 When performing a code review, respect the project conventions:
 - All module activities are `final`
 - Czech/English dual localization (no hardcoded strings)
-- No comments in code (project convention)
+- Comment code heavily (project convention): prefer explanatory comments and Javadoc that document intent, invariants, non-obvious math and edge cases over sparse code. Generous commenting is desired, so do not flag comments as clutter.
 - Cipher modules follow Activity → DFragment/CFragment/RFragment pattern
