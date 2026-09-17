@@ -157,6 +157,9 @@ the skipped letters are considered non-alphabetic characters as they do not have
     <string name="tSDKasiski">Key analysis (Vigenère / Kasiski)</string>
     <string name="tSDKasiskiKonv">Letter combination (A + B / A − B)</string>
     <string name="tSDKasiskiDelka">Key length (number of key positions)</string>
+    <string name="tSDKasiskiKandidati">Candidate key lengths (from repeated sequences)</string>
+    <string name="tSDKasiskiEvidence">Repeated sequences, positions, distances and factors</string>
+    <string name="patKasiskiKandidat">Length %1$d — %2$d matching distances</string>
     <string name="tSDKasiskiPlain">Plaintext preview</string>
     <string name="patKasiskiSlot">Key position %1$d, %2$s, %3$s</string>
     <string name="cdKasiskiUp">Increase key position %1$d</string>

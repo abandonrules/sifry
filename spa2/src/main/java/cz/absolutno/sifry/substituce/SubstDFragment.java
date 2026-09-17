@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
@@ -26,6 +27,7 @@ import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
 import cz.absolutno.sifry.common.alphabet.Alphabet;
 import cz.absolutno.sifry.common.widget.FixedGridLayout;
+import cz.absolutno.sifry.substituce.analysis.KasiskiAnalyzer;
 import cz.absolutno.sifry.substituce.analysis.KeyWheelView;
 import cz.absolutno.sifry.substituce.analysis.VigenereConvention;
 import cz.absolutno.sifry.substituce.analysis.VigenereWorkbench;
@@ -40,6 +42,12 @@ public final class SubstDFragment extends AbstractDFragment {
     private static final String KAS_LETTERS = "kasiski.letters";
     private static final String KAS_LOCKS = "kasiski.locks";
     private static final String KAS_SELECTED = "kasiski.selected";
+
+    /** How many Kasiski candidate lengths are offered in the dropdown. */
+    private static final int MAX_CANDIDATES = 12;
+
+    /** Candidate key lengths currently listed, indexed by spinner position. */
+    private int[] candidatePeriods = new int[0];
 
     private int[] groupIDs;
     private AbstractSubstAdapter adapter;
@@ -85,6 +93,7 @@ public final class SubstDFragment extends AbstractDFragment {
         keyWheel = v.findViewById(R.id.kvSDKasiski);
         keyWheel.setOnWorkbenchChanged(kasiskiChangedListener);
         ((Spinner) v.findViewById(R.id.spSDKasiskiKonv)).setOnItemSelectedListener(itemSelectedListener);
+        ((Spinner) v.findViewById(R.id.spSDKasiskiKandidati)).setOnItemSelectedListener(itemSelectedListener);
         ((TextView) v.findViewById(R.id.etSDKasiskiDelka)).setOnEditorActionListener(editorActionListener);
 
         if (savedInstanceState != null)
@@ -118,6 +127,16 @@ public final class SubstDFragment extends AbstractDFragment {
                 // ordinals) and only re-derives the plaintext.
                 if (!suppressKasiskiEvents && workbench != null)
                     applyWorkbench(workbench.withConvention(conventionAt(position)));
+            } else if (id1 == R.id.spSDKasiskiKandidati) {
+                // Choosing a candidate length keeps the letters already guessed
+                // for the surviving slots and only resizes the wheel.
+                if (!suppressKasiskiEvents && workbench != null) {
+                    int period = candidatePeriodAt(position);
+                    if (period > 0) {
+                        ((EditText) getView().findViewById(R.id.etSDKasiskiDelka)).setText(String.valueOf(period));
+                        applyWorkbench(workbench.withKeyLength(period));
+                    }
+                }
             }
         }
 
@@ -140,13 +159,19 @@ public final class SubstDFragment extends AbstractDFragment {
 
     @SuppressWarnings("ConstantConditions")
     private void zpracuj() {
-        if (adapter == null) {
-            // Kasiski subtype: (re)build the workbench from the current inputs.
+        if (adapter instanceof KasiskiAdapter) {
+            // Kasiski subtype: refresh the evidence list and (re)build the
+            // workbench from the current inputs.
+            adapter.setInput(((TextView) getView().findViewById(R.id.etSDSifra)).getText().toString());
             buildWorkbench();
             return;
         }
-        if (adapter != null)
-            adapter.setInput(((TextView) getView().findViewById(R.id.etSDSifra)).getText().toString());
+        if (adapter == null) {
+            // Defensive: the subtype has not been laid out yet.
+            buildWorkbench();
+            return;
+        }
+        adapter.setInput(((TextView) getView().findViewById(R.id.etSDSifra)).getText().toString());
         if (adapter instanceof HesloAdapter)
             ((HesloAdapter) adapter).setKey(((TextView) getView().findViewById(R.id.etSDHeslo)).getText().toString());
         else if (adapter instanceof KlicAdapter)
@@ -164,7 +189,10 @@ public final class SubstDFragment extends AbstractDFragment {
     @Override
     protected void onPaste(String s) {
         ((EditText) getView().findViewById(R.id.etSDSifra)).setText(s);
-        if (adapter != null)
+        if (adapter instanceof KasiskiAdapter) {
+            adapter.setInput(s);
+            buildWorkbench();
+        } else if (adapter != null)
             adapter.setInput(s);
         else
             buildWorkbench();
@@ -247,6 +275,45 @@ public final class SubstDFragment extends AbstractDFragment {
                 conventionAt(((Spinner) getView().findViewById(R.id.spSDKasiskiKonv)).getSelectedItemPosition()),
                 currentKeyLength());
         applyWorkbench(workbench);
+        refreshCandidates(workbench.getCiphertext(), workbench.getKeyLength());
+    }
+
+    /**
+     * Recomputes the Kasiski candidate key lengths for the current ciphertext and
+     * shows the strongest few in the dropdown. Evidence only: the list informs the
+     * solver, it never selects a length on its own. If the current length is among
+     * the candidates it is preselected so the dropdown agrees with the wheel.
+     */
+    @SuppressWarnings("ConstantConditions")
+    private void refreshCandidates(String ciphertext, int currentLen) {
+        List<KasiskiAnalyzer.PeriodCandidate> candidates = KasiskiAnalyzer.candidatePeriods(ciphertext);
+        int count = Math.min(candidates.size(), MAX_CANDIDATES);
+        candidatePeriods = new int[count];
+        List<String> items = new ArrayList<String>(count);
+        int select = -1;
+        for (int i = 0; i < count; i++) {
+            KasiskiAnalyzer.PeriodCandidate c = candidates.get(i);
+            candidatePeriods[i] = c.getPeriod();
+            items.add(getString(R.string.patKasiskiKandidat, c.getPeriod(), c.getEvidence()));
+            if (c.getPeriod() == currentLen)
+                select = i;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner sp = getView().findViewById(R.id.spSDKasiskiKandidati);
+        // Populating/selecting the spinner must not bounce back into a rebuild.
+        suppressKasiskiEvents = true;
+        sp.setAdapter(adapter);
+        if (select >= 0)
+            sp.setSelection(select);
+        suppressKasiskiEvents = false;
+    }
+
+    /** Maps a candidate-spinner position onto its key length, or -1. */
+    private int candidatePeriodAt(int position) {
+        if (position < 0 || position >= candidatePeriods.length)
+            return -1;
+        return candidatePeriods[position];
     }
 
     /** Pushes a workbench into the wheel and refreshes the plaintext preview. */
@@ -322,20 +389,23 @@ public final class SubstDFragment extends AbstractDFragment {
         getView().findViewById(R.id.llSDVlastni).setVisibility(selItem == R.id.idSDVlastni ? View.VISIBLE : View.GONE);
 
         // The interactive key analysis replaces the result list with its own
-        // key-wheel and plaintext preview, so it is handled before the adapter
-        // dispatch below (which does not apply to it).
+        // key-wheel and plaintext preview, and repurposes the list below for the
+        // raw Kasiski evidence.
         boolean kasiski = selItem == R.id.idSDKasiski;
         getView().findViewById(R.id.llSDKasiski).setVisibility(kasiski ? View.VISIBLE : View.GONE);
-        getView().findViewById(R.id.lvSDRes).setVisibility(kasiski ? View.GONE : View.VISIBLE);
-        getView().findViewById(R.id.tvSDResLabel).setVisibility(kasiski ? View.GONE : View.VISIBLE);
+        TextView resLabel = getView().findViewById(R.id.tvSDResLabel);
         if (kasiski) {
-            adapter = null;
+            resLabel.setText(R.string.tSDKasiskiEvidence);
+            adapter = new KasiskiAdapter(abc);
+            ((ListView) getView().findViewById(R.id.lvSDRes)).setAdapter(adapter);
+            adapter.setInput(str);
             if (workbench == null)
                 buildWorkbench();
             else
                 applyWorkbench(workbench);
             return;
         }
+        resLabel.setText(R.string.tRes);
         workbench = null;
 
         if (adapter instanceof TranslateAdapter)

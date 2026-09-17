@@ -177,6 +177,17 @@
             android:imeOptions="flagNoExtractUi"
             android:inputType="number" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSDKasiskiKandidati" />
+
+        <Spinner
+            android:id="@+id/spSDKasiskiKandidati"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@android:layout/simple_spinner_item" />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
