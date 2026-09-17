@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -17,8 +16,6 @@ import java.util.Map;
  * All input text is folded to uppercase A-Z; any other character is a passthrough.
  */
 public final class VigenereEngine {
-
-    private static final int MOD = 26;
 
     private VigenereEngine() {
     }
@@ -85,13 +82,14 @@ public final class VigenereEngine {
     public static String derivePlainColumn(String ciphertext, VigenereConvention convention,
                                            String key, int onlySlot, String currentPlain) {
         StringBuilder dst = new StringBuilder();
+        Alignment alignment = align(ciphertext, key.length());
         for (int i = 0; i < ciphertext.length(); i++) {
             char c = ciphertext.charAt(i);
             if (!isLetter(c)) {
                 dst.append(toUpper(c));
                 continue;
             }
-            int slot = align(ciphertext, key.length()).slotAt(i);
+            int slot = alignment.slotAt(i);
             if (onlySlot >= 0 && slot != onlySlot) {
                 dst.append(currentPlain.charAt(i));
                 continue;
