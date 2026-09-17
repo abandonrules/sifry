@@ -75,6 +75,27 @@ public final class VigenereEngineTest {
     }
 
     @Test
+    public void derivePlainColumnPreservesOtherSlots() {
+        // Slot 0 governs positions 0, 5 and 10 ("AKW" in the plaintext). Corrupting
+        // them and then asking for slot 1 must keep the corruption untouched while
+        // slot 1 letters are recomputed; an implementation that silently ignores
+        // onlySlot and recomputes everything would wipe the 'Z' markers.
+        String current = VigenereEngine.derivePlain(CT, CONV, KEY);
+        char[] corrupted = current.toCharArray();
+        corrupted[0] = 'Z';
+        corrupted[5] = 'Z';
+        corrupted[10] = 'Z';
+        String col = VigenereEngine.derivePlainColumn(CT, CONV, KEY, 1, new String(corrupted));
+        assertEquals('Z', col.charAt(0));
+        assertEquals('Z', col.charAt(5));
+        assertEquals('Z', col.charAt(10));
+        assertEquals(PT.charAt(1), col.charAt(1));
+        assertEquals(PT.charAt(6), col.charAt(6));
+        assertEquals(PT.charAt(11), col.charAt(11));
+        assertEquals(PT.charAt(2), col.charAt(2));
+    }
+
+    @Test
     public void deriveRequiredKeyRoundTripsWithDerivePlain() {
         VigenereEngine.DerivedKey dk = VigenereEngine.deriveRequiredKey(CT, PT, CONV, KEY.length());
         assertFalse(dk.hasConflicts());
@@ -115,6 +136,16 @@ public final class VigenereEngineTest {
                 }
             }
         }
+    }
+
+    @Test
+    public void lowercaseInputIsFoldedBeforeEncrypting() {
+        // Pasted text is often lower case; the engine documents that it folds to
+        // upper case, so the ciphertext and the key must both be case-insensitive.
+        assertEquals(PT, VigenereEngine.derivePlain(CT.toLowerCase(), CONV, KEY));
+        assertEquals(PT, VigenereEngine.derivePlain(CT, CONV, KEY.toLowerCase()));
+        VigenereEngine.DerivedKey dk = VigenereEngine.deriveRequiredKey(CT, PT.toLowerCase(), CONV, KEY.length());
+        assertFalse(dk.hasConflicts());
     }
 
     @Test

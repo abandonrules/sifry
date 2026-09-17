@@ -13,7 +13,8 @@ import java.util.Map;
  * {@code (letterIndex mod keyLength)}. Spaces and punctuation never consume a key
  * position: they are skipped for alignment and copied into the plaintext unchanged.
  * <p>
- * All input text is folded to uppercase A-Z; any other character is a passthrough.
+ * All input letters are case-insensitive: lowercase is folded to uppercase before
+ * any output is derived; any other character is a passthrough.
  */
 public final class VigenereEngine {
 
@@ -126,7 +127,10 @@ public final class VigenereEngine {
      * with slot {@code index mod keyLength} over the letter positions (spaces and
      * punctuation do not consume key slots, matching {@link #align}).
      * <p>
-     * The two strings must have the same length; non-letter positions must coincide.
+     * The two strings must have the same length. Where the ciphertext is a non-letter the
+     * plaintext must be a non-letter too (a letter there throws). A partial hypothesis may
+     * leave a plaintext position unknown: a non-letter plaintext at a ciphertext letter
+     * derives no key letter for that position (wildcard, used by fragment propagation).
      * Positions where both are letters are compared for consistency: if the same slot
      * already requires a different letter, the conflict is reported in {@code conflicts}
      * rather than silently overwriting.
@@ -191,11 +195,14 @@ public final class VigenereEngine {
         }
     }
 
-    private static boolean isLetter(char c) {
-        return c >= 'A' && c <= 'Z';
+    static boolean isLetter(char c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
 
     private static int ord(char c) {
+        // Accept both cases; the caller folds the result to uppercase on output.
+        if (c >= 'a' && c <= 'z')
+            return c - 'a';
         return c - 'A';
     }
 

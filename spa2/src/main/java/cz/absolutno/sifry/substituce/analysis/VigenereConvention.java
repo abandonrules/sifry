@@ -83,9 +83,4 @@ public enum VigenereConvention {
         return b;
     }
 
-    /** Symbol used for labels, e.g. {@code "A + B (od 0)"} mirroring the app's strings. */
-    public String symbol() {
-        return (plus ? "A + B" : "A - B") + " (od " + (oneBased ? 1 : 0) + ")";
-    }
-
 }

@@ -104,6 +104,27 @@ public final class KasiskiAnalyzerTest {
     }
 
     @Test
+    public void divisorsOfOneAreEmptyAndNeverLeakAPeriod() {
+        // divisors documents values greater than 1; an overlapping repeat ("AAAA")
+        // has distance 1, which must not turn into a bogus period-1 candidate.
+        assertTrue(KasiskiAnalyzer.divisors(1).isEmpty());
+        assertTrue(KasiskiAnalyzer.candidatePeriods("AAAA").isEmpty());
+    }
+
+    @Test
+    public void periodCandidatesCompareByValue() {
+        List<KasiskiAnalyzer.PeriodCandidate> a = KasiskiAnalyzer.candidatePeriods(CT_REPEATED);
+        List<KasiskiAnalyzer.PeriodCandidate> b = KasiskiAnalyzer.candidatePeriods(CT_REPEATED);
+        assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
+        KasiskiAnalyzer.PeriodCandidate source = a.get(0);
+        KasiskiAnalyzer.PeriodCandidate copy =
+                new KasiskiAnalyzer.PeriodCandidate(source.getPeriod(), source.getEvidence());
+        assertEquals(source, copy);
+        assertEquals(source.hashCode(), copy.hashCode());
+    }
+
+    @Test
     public void candidatePeriodsIncludeKeywordLengthSix() {
         List<KasiskiAnalyzer.PeriodCandidate> cand = KasiskiAnalyzer.candidatePeriods(CT_REPEATED);
         assertTrue("expected a period-6 candidate in " + cand, containsPeriod(cand, 6));

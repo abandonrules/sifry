@@ -179,6 +179,19 @@ public final class VigenereAnalysisStateTest {
     }
 
     @Test
+    public void constructorRejectsMisindexedOrNullSlots() {
+        // The slot at list position i must be slot i; an entry claiming slot 99
+        // at index 0 is accepted nowhere else yet would blow up withKeyLength's
+        // reSlotted.get(slot). Null entries are rejected the same way.
+        assertThrows(IllegalArgumentException.class, () ->
+                new VigenereAnalysisState(CT, VigenereConvention.APLUSB1, 1,
+                        slots(new KeySlotState(99, 'A', false)), null));
+        assertThrows(IllegalArgumentException.class, () ->
+                new VigenereAnalysisState(CT, VigenereConvention.APLUSB1, 1,
+                        java.util.Collections.<KeySlotState>singletonList(null), null));
+    }
+
+    @Test
     public void withKeyLengthRejectsZero() {
         assertThrows(IllegalArgumentException.class, () -> state(2).withKeyLength(0));
     }

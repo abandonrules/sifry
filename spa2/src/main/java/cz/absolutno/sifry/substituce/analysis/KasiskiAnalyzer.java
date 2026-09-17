@@ -125,7 +125,7 @@ public final class KasiskiAnalyzer {
         return factors;
     }
 
-    /** Distinct divisors of n greater than 1, ascending. */
+    /** Distinct divisors of n greater than 1, ascending. Empty for n == 1. */
     public static List<Integer> divisors(int n) {
         if (n <= 0)
             throw new IllegalArgumentException("n must be positive");
@@ -135,7 +135,8 @@ public final class KasiskiAnalyzer {
                 div.put(i, Boolean.TRUE);
                 div.put(n / i, Boolean.TRUE);
             }
-        div.put(n, Boolean.TRUE);
+        if (n > 1)
+            div.put(n, Boolean.TRUE);
         List<Integer> out = new ArrayList<Integer>(div.keySet());
         Collections.sort(out);
         return out;
@@ -157,6 +158,26 @@ public final class KasiskiAnalyzer {
 
         public int getEvidence() {
             return evidence;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof PeriodCandidate))
+                return false;
+            PeriodCandidate that = (PeriodCandidate) o;
+            return period == that.period && evidence == that.evidence;
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * period + evidence;
+        }
+
+        @Override
+        public String toString() {
+            return "PeriodCandidate[" + period + ":" + evidence + "]";
         }
     }
 

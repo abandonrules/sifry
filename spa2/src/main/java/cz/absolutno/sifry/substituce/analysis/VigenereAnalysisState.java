@@ -33,6 +33,11 @@ public final class VigenereAnalysisState {
             throw new IllegalArgumentException("keyLength must be >= 1");
         if (keySlots == null || keySlots.size() != keyLength)
             throw new IllegalArgumentException("keySlots must have exactly keyLength slots");
+        for (int i = 0; i < keySlots.size(); i++) {
+            KeySlotState ks = keySlots.get(i);
+            if (ks == null || ks.getSlot() != i)
+                throw new IllegalArgumentException("keySlots[" + i + "] must be a non-null slot " + i);
+        }
         this.ciphertext = ciphertext;
         this.convention = convention;
         this.keyLength = keyLength;
