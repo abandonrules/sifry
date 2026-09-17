@@ -204,6 +204,10 @@ component directly.</p>
 	
 	
 <string name="tHelpNews"><![CDATA[
+<h1>Changes in v4.2</h1>
+– New Vigenère/Kasiski key analysis workbench: analysis state, the four letter-combination conventions, a deterministic key engine, and ranked Kasiski period candidates<br/>
+– The Kasiski examination follows the method described in C.-K. Shene, <i>Kasiski\'s Method</i>, Michigan Technological University (pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Kasiski.html)<br/>
+
 <h1>Changes in v4.1</h1>
 – Workbench state is now saved across app restarts (cipher settings, references and edited values)<br/>
 – Dictionary Search: new periodic-table, Pokemon and Wordle data sources, per-row filter kinds, operator menu, reference viewer, Show-all mode, search across all enabled sources, and per-source results with cross-source de-duplication<br/>

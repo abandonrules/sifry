@@ -192,6 +192,10 @@ nyní můžete komponentu používat přímo.</p>
 
 
 <string name="tHelpNews"><![CDATA[
+<h1>Novinky ve verzi 4.2</h1>
+– Nová pracovní plocha pro analýzu Vigenèrovy šifry metodou Kasiski: stav analýzy, čtyři varianty kombinace písmen, deterministický klíčový stroj a seřazení kandidáti na periodu<br/>
+– Kasiskiho zkoumání vychází z metody popsané v C.-K. Shene, <i>Kasiski\'s Method</i>, Michigan Technological University (pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Kasiski.html)<br/>
+
 <h1>Novinky ve verzi 4.1</h1>
 – Stav pracovních ploch se nyní ukládá mezi restartováním aplikace (nastavení šifer, reference a upravené hodnoty)<br/>
 – Databáze slov: nové zdroje dat (periodická tabulka, Pokémon, Wordle), typy filtrů pro jednotlivé řádky, nabídka operátorů, prohlížeč referencí, režim zobrazení všeho, vyhledávání ve všech zapnutých zdrojích a výsledky podle zdroje s odstraněním duplicit napříč zdroji<br/>

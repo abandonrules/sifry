@@ -17,7 +17,7 @@ public final class SubstActivity extends BottomBarActivity {
             if (!restoreWorkbench()) {
                 AbstractDFragment fragment = new SubstDFragment();
                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-                trans.replace(R.id.content, fragment);
+                trans.replace(R.id.content, fragment, "D");
                 trans.commit();
             }
         }

@@ -126,6 +126,7 @@ a tak nemůže být použito při aritmetických operacích.</p>
         <item>Pomocí polohy písmene</item>
         <item>Monoalfabetická s klíčem</item>
         <item>Vlastní překladová tabulka</item>
+        <item>Analýza klíče / Kasiski</item>
     </string-array>
 
     <array name="iaSDTypy">
@@ -137,7 +138,32 @@ a tak nemůže být použito při aritmetických operacích.</p>
         <item>@id/idSDPozice</item>
         <item>@id/idSDKlic</item>
         <item>@id/idSDVlastni</item>
+        <item>@id/idSDKasiski</item>
     </array>
+
+    <string name="tSDKasiski">Analýza klíče (Vigenère / Kasiski)</string>
+    <string name="tSDKasiskiKonv">Kombinace písmen (A + B / A − B)</string>
+    <string name="tSDKasiskiDelka">Délka klíče (počet pozic klíče)</string>
+    <string name="tSDKasiskiKandidati">Kandidáti délky klíče (z opakovaných sekvencí)</string>
+    <string name="tSDKasiskiEvidence">Opakované sekvence, pozice, vzdálenosti a činitele</string>
+    <string name="patKasiskiKandidat">Délka %1$d — %2$d shodných vzdáleností</string>
+    <string name="tSDKasiskiPlain">Náhled otevřeného textu</string>
+    <string name="patKasiskiSlot">Pozice klíče %1$d, %2$s, %3$s</string>
+    <string name="cdKasiskiUp">Zvýšit pozici klíče %1$d</string>
+    <string name="cdKasiskiDown">Snížit pozici klíče %1$d</string>
+    <string name="cdKasiskiLock">Zamknout nebo odemknout pozici klíče %1$d</string>
+    <string name="cdKasiskiStateChanged">změněno</string>
+    <string name="cdKasiskiStateLocked">zamčeno</string>
+    <string name="cdKasiskiStateSelected">vybráno</string>
+    <string name="cdKasiskiStateMatching">shoduje se s jinou pozicí</string>
+    <string name="cdKasiskiStateEmpty">prázdné</string>
+
+    <string-array name="saSDKasiskiKonv">
+        <item>A + B (od 0)</item>
+        <item>A − B (od 0)</item>
+        <item>A + B (od 1)</item>
+        <item>A − B (od 1)</item>
+    </string-array>
 
     <string-array name="saSDbezHesla">
         <item>A(n) + A(n-1) (od 1)</item>

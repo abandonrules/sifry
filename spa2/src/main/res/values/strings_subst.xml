@@ -139,6 +139,7 @@ the skipped letters are considered non-alphabetic characters as they do not have
         <item>Key = position</item>
         <item>Keyword ciphers</item>
         <item>Custom translation table</item>
+        <item>Key analysis / Kasiski</item>
     </string-array>
 
     <array name="iaSDTypy">
@@ -150,7 +151,32 @@ the skipped letters are considered non-alphabetic characters as they do not have
         <item>@id/idSDPozice</item>
         <item>@id/idSDKlic</item>
         <item>@id/idSDVlastni</item>
+        <item>@id/idSDKasiski</item>
     </array>
+
+    <string name="tSDKasiski">Key analysis (Vigenère / Kasiski)</string>
+    <string name="tSDKasiskiKonv">Letter combination (A + B / A − B)</string>
+    <string name="tSDKasiskiDelka">Key length (number of key positions)</string>
+    <string name="tSDKasiskiKandidati">Candidate key lengths (from repeated sequences)</string>
+    <string name="tSDKasiskiEvidence">Repeated sequences, positions, distances and factors</string>
+    <string name="patKasiskiKandidat">Length %1$d — %2$d matching distances</string>
+    <string name="tSDKasiskiPlain">Plaintext preview</string>
+    <string name="patKasiskiSlot">Key position %1$d, %2$s, %3$s</string>
+    <string name="cdKasiskiUp">Increase key position %1$d</string>
+    <string name="cdKasiskiDown">Decrease key position %1$d</string>
+    <string name="cdKasiskiLock">Lock or unlock key position %1$d</string>
+    <string name="cdKasiskiStateChanged">changed</string>
+    <string name="cdKasiskiStateLocked">locked</string>
+    <string name="cdKasiskiStateSelected">selected</string>
+    <string name="cdKasiskiStateMatching">matching another position</string>
+    <string name="cdKasiskiStateEmpty">empty</string>
+
+    <string-array name="saSDKasiskiKonv">
+        <item>A + B (0-based)</item>
+        <item>A − B (0-based)</item>
+        <item>A + B (1-based)</item>
+        <item>A − B (1-based)</item>
+    </string-array>
 
     <string-array name="saSDbezHesla">
         <item>A(n) + A(n-1) (1-based)</item>
