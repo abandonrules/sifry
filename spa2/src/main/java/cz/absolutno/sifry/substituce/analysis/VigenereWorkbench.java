@@ -126,7 +126,7 @@ public final class VigenereWorkbench {
     /**
      * Cycles the selected slot's key letter by {@code delta} positions, wrapping
      * A..Z in both directions (a vertical swipe or the accessible up/down
-     * controls). An unassigned slot starts from 'A' before stepping.
+     * controls). See {@link #step(int, int)} for how a blank slot behaves.
      */
     public void stepSelected(int delta) {
         step(selected, delta);

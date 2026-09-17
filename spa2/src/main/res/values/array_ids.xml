@@ -78,6 +78,7 @@
     <item type="id" name="idSDAffini" />
     <item type="id" name="idSDKlic" />
     <item type="id" name="idSDVlastni" />
+    <item type="id" name="idSDKasiski" />
 
     <item type="id" name="idFDGPismenaC" />
     <item type="id" name="idFDGCisliceC" />

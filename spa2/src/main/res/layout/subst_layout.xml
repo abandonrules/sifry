@@ -141,7 +141,68 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/llSDKasiski"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSDKasiski" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSDKasiskiKonv" />
+
+        <Spinner
+            android:id="@+id/spSDKasiskiKonv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/saSDKasiskiKonv"
+            tools:listitem="@android:layout/simple_spinner_item" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSDKasiskiDelka" />
+
+        <EditText
+            android:id="@+id/etSDKasiskiDelka"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="number" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <cz.absolutno.sifry.substituce.analysis.KeyWheelView
+                android:id="@+id/kvSDKasiski"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSDKasiskiPlain" />
+
+        <TextView
+            android:id="@+id/tvSDKasiskiPlain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace" />
+
+    </LinearLayout>
+
     <TextView
+        android:id="@+id/tvSDResLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tRes" />

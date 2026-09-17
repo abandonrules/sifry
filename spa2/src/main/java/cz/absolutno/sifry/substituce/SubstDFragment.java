@@ -26,8 +26,20 @@ import cz.absolutno.sifry.Utils;
 import cz.absolutno.sifry.common.activity.AbstractDFragment;
 import cz.absolutno.sifry.common.alphabet.Alphabet;
 import cz.absolutno.sifry.common.widget.FixedGridLayout;
+import cz.absolutno.sifry.substituce.analysis.KeyWheelView;
+import cz.absolutno.sifry.substituce.analysis.VigenereConvention;
+import cz.absolutno.sifry.substituce.analysis.VigenereWorkbench;
 
 public final class SubstDFragment extends AbstractDFragment {
+
+    // Keys under which the Kasiski workbench persists its extra state in the
+    // shared save bundle. They are private to this fragment because nothing else
+    // needs to understand them.
+    private static final String KAS_LEN = "kasiski.len";
+    private static final String KAS_CONV = "kasiski.conv";
+    private static final String KAS_LETTERS = "kasiski.letters";
+    private static final String KAS_LOCKS = "kasiski.locks";
+    private static final String KAS_SELECTED = "kasiski.selected";
 
     private int[] groupIDs;
     private AbstractSubstAdapter adapter;
@@ -35,6 +47,16 @@ public final class SubstDFragment extends AbstractDFragment {
     private String patKoef;
     private int[] savedTr = null;
     private Bundle restored = null;
+
+    /** Non-null only while the Kasiski analysis subtype is showing. */
+    private VigenereWorkbench workbench;
+    private KeyWheelView keyWheel;
+
+    /**
+     * Set while programmatically moving the convention spinner, so the resulting
+     * item-selected callback does not immediately rebuild the workbench again.
+     */
+    private boolean suppressKasiskiEvents;
 
     @Override
     protected int getMenuCaps() {
@@ -56,6 +78,14 @@ public final class SubstDFragment extends AbstractDFragment {
 
         groupIDs = Utils.getIdArray(R.array.iaSDTypy);
         patKoef = getString(R.string.patSDKoef);
+
+        // The key-wheel and its two inputs exist in the layout for every subtype
+        // (they are hidden unless the Kasiski entry is chosen), so they can be
+        // wired once here.
+        keyWheel = v.findViewById(R.id.kvSDKasiski);
+        keyWheel.setOnWorkbenchChanged(kasiskiChangedListener);
+        ((Spinner) v.findViewById(R.id.spSDKasiskiKonv)).setOnItemSelectedListener(itemSelectedListener);
+        ((TextView) v.findViewById(R.id.etSDKasiskiDelka)).setOnEditorActionListener(editorActionListener);
 
         if (savedInstanceState != null)
             savedTr = savedInstanceState.getIntArray(App.DATA);
@@ -83,6 +113,11 @@ public final class SubstDFragment extends AbstractDFragment {
             } else if(id1 == R.id.spSDKPokr) {
                 if (adapter instanceof KlicAdapter)
                     ((KlicAdapter) adapter).setKlic(((EditText) getView().findViewById(R.id.etSDKlic)).getText().toString(), position);
+            } else if (id1 == R.id.spSDKasiskiKonv) {
+                // Changing the convention keeps the key letters (they are
+                // ordinals) and only re-derives the plaintext.
+                if (!suppressKasiskiEvents && workbench != null)
+                    applyWorkbench(workbench.withConvention(conventionAt(position)));
             }
         }
 
@@ -105,6 +140,11 @@ public final class SubstDFragment extends AbstractDFragment {
 
     @SuppressWarnings("ConstantConditions")
     private void zpracuj() {
+        if (adapter == null) {
+            // Kasiski subtype: (re)build the workbench from the current inputs.
+            buildWorkbench();
+            return;
+        }
         if (adapter != null)
             adapter.setInput(((TextView) getView().findViewById(R.id.etSDSifra)).getText().toString());
         if (adapter instanceof HesloAdapter)
@@ -124,7 +164,10 @@ public final class SubstDFragment extends AbstractDFragment {
     @Override
     protected void onPaste(String s) {
         ((EditText) getView().findViewById(R.id.etSDSifra)).setText(s);
-        adapter.setInput(s);
+        if (adapter != null)
+            adapter.setInput(s);
+        else
+            buildWorkbench();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -133,9 +176,17 @@ public final class SubstDFragment extends AbstractDFragment {
         ((EditText) getView().findViewById(R.id.etSDSifra)).setText("");
         ((EditText) getView().findViewById(R.id.etSDHeslo)).setText("");
         ((EditText) getView().findViewById(R.id.etSDKlic)).setText("");
-        adapter.clear();
-        if (adapter instanceof TranslateAdapter)
-            updateFGL();
+        if (adapter != null) {
+            adapter.clear();
+            if (adapter instanceof TranslateAdapter)
+                updateFGL();
+        }
+        // Drop the interactive workbench entirely; updateLayout will build a new
+        // empty one if the Kasiski subtype is still showing.
+        workbench = null;
+        if (keyWheel != null)
+            keyWheel.setWorkbench(null);
+        ((TextView) getView().findViewById(R.id.tvSDKasiskiPlain)).setText("");
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -176,6 +227,90 @@ public final class SubstDFragment extends AbstractDFragment {
         }
     }
 
+    // ---- Interactive key analysis (Vigenère / Kasiski) ----------------------
+    // The methods below are the thin Android glue around the pure-JVM
+    // VigenereWorkbench: they build the controller from the screen inputs, render
+    // its plaintext and persist it. All cipher logic stays in the analysis package.
+
+    /** Re-renders the plaintext preview whenever the wheel changes the key. */
+    private final KeyWheelView.OnWorkbenchChanged kasiskiChangedListener = new KeyWheelView.OnWorkbenchChanged() {
+        public void onWorkbenchChanged(VigenereWorkbench wb) {
+            ((TextView) getView().findViewById(R.id.tvSDKasiskiPlain)).setText(wb.getPlaintext());
+        }
+    };
+
+    /** Builds a fresh workbench from the current ciphertext and inputs. */
+    @SuppressWarnings("ConstantConditions")
+    private void buildWorkbench() {
+        workbench = new VigenereWorkbench(
+                ((EditText) getView().findViewById(R.id.etSDSifra)).getText().toString(),
+                conventionAt(((Spinner) getView().findViewById(R.id.spSDKasiskiKonv)).getSelectedItemPosition()),
+                currentKeyLength());
+        applyWorkbench(workbench);
+    }
+
+    /** Pushes a workbench into the wheel and refreshes the plaintext preview. */
+    @SuppressWarnings("ConstantConditions")
+    private void applyWorkbench(VigenereWorkbench wb) {
+        workbench = wb;
+        keyWheel.setWorkbench(wb);
+        ((TextView) getView().findViewById(R.id.tvSDKasiskiPlain)).setText(wb.getPlaintext());
+    }
+
+    /** Reads the requested key length, defaulting to 1 and clamping to 1..64. */
+    @SuppressWarnings("ConstantConditions")
+    private int currentKeyLength() {
+        int len;
+        try {
+            len = Integer.parseInt(((EditText) getView().findViewById(R.id.etSDKasiskiDelka)).getText().toString().trim());
+        } catch (NumberFormatException e) {
+            len = 1;
+        }
+        return Math.max(1, Math.min(64, len));
+    }
+
+    /** Maps the convention spinner position onto the enum. */
+    private static VigenereConvention conventionAt(int position) {
+        VigenereConvention[] values = VigenereConvention.values();
+        if (position < 0 || position >= values.length)
+            return VigenereConvention.APLUSB0;
+        return values[position];
+    }
+
+    /** Encodes the key letters for persistence, using '-' for a blank slot. */
+    private static String keyLetters(VigenereWorkbench wb) {
+        StringBuilder sb = new StringBuilder(wb.getKeyLength());
+        for (int i = 0; i < wb.getKeyLength(); i++) {
+            Character c = wb.getSlot(i).getKeyLetter();
+            sb.append(c != null ? c : '-');
+        }
+        return sb.toString();
+    }
+
+    /** Re-applies a previously saved workbench on top of the freshly built one. */
+    @SuppressWarnings("ConstantConditions")
+    private void restoreWorkbench(Bundle d) {
+        if (workbench == null)
+            return;
+        int conv = d.getInt(KAS_CONV, workbench.getConvention().ordinal());
+        suppressKasiskiEvents = true;
+        ((Spinner) getView().findViewById(R.id.spSDKasiskiKonv)).setSelection(conv);
+        suppressKasiskiEvents = false;
+        VigenereWorkbench wb = workbench.withConvention(conventionAt(conv));
+        String letters = d.getString(KAS_LETTERS);
+        for (int i = 0; letters != null && i < letters.length() && i < wb.getKeyLength(); i++) {
+            char c = letters.charAt(i);
+            if (c >= 'A' && c <= 'Z')
+                wb.setSlotLetter(i, c);
+        }
+        boolean[] locks = d.getBooleanArray(KAS_LOCKS);
+        for (int i = 0; locks != null && i < locks.length && i < wb.getKeyLength(); i++)
+            if (locks[i])
+                wb.toggleLock(i);
+        wb.select(Math.max(0, Math.min(wb.getKeyLength() - 1, d.getInt(KAS_SELECTED, 0))));
+        applyWorkbench(wb);
+    }
+
     @SuppressWarnings("ConstantConditions")
     private void updateLayout() {
         String str = ((EditText) getView().findViewById(R.id.etSDSifra)).getText().toString();
@@ -185,6 +320,23 @@ public final class SubstDFragment extends AbstractDFragment {
         getView().findViewById(R.id.llSDAfinni).setVisibility(selItem == R.id.idSDAffini ? View.VISIBLE : View.GONE);
         getView().findViewById(R.id.llSDKlic).setVisibility(selItem == R.id.idSDKlic ? View.VISIBLE : View.GONE);
         getView().findViewById(R.id.llSDVlastni).setVisibility(selItem == R.id.idSDVlastni ? View.VISIBLE : View.GONE);
+
+        // The interactive key analysis replaces the result list with its own
+        // key-wheel and plaintext preview, so it is handled before the adapter
+        // dispatch below (which does not apply to it).
+        boolean kasiski = selItem == R.id.idSDKasiski;
+        getView().findViewById(R.id.llSDKasiski).setVisibility(kasiski ? View.VISIBLE : View.GONE);
+        getView().findViewById(R.id.lvSDRes).setVisibility(kasiski ? View.GONE : View.VISIBLE);
+        getView().findViewById(R.id.tvSDResLabel).setVisibility(kasiski ? View.GONE : View.VISIBLE);
+        if (kasiski) {
+            adapter = null;
+            if (workbench == null)
+                buildWorkbench();
+            else
+                applyWorkbench(workbench);
+            return;
+        }
+        workbench = null;
 
         if (adapter instanceof TranslateAdapter)
             savedTr = ((TranslateAdapter) adapter).getTr();
@@ -276,6 +428,16 @@ public final class SubstDFragment extends AbstractDFragment {
         data.putString(App.VSTUP2, ((EditText) getView().findViewById(R.id.etSDKlic)).getText().toString());
         if (adapter instanceof TranslateAdapter)
             data.putIntArray(App.DATA, ((TranslateAdapter) adapter).getTr());
+        if (selGroup == R.id.idSDKasiski && workbench != null) {
+            data.putInt(KAS_LEN, workbench.getKeyLength());
+            data.putInt(KAS_CONV, workbench.getConvention().ordinal());
+            data.putString(KAS_LETTERS, keyLetters(workbench));
+            boolean[] locks = new boolean[workbench.getKeyLength()];
+            for (int i = 0; i < locks.length; i++)
+                locks[i] = workbench.getSlot(i).isLocked();
+            data.putBooleanArray(KAS_LOCKS, locks);
+            data.putInt(KAS_SELECTED, workbench.getSelectedSlot());
+        }
         return true;
     }
 
@@ -311,7 +473,16 @@ public final class SubstDFragment extends AbstractDFragment {
                 break;
             }
         }
+        // Restore the key length before updateLayout builds the workbench, then
+        // overlay the saved letters/locks/selection on top of the fresh one.
+        if (selGroup == R.id.idSDKasiski) {
+            int klen = d.getInt(KAS_LEN, 0);
+            if (klen > 0)
+                ((EditText) getView().findViewById(R.id.etSDKasiskiDelka)).setText(String.valueOf(klen));
+        }
         updateLayout();
+        if (selGroup == R.id.idSDKasiski)
+            restoreWorkbench(d);
     }
 
     @Override
