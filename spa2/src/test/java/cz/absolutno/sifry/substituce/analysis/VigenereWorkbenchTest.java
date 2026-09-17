@@ -161,4 +161,82 @@ public final class VigenereWorkbenchTest {
         assertFalse(PT.equals(plus.getPlaintext()));
     }
 
+    @Test
+    public void boundariesStartEmptyAndAreDecorative() {
+        VigenereWorkbench wb = new VigenereWorkbench(CT, CONV, KEY.length());
+        for (int s = 0; s < KEY.length(); s++)
+            wb.setSlotLetter(s, KEY.charAt(s));
+        assertTrue(wb.getBoundaries().isEmpty());
+        String plain = wb.getPlaintext();
+        for (int i = 0; i < wb.getLetterCount() - 1; i++)
+            wb.toggleBoundaryAfter(i);
+        assertEquals(wb.getLetterCount() - 1, wb.getBoundaries().size());
+        // Boundaries annotate the text; they never change derivation or the key.
+        assertEquals(plain, wb.getPlaintext());
+    }
+
+    @Test
+    public void toggleBoundaryFlipsTheSameGap() {
+        VigenereWorkbench wb = new VigenereWorkbench(CT, CONV, KEY.length());
+        assertFalse(wb.hasBoundaryAfter(2));
+        wb.toggleBoundaryAfter(2);
+        assertTrue(wb.hasBoundaryAfter(2));
+        wb.toggleBoundaryAfter(2);
+        assertFalse(wb.hasBoundaryAfter(2));
+        assertTrue(wb.getBoundaries().isEmpty());
+    }
+
+    @Test
+    public void boundariesAreKeyedByLetterIndexNotAbsolutePosition() {
+        // 7 letters (L X F O P V E); spaces and punctuation are not included in
+        // the coordinate space, so a gap index skips over every non-letter.
+        VigenereWorkbench wb = new VigenereWorkbench("LXF OP-VE", VigenereConvention.APLUSB0, 3);
+        assertEquals(7, wb.getLetterCount());
+        wb.toggleBoundaryAfter(2); // gap between F and O
+        assertTrue(wb.hasBoundaryAfter(2));
+        assertFalse(wb.hasBoundaryAfter(5));
+        assertFalse(wb.hasBoundaryAfter(6));
+    }
+
+    @Test
+    public void invalidBoundaryGapsAreRejected() {
+        VigenereWorkbench wb = new VigenereWorkbench(CT, CONV, KEY.length());
+        assertThrows(IllegalArgumentException.class, () -> wb.toggleBoundaryAfter(-1));
+        // The last letter has no gap after it.
+        assertThrows(IllegalArgumentException.class, () -> wb.toggleBoundaryAfter(wb.getLetterCount() - 1));
+        assertThrows(IllegalArgumentException.class, () -> wb.toggleBoundaryAfter(wb.getLetterCount()));
+    }
+
+    @Test
+    public void singleLetterAndEmptyCiphertextHaveNoBoundaryGaps() {
+        VigenereWorkbench single = new VigenereWorkbench("x", VigenereConvention.APLUSB0, 1);
+        assertEquals(1, single.getLetterCount());
+        assertThrows(IllegalArgumentException.class, () -> single.toggleBoundaryAfter(0));
+        VigenereWorkbench empty = new VigenereWorkbench("", VigenereConvention.APLUSB0, 1);
+        assertEquals(0, empty.getLetterCount());
+        assertThrows(IllegalArgumentException.class, () -> empty.toggleBoundaryAfter(0));
+    }
+
+    @Test
+    public void getBoundariesIsAnUnmodifiableView() {
+        VigenereWorkbench wb = new VigenereWorkbench(CT, CONV, KEY.length());
+        wb.toggleBoundaryAfter(3);
+        assertThrows(UnsupportedOperationException.class, () -> wb.getBoundaries().add(5));
+    }
+
+    @Test
+    public void boundariesSurviveKeyLengthAndConventionChanges() {
+        VigenereWorkbench wb = new VigenereWorkbench(CT, CONV, 5);
+        wb.setSlotLetter(0, 'L');
+        wb.toggleBoundaryAfter(2);
+        wb.toggleBoundaryAfter(7);
+        VigenereWorkbench resized = wb.withKeyLength(3);
+        assertTrue(resized.hasBoundaryAfter(2));
+        assertTrue(resized.hasBoundaryAfter(7));
+        assertFalse(wb.getBoundaries().isEmpty());
+        VigenereWorkbench switched = wb.withConvention(VigenereConvention.APLUSB1);
+        assertTrue(switched.hasBoundaryAfter(2));
+        assertTrue(switched.hasBoundaryAfter(7));
+    }
+
 }

@@ -20,6 +20,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cz.absolutno.sifry.App;
 import cz.absolutno.sifry.R;
@@ -42,6 +43,7 @@ public final class SubstDFragment extends AbstractDFragment {
     private static final String KAS_LETTERS = "kasiski.letters";
     private static final String KAS_LOCKS = "kasiski.locks";
     private static final String KAS_SELECTED = "kasiski.selected";
+    private static final String KAS_BOUNDARIES = "kasiski.boundaries";
 
     /** How many Kasiski candidate lengths are offered in the dropdown. */
     private static final int MAX_CANDIDATES = 12;
@@ -375,6 +377,15 @@ public final class SubstDFragment extends AbstractDFragment {
             if (locks[i])
                 wb.toggleLock(i);
         wb.select(Math.max(0, Math.min(wb.getKeyLength() - 1, d.getInt(KAS_SELECTED, 0))));
+        // Boundaries are keyed by letter index; the saved ciphertext restores the
+        // same letter count, so any stale index is defensively skipped.
+        int[] boundaries = d.getIntArray(KAS_BOUNDARIES);
+        if (boundaries != null) {
+            for (int i = 0; i < boundaries.length; i++) {
+                if (boundaries[i] >= 0 && boundaries[i] < wb.getLetterCount() - 1)
+                    wb.toggleBoundaryAfter(boundaries[i]);
+            }
+        }
         applyWorkbench(wb);
     }
 
@@ -507,6 +518,12 @@ public final class SubstDFragment extends AbstractDFragment {
                 locks[i] = workbench.getSlot(i).isLocked();
             data.putBooleanArray(KAS_LOCKS, locks);
             data.putInt(KAS_SELECTED, workbench.getSelectedSlot());
+            Set<Integer> boundaries = workbench.getBoundaries();
+            int[] boundaryArray = new int[boundaries.size()];
+            int i = 0;
+            for (int b : boundaries)
+                boundaryArray[i++] = b;
+            data.putIntArray(KAS_BOUNDARIES, boundaryArray);
         }
         return true;
     }

@@ -59,6 +59,16 @@ public final class VigenereWorkbench {
     private int selected;
 
     /**
+     * Manually placed word boundaries (issue #37, implementation step 3). Each
+     * entry is the index of a plaintext letter after which a boundary sits, so it
+     * annotates the gap between two adjacent letters. Boundaries are decorative
+     * annotations only: they consume no ciphertext or key position and never
+     * change how a letter is derived. They survive key-length and convention
+     * changes because they are keyed by letter position, not by slot.
+     */
+    private final Set<Integer> boundaries;
+
+    /**
      * Creates an empty workbench: every slot unassigned and unlocked, the first
      * slot selected.
      *
@@ -81,6 +91,7 @@ public final class VigenereWorkbench {
         for (int s = 0; s < keyLength; s++)
             this.slots.add(new KeySlotState(s));
         this.changed = new LinkedHashSet<Integer>();
+        this.boundaries = new LinkedHashSet<Integer>();
         this.selected = 0;
     }
 
@@ -232,21 +243,61 @@ public final class VigenereWorkbench {
             }
         }
         copy.selected = Math.min(selected, len - 1);
+        // Boundaries are keyed by letter position, so a key-length change does
+        // not touch them.
+        copy.boundaries.addAll(boundaries);
         return copy;
     }
 
     /**
      * Returns a shallow copy under a different convention. Key letters are
      * ordinals and convention-independent, so they carry over unchanged; only the
-     * derived plaintext differs.
+     * derived plaintext differs. Boundaries carry over too.
      */
     public VigenereWorkbench withConvention(VigenereConvention c) {
         VigenereWorkbench copy = new VigenereWorkbench(ciphertext, c, keyLength);
         copy.slots.clear();
         copy.slots.addAll(slots);
         copy.changed.addAll(changed);
+        copy.boundaries.addAll(boundaries);
         copy.selected = selected;
         return copy;
+    }
+
+    /** Number of letters in the ciphertext; the coordinate space of boundaries. */
+    public int getLetterCount() {
+        int count = 0;
+        for (int i = 0; i < ciphertext.length(); i++)
+            if (VigenereEngine.isLetter(ciphertext.charAt(i)))
+                count++;
+        return count;
+    }
+
+    /**
+     * True when a word boundary has been placed after the given plaintext letter.
+     * The index is a letter index ({@code 0 .. getLetterCount()-1}), so non-letter
+     * characters never shift it.
+     */
+    public boolean hasBoundaryAfter(int letterIndex) {
+        return boundaries.contains(letterIndex);
+    }
+
+    /**
+     * Toggles the boundary in the gap after the given plaintext letter. Only gaps
+     * that actually sit between two letters are valid, i.e. {@code 0 .. count-2}.
+     * A boundary is a user annotation: this never edits a key letter.
+     */
+    public void toggleBoundaryAfter(int letterIndex) {
+        int count = getLetterCount();
+        if (letterIndex < 0 || letterIndex >= count - 1)
+            throw new IllegalArgumentException("no gap after letter " + letterIndex);
+        if (!boundaries.remove(Integer.valueOf(letterIndex)))
+            boundaries.add(letterIndex);
+    }
+
+    /** Immutable view of the boundary positions (letter indices). */
+    public Set<Integer> getBoundaries() {
+        return Collections.unmodifiableSet(boundaries);
     }
 
     /** Builds the key string the engine expects, substituting 'A' for blanks. */
