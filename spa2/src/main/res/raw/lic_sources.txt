@@ -41,3 +41,21 @@ Wordle
   Valid Wordle answers and guesses, collected from the NYT Wordle game by
   Steve Kasica.
   https://github.com/steve-kasica/wordle-words
+
+
+Calvin and Hobbes (Lookup packs)
+
+  "Calvin and Hobbes" was created by Bill Watterson and ran as a daily strip
+  from 18 November 1985 to 31 December 1995. It is copyright (c) Bill
+  Watterson, published by Andrews McMeel / Universal Uclick.
+
+  The Lookup packs data set bundled with SPA2 is a reference index of the
+  strip's cast, recurring devices and themes, and short quotations, each with
+  the date of the strip it comes from. Quotations are transcribed from the
+  WIST Quotations index (https://wist.info/author/watterson-bill/), which
+  cites the GoComics archive of the strip for every entry; strip dates follow
+  the GoComics archive dates given by that index. Quotations are short
+  excerpts used for identification and reference, and remain the property of
+  their rights holder. No artwork, artwork scans or longer passages are
+  included, and nothing here is endorsed by or affiliated with the rights
+  holder.

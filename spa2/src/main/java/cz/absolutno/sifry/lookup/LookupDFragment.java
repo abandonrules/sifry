@@ -124,6 +124,7 @@ public final class LookupDFragment extends AbstractDFragment {
             out.add(Packs.zodiac(assets));
             out.add(Packs.nato(assets));
             out.add(Packs.greek(assets));
+            out.add(Packs.calvinhobbes(assets));
         } catch (IOException e) {
             /* no user-facing failure here; the packed assets are part of the apk */
         }

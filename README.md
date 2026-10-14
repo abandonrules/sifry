@@ -67,6 +67,24 @@ Attribution and licence texts live in app → About → Licence, and in
 canon form (lowercase `[a-z]` key, `:Display`) and gzipped; the build
 unpacks the `.gz` assets (see `tools/canon/gen_canon.py`).
 
+## Lookup pack data sources
+
+The same screen also offers *lookup packs*: small structured databases in
+`spa2/src/main/assets/data/packs/<pack>/` (`manifest.json` + `records.json`),
+each with a `DataPack` class, a registration in `Packs`, and a row in
+`LookupDFragment.loadPacks`.
+
+| Pack | Contents | Origin / licence |
+|---|---|---|
+| Astronomy | Sun, planets, dwarf planets, moons, constellations | factual data, no third-party text |
+| Zodiac & Birthday | 12 signs and 12 birthstones | factual data |
+| NATO | ICAO spelling alphabet and spoken digits | public standard (ICAO) |
+| Greek | the 24-letter Greek alphabet | factual data |
+| Calvin and Hobbes | Bill Watterson's strip: cast, devices, running gags, themes and a dated quotation corpus | quotations (c) Bill Watterson, transcribed from the [WIST Quotations index](https://wist.info/author/watterson-bill/) with GoComics strip dates; see `lic_sources.txt` |
+
+Each pack declares its own queryable fields, so the field menu, the sort
+columns and the value drop-downs are rendered from pack metadata.
+
 ## Building
 
 Requirements:

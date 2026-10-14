@@ -1,0 +1,4570 @@
+[
+  {
+    "id": "creator",
+    "displayName": "Bill Watterson",
+    "aliases": [
+      "Watterson"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Philosophy",
+      "note": "Creator, and sole author and artist of every strip; born 1958."
+    }
+  },
+  {
+    "id": "first-strip",
+    "displayName": "First strip",
+    "aliases": [
+      "debut",
+      "1985-11-18"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "year": "1985",
+      "stripDate": "1985-11-18",
+      "note": "Published in 35 newspapers; the strip then ran daily until 1995."
+    },
+    "sourceDate": "1985-11-18"
+  },
+  {
+    "id": "last-strip",
+    "displayName": "Last strip",
+    "aliases": [
+      "final strip",
+      "1995-12-31"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-12-31",
+      "note": "Sunday strip: Calvin and Hobbes sled downhill into the snow."
+    },
+    "sourceDate": "1995-12-31"
+  },
+  {
+    "id": "syndicate",
+    "displayName": "Universal Press Syndicate",
+    "aliases": [
+      "syndication"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "note": "Syndicated the strip; United Feature Syndicate first declined it."
+    }
+  },
+  {
+    "id": "publisher",
+    "displayName": "Andrews McMeel Publishing",
+    "aliases": [
+      "publisher",
+      "Andrews McMeel"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "note": "Publishes the collected books."
+    }
+  },
+  {
+    "id": "books",
+    "displayName": "Eighteen book collections",
+    "aliases": [
+      "collections",
+      "books"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "year": "1987",
+      "note": "Published 1987-1997; eleven of them archive every daily strip."
+    }
+  },
+  {
+    "id": "complete-edition",
+    "displayName": "The Complete Calvin and Hobbes",
+    "aliases": [
+      "complete calvin and hobbes"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "year": "2005",
+      "note": "Three hardback volumes, 1,440 pages, released 4 October 2005; a four-volume paperback followed in 2012."
+    }
+  },
+  {
+    "id": "newspapers",
+    "displayName": "More than 2,000 newspapers",
+    "aliases": [
+      "circulation",
+      "peak"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Civics",
+      "note": "Peak international circulation of the daily strip."
+    }
+  },
+  {
+    "id": "genre",
+    "displayName": "Humor, family life, philosophy, satire",
+    "aliases": [
+      "genres"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Philosophy",
+      "note": "The genres the strip is usually described by."
+    }
+  },
+  {
+    "id": "angouleme",
+    "displayName": "Angouleme Grand Prix",
+    "aliases": [
+      "2014",
+      "festival"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Art",
+      "year": "2014",
+      "note": "Awarded to Watterson in 2014, the fourth American after Eisner, Crumb and Spiegelman."
+    }
+  },
+  {
+    "id": "merchandise",
+    "displayName": "No official merchandise",
+    "aliases": [
+      "no merchandise",
+      "licensing"
+    ],
+    "category": "fact",
+    "properties": {
+      "type": "fact",
+      "theme": "Greed",
+      "note": "Watterson refused to license the characters, and the strip was never made into an animation."
+    }
+  },
+  {
+    "id": "calvin",
+    "displayName": "Calvin",
+    "aliases": [
+      "the six-year-old"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Imagination",
+      "year": "1985",
+      "stripDate": "1985-11-18",
+      "note": "Six-year-old protagonist, named after the theologian John Calvin; striped shirt, spiky blond hair."
+    },
+    "sourceDate": "1985-11-18"
+  },
+  {
+    "id": "hobbes",
+    "displayName": "Hobbes",
+    "aliases": [
+      "the tiger",
+      "calvin's tiger"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Friendship",
+      "year": "1985",
+      "stripDate": "1985-11-18",
+      "note": "Calvin's stuffed tiger: real to Calvin, a toy to everyone else. Named after Thomas Hobbes and modelled on Watterson's cat Sprite."
+    },
+    "sourceDate": "1985-11-18"
+  },
+  {
+    "id": "mom",
+    "displayName": "Mom",
+    "aliases": [
+      "calvin's mom",
+      "mother"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "year": "1985",
+      "stripDate": "1985-11-26",
+      "note": "Calvin's unnamed stay-at-home mother, usually exhausted; she is the one who curbs his worst impulses."
+    },
+    "sourceDate": "1985-11-26"
+  },
+  {
+    "id": "dad",
+    "displayName": "Dad",
+    "aliases": [
+      "calvin's dad",
+      "father"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "year": "1985",
+      "stripDate": "1985-11-18",
+      "note": "Calvin's unnamed father, a patent attorney and outdoorsman, modelled on Watterson's own father."
+    },
+    "sourceDate": "1985-11-18"
+  },
+  {
+    "id": "susie-derkson",
+    "displayName": "Susie Derkson",
+    "aliases": [
+      "susie",
+      "susie derkins",
+      "susie derkin"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Friendship",
+      "year": "1985",
+      "stripDate": "1985-12-05",
+      "note": "Calvin's classmate and neighbour; polite, diligent and usually Calvin's equal in cunning. The surname appears as both Derkson and Derkins in sources."
+    },
+    "sourceDate": "1985-12-05"
+  },
+  {
+    "id": "mr-bun",
+    "displayName": "Mr. Bun",
+    "aliases": [
+      "susie's rabbit",
+      "bun"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Friendship",
+      "note": "Susie's stuffed rabbit; never shown as a living character, and once described as comatose."
+    }
+  },
+  {
+    "id": "miss-wormwood",
+    "displayName": "Miss Wormwood",
+    "aliases": [
+      "wormwood",
+      "teacher"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "year": "1985",
+      "stripDate": "1985-11-21",
+      "note": "Calvin's strict teacher, named after the apprentice demon in C. S. Lewis' The Screwtape Letters. Calvin is back in her class every autumn."
+    },
+    "sourceDate": "1985-11-21"
+  },
+  {
+    "id": "moe",
+    "displayName": "Moe",
+    "aliases": [
+      "the bully"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "year": "1986",
+      "stripDate": "1986-01-30",
+      "note": "Calvin's school bully, drawn in crude lower-case letters; the only major character never portrayed sympathetically."
+    },
+    "sourceDate": "1986-01-30"
+  },
+  {
+    "id": "rosalyn",
+    "displayName": "Rosalyn",
+    "aliases": [
+      "the baby-sitter",
+      "baby sitter"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "year": "1986",
+      "stripDate": "1986-05-15",
+      "note": "The last major recurring character to appear: a high-school senior, and the only baby-sitter Calvin fears."
+    },
+    "sourceDate": "1986-05-15"
+  },
+  {
+    "id": "uncle-max",
+    "displayName": "Uncle Max",
+    "aliases": [
+      "max"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "year": "1988",
+      "note": "Calvin's father's older brother; he appeared in a series of 1988 strips and never came back."
+    }
+  },
+  {
+    "id": "grandparents",
+    "displayName": "Calvin's grandparents",
+    "aliases": [
+      "grandpa",
+      "grandma",
+      "grandfather",
+      "grandmother"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "note": "Mentioned in strips: a grandfather who complains that comic strips are printed too small, and a grandmother Calvin plays cards with."
+    }
+  },
+  {
+    "id": "amy",
+    "displayName": "Amy",
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "note": "Another baby-sitter Calvin's parents hired; she has apparently purged him from her memory."
+    }
+  },
+  {
+    "id": "charlie",
+    "displayName": "Charlie",
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "note": "Rosalyn's unseen boyfriend, whose arrangements she repeatedly cancels by telephone."
+    }
+  },
+  {
+    "id": "principal-spittle",
+    "displayName": "Principal Spittle",
+    "aliases": [
+      "principal"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "note": "Calvin's school principal, seen over his desk while Calvin explains himself; he hates his job."
+    }
+  },
+  {
+    "id": "mr-lockjaw",
+    "displayName": "Mr. Lockjaw",
+    "aliases": [
+      "lockjaw",
+      "coach"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Sport",
+      "note": "Gym teacher and coach of the school baseball team; he lets Moe's violence pass and calls Calvin a quitter."
+    }
+  },
+  {
+    "id": "mr-kneecapper",
+    "displayName": "Mr. Kneecapper",
+    "aliases": [
+      "kneecapper"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "note": "The only substitute teacher Calvin's class is given a name for."
+    }
+  },
+  {
+    "id": "maurice",
+    "displayName": "Maurice",
+    "aliases": [
+      "monster",
+      "monster under the bed"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Winter",
+      "note": "One of the two named monsters under Calvin's bed."
+    }
+  },
+  {
+    "id": "winslow",
+    "displayName": "Winslow",
+    "aliases": [
+      "monster",
+      "monster under the bed"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Winter",
+      "note": "The other named monster under Calvin's bed."
+    }
+  },
+  {
+    "id": "pete",
+    "displayName": "Pete",
+    "aliases": [
+      "the barber"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "note": "The barber Calvin visits once; barbers named Charlie and others are also mentioned."
+    }
+  },
+  {
+    "id": "doctor",
+    "displayName": "Calvin's doctor",
+    "aliases": [
+      "pediatrician",
+      "the doctor"
+    ],
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "School",
+      "note": "Calvin's mild-mannered pediatrician, whom Calvin imagines as a vicious interrogator."
+    }
+  },
+  {
+    "id": "susies-mom",
+    "displayName": "Susie's mom",
+    "category": "character",
+    "properties": {
+      "type": "character",
+      "theme": "Family",
+      "note": "Shown only from the waist down, in a foiled attempt to pester Susie."
+    }
+  },
+  {
+    "id": "spaceman-spiff",
+    "displayName": "Spaceman Spiff",
+    "aliases": [
+      "spiff",
+      "the astronaut"
+    ],
+    "category": "alterEgo",
+    "properties": {
+      "type": "alterEgo",
+      "theme": "Imagination",
+      "note": "Calvin's astronaut, an explorer of the galaxy whose deserts are based on southern Utah; the idea grew out of Watterson's earlier Spaceman Mort."
+    }
+  },
+  {
+    "id": "tracer-bullet",
+    "displayName": "Tracer Bullet",
+    "aliases": [
+      "tracer",
+      "the detective"
+    ],
+    "category": "alterEgo",
+    "properties": {
+      "type": "alterEgo",
+      "theme": "Imagination",
+      "note": "A hardboiled private eye drawn in shadowy film-noir black and white; he appeared when Calvin wore a fedora to hide a haircut."
+    }
+  },
+  {
+    "id": "stupendous-man",
+    "displayName": "Stupendous Man",
+    "aliases": [
+      "stupendous",
+      "the superhero"
+    ],
+    "category": "alterEgo",
+    "properties": {
+      "type": "alterEgo",
+      "theme": "Imagination",
+      "note": "A superhero whose mask and cape Calvin's mother made, and who narrates his own adventures."
+    }
+  },
+  {
+    "id": "cardboard-box",
+    "displayName": "Calvin's cardboard box",
+    "aliases": [
+      "box",
+      "the box"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Imagination",
+      "note": "A corrugated box Calvin sits in: the recurring device that turns any object or situation into an adventure, from time travel to self-duplication."
+    }
+  },
+  {
+    "id": "transmogrifier",
+    "displayName": "Transmogrifier",
+    "aliases": [
+      "calvin's transmogrifier"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Imagination",
+      "year": "1995",
+      "stripDate": "1995-09-11",
+      "note": "Calvin's device for turning its user into any creature or object."
+    },
+    "sourceDate": "1995-09-11"
+  },
+  {
+    "id": "duplicator",
+    "displayName": "Duplicator",
+    "aliases": [
+      "duplicating machine"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Imagination",
+      "note": "Calvin's machine for copying himself; he once modified it to copy only his good side."
+    }
+  },
+  {
+    "id": "invisible-cretinizer",
+    "displayName": "Invisible Cretinizer",
+    "aliases": [
+      "cretinizer"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Imagination",
+      "note": "Calvin's pretend gadget for making other people invisible."
+    }
+  },
+  {
+    "id": "wagon-and-sled",
+    "displayName": "Wagon and sled rides",
+    "aliases": [
+      "wagon",
+      "sled",
+      "sled ride",
+      "wagon ride"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Winter",
+      "note": "The downhill rides Calvin and Hobbes take in every season; Watterson used them to break up talking heads and to let Calvin think aloud."
+    }
+  },
+  {
+    "id": "snowmen",
+    "displayName": "Calvin's snowmen",
+    "aliases": [
+      "snowman"
+    ],
+    "category": "device",
+    "properties": {
+      "type": "device",
+      "theme": "Art",
+      "note": "Calvin builds snowmen with avant-garde forms; they are the main vehicle for his parodies of the art world."
+    }
+  },
+  {
+    "id": "calvinball",
+    "displayName": "Calvinball",
+    "aliases": [
+      "calvin ball"
+    ],
+    "category": "term",
+    "properties": {
+      "type": "term",
+      "theme": "Sport",
+      "year": "1990",
+      "note": "Improvised game invented in 1990 after Calvin's bad spell in the school baseball team. Rules are made up as you go, never the same twice, and every player wears a mask."
+    }
+  },
+  {
+    "id": "gross",
+    "displayName": "G.R.O.S.S.",
+    "aliases": [
+      "get rid of slimy girls",
+      "gross club"
+    ],
+    "category": "term",
+    "properties": {
+      "type": "term",
+      "theme": "Friendship",
+      "note": "Get Rid Of Slimy girlS: Calvin and Hobbes's club, run from the treehouse, with Calvin as Dictator-for-Life and Hobbes as President-and-First-Tiger."
+    }
+  },
+  {
+    "id": "horrendous-space-kablooie",
+    "displayName": "Horrendous Space Kablooie",
+    "aliases": [
+      "hsk",
+      "big bang"
+    ],
+    "category": "term",
+    "properties": {
+      "type": "term",
+      "theme": "Science",
+      "year": "1992",
+      "stripDate": "1992-06-21",
+      "note": "Calvin's alternative name for the Big Bang theory, coined in a Sunday strip of 21 June 1992 and often shortened to the HSK."
+    },
+    "sourceDate": "1992-06-21"
+  },
+  {
+    "id": "imagination-vs-reality",
+    "displayName": "Imagination versus reality",
+    "aliases": [
+      "reality"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Imagination",
+      "note": "Calvin's inner world is real to him and Hobbes lives in it; Watterson never settles which of the two readings is truer."
+    }
+  },
+  {
+    "id": "philosophical-banter",
+    "displayName": "Philosophical banter",
+    "aliases": [
+      "philosophy"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Philosophy",
+      "note": "Calvin and Hobbes argue about determinism, morality, the meaning of life and the future, usually at each other's expense."
+    }
+  },
+  {
+    "id": "parents-who-do-not-know",
+    "displayName": "Parents who do not know",
+    "aliases": [
+      "parents"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Family",
+      "note": "Mom and Dad are outmatched, exasperated and occasionally at a loss; Watterson said they parent Calvin better than he would."
+    }
+  },
+  {
+    "id": "school-as-an-institution",
+    "displayName": "School as an institution",
+    "aliases": [
+      "homework",
+      "tests"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "School",
+      "note": "Homework, tests, Show and Tell and Miss Wormwood's class, against which Calvin declares war of attrition."
+    }
+  },
+  {
+    "id": "greed-and-consumerism",
+    "displayName": "Greed and consumerism",
+    "aliases": [
+      "greed",
+      "consumerism"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Greed",
+      "note": "Allowances, cookies, presents and fund-raising letters: Calvin treats money as a tool for acquiring happiness."
+    }
+  },
+  {
+    "id": "failed-future",
+    "displayName": "The failed future",
+    "aliases": [
+      "the future",
+      "flying cars"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Technology",
+      "note": "Flying cars, moon colonies and personal robots never arrive, and Hobbes doubts our ability to manage the technology already invented."
+    }
+  },
+  {
+    "id": "nature-is-indifferent",
+    "displayName": "Nature is indifferent",
+    "aliases": [
+      "the outdoors",
+      "wilderness"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Nature",
+      "note": "The outdoors ignores Calvin; he argues with it about fear, awe, science and frogs."
+    }
+  },
+  {
+    "id": "winter-and-snow",
+    "displayName": "Winter and snow",
+    "aliases": [
+      "snow",
+      "winter"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Winter",
+      "note": "Snow, sledding and snow goons: Calvin's snowmen and his best and worst behaviour."
+    }
+  },
+  {
+    "id": "sport-and-losing",
+    "displayName": "Sport and losing",
+    "aliases": [
+      "calvinball",
+      "baseball"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Sport",
+      "note": "Baseball, Calvinball, and the lesson that competition only divides people into winners and losers."
+    }
+  },
+  {
+    "id": "avant-garde-art",
+    "displayName": "Avant-garde art",
+    "aliases": [
+      "snowmen",
+      "art criticism"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Art",
+      "note": "Calvin's snowmen and drawings as cutting-edge art, defended with the jargon of art criticism."
+    }
+  },
+  {
+    "id": "death-and-the-afterlife",
+    "displayName": "Death and the afterlife",
+    "aliases": [
+      "afterlife",
+      "god",
+      "the devil"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Death",
+      "note": "What happens when we die, whether God and the Devil exist, and how to live anyway."
+    }
+  },
+  {
+    "id": "food-as-currency",
+    "displayName": "Food as currency",
+    "aliases": [
+      "cookies",
+      "food"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Greed",
+      "note": "Cookies, frozen goods and meals traded and hoarded; Calvin treats the kitchen as a commodity."
+    }
+  },
+  {
+    "id": "pop-psychobabble",
+    "displayName": "Pop psychobabble",
+    "aliases": [
+      "psychobabble",
+      "toxic codependency"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Philosophy",
+      "note": "Calvin justifies his rampages with pseudo-psychological jargon such as toxic codependency."
+    }
+  },
+  {
+    "id": "civics-and-polls",
+    "displayName": "Civics and polls",
+    "aliases": [
+      "polls",
+      "politics"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Civics",
+      "note": "Calvin polls his father, wants to vote while refusing to follow issues, and writes fund-raising letters built on antagonism."
+    }
+  },
+  {
+    "id": "science-and-doubt",
+    "displayName": "Science and doubt",
+    "aliases": [
+      "newton",
+      "ice floats",
+      "big bang"
+    ],
+    "category": "theme",
+    "properties": {
+      "type": "theme",
+      "theme": "Science",
+      "note": "Newton's first law, why ice floats, the Big Bang, and the strip's own punchline that the answers are boring."
+    }
+  },
+  {
+    "id": "quote-1985-12-02-1",
+    "displayName": "Bad news, Dad. Your polls are way down.",
+    "aliases": [
+      "your polls are way down"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1985",
+      "stripDate": "1985-12-02",
+      "note": "Calvin polls his father; Watterson said the polls parody his own dislike of political polling."
+    },
+    "sourceDate": "1985-12-02"
+  },
+  {
+    "id": "quote-1985-12-02-2",
+    "displayName": "My polls?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Civics",
+      "year": "1985",
+      "stripDate": "1985-12-02",
+      "note": "Calvin polls his father; Watterson said the polls parody his own dislike of political polling."
+    },
+    "sourceDate": "1985-12-02"
+  },
+  {
+    "id": "quote-1985-12-02-3",
+    "displayName": "You rate especially low among tigers and six-year-old white males.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1985",
+      "stripDate": "1985-12-02",
+      "note": "Calvin polls his father; Watterson said the polls parody his own dislike of political polling."
+    },
+    "sourceDate": "1985-12-02"
+  },
+  {
+    "id": "quote-1986-02-16-1",
+    "displayName": "First, your heart falls into your stomach and splashes your innards. All the moisture makes you sweat profusely. This condensation shorts the circuits to your brain, and you get all woozy. When your brain burns out altogether, your mouth disengages and you babble like a cretin until she leaves.",
+    "aliases": [
+      "that's love"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Friendship",
+      "year": "1986",
+      "stripDate": "1986-02-16",
+      "note": "Hobbes explains falling in love as a physiological malfunction."
+    },
+    "sourceDate": "1986-02-16"
+  },
+  {
+    "id": "quote-1986-02-16-2",
+    "displayName": "That’s love?!?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1986",
+      "stripDate": "1986-02-16",
+      "note": "Hobbes explains falling in love as a physiological malfunction."
+    },
+    "sourceDate": "1986-02-16"
+  },
+  {
+    "id": "quote-1986-02-16-3",
+    "displayName": "Medically speaking.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Friendship",
+      "year": "1986",
+      "stripDate": "1986-02-16",
+      "note": "Hobbes explains falling in love as a physiological malfunction."
+    },
+    "sourceDate": "1986-02-16"
+  },
+  {
+    "id": "quote-1986-02-16-4",
+    "displayName": "Heck, that happened to me once, but I figured it was cooties!!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1986",
+      "stripDate": "1986-02-16",
+      "note": "Hobbes explains falling in love as a physiological malfunction."
+    },
+    "sourceDate": "1986-02-16"
+  },
+  {
+    "id": "quote-1986-03-30-1",
+    "displayName": "Did you ask your Mom if you could jump off the roof?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Family",
+      "year": "1986",
+      "stripDate": "1986-03-30",
+      "note": "Hobbes asks whether Calvin cleared jumping off the roof with Mom."
+    },
+    "sourceDate": "1986-03-30"
+  },
+  {
+    "id": "quote-1986-03-30-2",
+    "displayName": "Questions I know the answers to I don’t need to ask, right?",
+    "aliases": [
+      "questions i know the answers to"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1986",
+      "stripDate": "1986-03-30",
+      "note": "Hobbes asks whether Calvin cleared jumping off the roof with Mom."
+    },
+    "sourceDate": "1986-03-30"
+  },
+  {
+    "id": "quote-1986-04-14-1",
+    "displayName": "It’s not fair!",
+    "aliases": [
+      "why isn't it ever unfair in my favor"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1986",
+      "stripDate": "1986-04-14",
+      "note": "The world is never unfair in Calvin's favor."
+    },
+    "sourceDate": "1986-04-14"
+  },
+  {
+    "id": "quote-1986-04-14-2",
+    "displayName": "The world isn’t fair, Calvin.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1986",
+      "stripDate": "1986-04-14",
+      "note": "The world is never unfair in Calvin's favor."
+    },
+    "sourceDate": "1986-04-14"
+  },
+  {
+    "id": "quote-1986-04-14-3",
+    "displayName": "I know, but why isn’t it ever unfair in my favor?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1986",
+      "stripDate": "1986-04-14",
+      "note": "The world is never unfair in Calvin's favor."
+    },
+    "sourceDate": "1986-04-14"
+  },
+  {
+    "id": "quote-1986-04-25-1",
+    "displayName": "Hocus-pocus, Abracadabra! I command my homework to do itself! Homework, be done!",
+    "aliases": [
+      "homework, be done!"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1986",
+      "stripDate": "1986-04-25",
+      "note": "Homework is ordered to do itself."
+    },
+    "sourceDate": "1986-04-25"
+  },
+  {
+    "id": "quote-1986-05-06-1",
+    "displayName": "Do you think there’s a God?",
+    "aliases": [
+      "somebody's out to get me"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1986",
+      "stripDate": "1986-05-06",
+      "note": "On God's existence, answered purely in self-interest."
+    },
+    "sourceDate": "1986-05-06"
+  },
+  {
+    "id": "quote-1986-05-06-2",
+    "displayName": "Well somebody’s out to get me.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1986",
+      "stripDate": "1986-05-06",
+      "note": "On God's existence, answered purely in self-interest."
+    },
+    "sourceDate": "1986-05-06"
+  },
+  {
+    "id": "quote-1986-05-10-1",
+    "displayName": "I love Saturday morning cartoons. What classic humor! This is what entertainment is all about … idiots, explosives and falling anvils.",
+    "aliases": [
+      "idiots, explosives and falling anvils"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1986",
+      "stripDate": "1986-05-10",
+      "note": "Calvin's review of Saturday morning television."
+    },
+    "sourceDate": "1986-05-10"
+  },
+  {
+    "id": "quote-1986-05-26-1",
+    "displayName": "There’s no problem so awful that you can’t add some guilt to it and make it even worse!",
+    "aliases": [
+      "add some guilt to it"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1986",
+      "stripDate": "1986-05-26",
+      "note": "Guilt as a way of making any situation worse."
+    },
+    "sourceDate": "1986-05-26"
+  },
+  {
+    "id": "quote-1986-08-30-1",
+    "displayName": "Your polls are slipping Dad. Better get with it.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-08-30-2",
+    "displayName": "Calvin, being your dad is not an elected position. I don’t have to respond to polls.",
+    "aliases": [
+      "being your dad is not an elected position"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-08-30-3",
+    "displayName": "Not elected? You mean you can govern with dictatorial impunity?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-08-30-4",
+    "displayName": "Exactly.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-08-30-5",
+    "displayName": "In short, open revolt and exile is the only hope for change?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-08-30-6",
+    "displayName": "I don’t like the direction this conversation is taking.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Civics",
+      "year": "1986",
+      "stripDate": "1986-08-30",
+      "note": "Being a dad is not an elected position, and not subject to recall."
+    },
+    "sourceDate": "1986-08-30"
+  },
+  {
+    "id": "quote-1986-09-27-1",
+    "displayName": "I try to make everyone’s day a little more surreal.",
+    "aliases": [
+      "a little more surreal"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1986",
+      "stripDate": "1986-09-27",
+      "note": "Calvin's stated purpose in life, on the telephone."
+    },
+    "sourceDate": "1986-09-27"
+  },
+  {
+    "id": "quote-1987-02-12-1",
+    "displayName": "Where do we keep all our chainsaws, Mom?",
+    "aliases": [
+      "where do we keep all our chainsaws"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-02-12",
+      "note": "Chainsaws, snow and Calvin's reading habits."
+    },
+    "sourceDate": "1987-02-12"
+  },
+  {
+    "id": "quote-1987-04-18-1",
+    "displayName": "Dad, how do people make babies?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-04-18",
+      "note": "Dad explains procreation as a kit from a department store."
+    },
+    "sourceDate": "1987-04-18"
+  },
+  {
+    "id": "quote-1987-04-18-2",
+    "displayName": "Most people just go to Sears, buy the kit, and follow the assembly instructions.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-04-18",
+      "note": "Dad explains procreation as a kit from a department store."
+    },
+    "sourceDate": "1987-04-18"
+  },
+  {
+    "id": "quote-1987-04-18-3",
+    "displayName": "I came from Sears??",
+    "aliases": [
+      "i came from sears"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-04-18",
+      "note": "Dad explains procreation as a kit from a department store."
+    },
+    "sourceDate": "1987-04-18"
+  },
+  {
+    "id": "quote-1987-04-18-4",
+    "displayName": "No, you were a Blue Light Special at K Mart. Almost as good, and a lot cheaper.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-04-18",
+      "note": "Dad explains procreation as a kit from a department store."
+    },
+    "sourceDate": "1987-04-18"
+  },
+  {
+    "id": "quote-1987-04-18-5",
+    "displayName": "AAUUGHHH!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-04-18",
+      "note": "Dad explains procreation as a kit from a department store."
+    },
+    "sourceDate": "1987-04-18"
+  },
+  {
+    "id": "quote-1987-06-03-1",
+    "displayName": "Hey Dad, how does a carburetor work?",
+    "aliases": [
+      "you just don't know"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-06-03",
+      "note": "Dad pretends ignorance; Calvin sees through it."
+    },
+    "sourceDate": "1987-06-03"
+  },
+  {
+    "id": "quote-1987-06-03-2",
+    "displayName": "I can’t tell you.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-06-03",
+      "note": "Dad pretends ignorance; Calvin sees through it."
+    },
+    "sourceDate": "1987-06-03"
+  },
+  {
+    "id": "quote-1987-06-03-3",
+    "displayName": "Why not?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-06-03",
+      "note": "Dad pretends ignorance; Calvin sees through it."
+    },
+    "sourceDate": "1987-06-03"
+  },
+  {
+    "id": "quote-1987-06-03-4",
+    "displayName": "It’s a secret.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-06-03",
+      "note": "Dad pretends ignorance; Calvin sees through it."
+    },
+    "sourceDate": "1987-06-03"
+  },
+  {
+    "id": "quote-1987-06-03-5",
+    "displayName": "No it isn’t! You just don’t know!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1987",
+      "stripDate": "1987-06-03",
+      "note": "Dad pretends ignorance; Calvin sees through it."
+    },
+    "sourceDate": "1987-06-03"
+  },
+  {
+    "id": "quote-1987-09-22-1",
+    "displayName": "My life needs a rewind/erase button.",
+    "aliases": [
+      "rewind/erase button"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1987",
+      "stripDate": "1987-09-22",
+      "note": "Calvin wants a rewind button for his life; Hobbes wants a volume control."
+    },
+    "sourceDate": "1987-09-22"
+  },
+  {
+    "id": "quote-1987-09-22-2",
+    "displayName": "… And a volume control.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Technology",
+      "year": "1987",
+      "stripDate": "1987-09-22",
+      "note": "Calvin wants a rewind button for his life; Hobbes wants a volume control."
+    },
+    "sourceDate": "1987-09-22"
+  },
+  {
+    "id": "quote-1987-11-24-1",
+    "displayName": "Isn’t it sad how some people’s grip on their lives is so precarious that they’ll embrace any preposterous delusion, rather than face an occasional bleak truth?",
+    "aliases": [
+      "embrace any preposterous delusion"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1987",
+      "stripDate": "1987-11-24",
+      "note": "Calvin prefers a comforting delusion to a bleak truth about winter."
+    },
+    "sourceDate": "1987-11-24"
+  },
+  {
+    "id": "quote-1987-12-21-1",
+    "displayName": "This whole Santa Claus thing just doesn’t make sense. Why all the secrecy? Why all the mystery? If the guy exists, why doesn’t he ever show himself and prove it? And if he doesn’t exist, what’s the meaning of all this?",
+    "aliases": [
+      "all the secrecy? why all the mystery?"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1987",
+      "stripDate": "1987-12-21",
+      "note": "Calvin's case against Santa Claus, extended to God."
+    },
+    "sourceDate": "1987-12-21"
+  },
+  {
+    "id": "quote-1987-12-21-2",
+    "displayName": "I dunno … isn’t this a religious holiday?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1987",
+      "stripDate": "1987-12-21",
+      "note": "Calvin's case against Santa Claus, extended to God."
+    },
+    "sourceDate": "1987-12-21"
+  },
+  {
+    "id": "quote-1987-12-21-3",
+    "displayName": "Yeah, but actually, I’ve got the same questions about God.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1987",
+      "stripDate": "1987-12-21",
+      "note": "Calvin's case against Santa Claus, extended to God."
+    },
+    "sourceDate": "1987-12-21"
+  },
+  {
+    "id": "quote-1987-12-23-1",
+    "displayName": "Well. I’ve decided I do believe in Santa Claus, no matter how preposterous he sounds.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1987",
+      "stripDate": "1987-12-23",
+      "note": "Pascal's wager applied to presents."
+    },
+    "sourceDate": "1987-12-23"
+  },
+  {
+    "id": "quote-1987-12-23-2",
+    "displayName": "What convinced you?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1987",
+      "stripDate": "1987-12-23",
+      "note": "Pascal's wager applied to presents."
+    },
+    "sourceDate": "1987-12-23"
+  },
+  {
+    "id": "quote-1987-12-23-3",
+    "displayName": "A simple risk analysis. I want presents. Lots of presents. Why risk not getting them over a matter of belief? Heck, I’ll believe anything they want.",
+    "aliases": [
+      "a simple risk analysis"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1987",
+      "stripDate": "1987-12-23",
+      "note": "Pascal's wager applied to presents."
+    },
+    "sourceDate": "1987-12-23"
+  },
+  {
+    "id": "quote-1987-12-23-4",
+    "displayName": "How cynically enterprising of you.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1987",
+      "stripDate": "1987-12-23",
+      "note": "Pascal's wager applied to presents."
+    },
+    "sourceDate": "1987-12-23"
+  },
+  {
+    "id": "quote-1987-12-23-5",
+    "displayName": "It’s the spirit of Christmas.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1987",
+      "stripDate": "1987-12-23",
+      "note": "Pascal's wager applied to presents."
+    },
+    "sourceDate": "1987-12-23"
+  },
+  {
+    "id": "quote-1988-04-09-1",
+    "displayName": "Do you believe our destinies are determined by the stars?",
+    "aliases": [
+      "determined by the stars"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1988",
+      "stripDate": "1988-04-09",
+      "note": "Belief in the stars as an excuse for personal responsibility."
+    },
+    "sourceDate": "1988-04-09"
+  },
+  {
+    "id": "quote-1988-04-09-2",
+    "displayName": "Nah.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1988",
+      "stripDate": "1988-04-09",
+      "note": "Belief in the stars as an excuse for personal responsibility."
+    },
+    "sourceDate": "1988-04-09"
+  },
+  {
+    "id": "quote-1988-04-09-3",
+    "displayName": "Oh, I do.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1988",
+      "stripDate": "1988-04-09",
+      "note": "Belief in the stars as an excuse for personal responsibility."
+    },
+    "sourceDate": "1988-04-09"
+  },
+  {
+    "id": "quote-1988-04-09-4",
+    "displayName": "Really? How come?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1988",
+      "stripDate": "1988-04-09",
+      "note": "Belief in the stars as an excuse for personal responsibility."
+    },
+    "sourceDate": "1988-04-09"
+  },
+  {
+    "id": "quote-1988-04-09-5",
+    "displayName": "Life’s a lot more fun when you’re not responsible for your actions.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1988",
+      "stripDate": "1988-04-09",
+      "note": "Belief in the stars as an excuse for personal responsibility."
+    },
+    "sourceDate": "1988-04-09"
+  },
+  {
+    "id": "quote-1988-08-28-1",
+    "displayName": "There’s never enough time to do all the nothing you want.",
+    "aliases": [
+      "never enough time to do all the nothing"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1988",
+      "stripDate": "1988-08-28",
+      "note": "The strip is Calvin and Hobbes watching summer end."
+    },
+    "sourceDate": "1988-08-28"
+  },
+  {
+    "id": "quote-1989-03-12-1",
+    "displayName": "Tigers don’t worry about much, do they?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1989",
+      "stripDate": "1989-03-12",
+      "note": "The perks of being feral."
+    },
+    "sourceDate": "1989-03-12"
+  },
+  {
+    "id": "quote-1989-03-12-2",
+    "displayName": "Nope. That’s one of the perks of being feral.",
+    "aliases": [
+      "the perks of being feral"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Friendship",
+      "year": "1989",
+      "stripDate": "1989-03-12",
+      "note": "The perks of being feral."
+    },
+    "sourceDate": "1989-03-12"
+  },
+  {
+    "id": "quote-1989-04-23-1",
+    "displayName": "I think nighttime is dark so you can imagine your fears with less distraction.",
+    "aliases": [
+      "imagine your fears with less distraction"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-04-23",
+      "note": "Night is dark so that fears get less distraction."
+    },
+    "sourceDate": "1989-04-23"
+  },
+  {
+    "id": "quote-1989-05-10-1",
+    "displayName": "It’s funny … when I was a kid, I thought grown-ups never worried about anything. I trusted my parents to take care of everything, and it never occurred to me that they might not know how. I figured that once you grew up, you automatically knew what to do in any given scenario. I don’t think I would have been in such a hurry to reach adulthood if I’d know the whole thing was going to be ad-libbed.",
+    "aliases": [
+      "the whole thing was going to be ad-libbed"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1989",
+      "stripDate": "1989-05-10",
+      "note": "After the house is burgled, Dad admits adulthood is improvised."
+    },
+    "sourceDate": "1989-05-10"
+  },
+  {
+    "id": "quote-1989-05-28-1",
+    "displayName": "I think all of life’s problems ought to be solved in thirty minutes with simple homilies, don’t you? I think weight and oral hygiene ought to be our biggest concerns.",
+    "aliases": [
+      "life should be more like tv"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-05-28",
+      "note": "Life would be better as a situation comedy."
+    },
+    "sourceDate": "1989-05-28"
+  },
+  {
+    "id": "quote-1989-05-28-2",
+    "displayName": "I think we should all have powerful, high-paying jobs, and everyone should drive fancy sports cars. All our desires should be instantly gratified.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-05-28",
+      "note": "Life would be better as a situation comedy."
+    },
+    "sourceDate": "1989-05-28"
+  },
+  {
+    "id": "quote-1989-05-28-3",
+    "displayName": "Of course, if life was really like that, what would we watch on TV?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-05-28",
+      "note": "Life would be better as a situation comedy."
+    },
+    "sourceDate": "1989-05-28"
+  },
+  {
+    "id": "quote-1989-07-15-1",
+    "displayName": "People think it must be fun to be a super genius, but they don’t realize how hard it is to put up with all the idiots in the world.",
+    "aliases": [
+      "super genius"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-07-15",
+      "note": "The burden of being a genius."
+    },
+    "sourceDate": "1989-07-15"
+  },
+  {
+    "id": "quote-1989-10-29-1",
+    "displayName": "Dad, how come old photographs are always black and white? Didn’t they have color film back then?",
+    "aliases": [
+      "the world is a complicated place"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-10",
+    "displayName": "Of course, but they turned colors like everything did in the ’30s.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-11",
+    "displayName": "So why didn’t old black and white photos turn color, too?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-12",
+    "displayName": "Because they were color pictures of black and white, remember?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-13",
+    "displayName": "Whenever it seems that way, I take a nap in a tree and wait for dinner.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-2",
+    "displayName": "Sure they did. In fact, those old photographs are in color. It’s just the world was black and white then.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-3",
+    "displayName": "Really?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-4",
+    "displayName": "Yep. The world didn’t turn color until sometime in the 1930s, and it was pretty grainy color for a while, too.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-5",
+    "displayName": "That’s really weird.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-6",
+    "displayName": "Well, truth is stranger than fiction.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-7",
+    "displayName": "But then why are old paintings in color?! If the world was black and white, wouldn’t artists have painted it that way?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-8",
+    "displayName": "Not necessarily. A lot of great artists were insane.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-10-29-9",
+    "displayName": "But … but how could they have painted in color anyway? Wouldn’t their paints have been shades of gray back then?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1989",
+      "stripDate": "1989-10-29",
+      "note": "Old photographs, a colour world, and a nap in a tree."
+    },
+    "sourceDate": "1989-10-29"
+  },
+  {
+    "id": "quote-1989-12-30-1",
+    "displayName": "A new decade is coming up.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-12-30",
+      "note": "Where are the flying cars? Hobbes doubts our ability to manage what we have."
+    },
+    "sourceDate": "1989-12-30"
+  },
+  {
+    "id": "quote-1989-12-30-2",
+    "displayName": "Yeah, big deal! Hmph. Where are the flying cars? Where are the Moon colonies? Where are the personal robots and the zero gravity boots, huh? You call this a new decade?! You call this the future?? Ha! Where are the rocket packs? Where are the disintegration rays? Where are the floating cities?",
+    "aliases": [
+      "where are the flying cars"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-12-30",
+      "note": "Where are the flying cars? Hobbes doubts our ability to manage what we have."
+    },
+    "sourceDate": "1989-12-30"
+  },
+  {
+    "id": "quote-1989-12-30-3",
+    "displayName": "Frankly, I’m not sure people have the brains to manage the technology they’ve got.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-12-30",
+      "note": "Where are the flying cars? Hobbes doubts our ability to manage what we have."
+    },
+    "sourceDate": "1989-12-30"
+  },
+  {
+    "id": "quote-1989-12-30-4",
+    "displayName": "I mean, look at this! We still have the weather?! Give me a break!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1989",
+      "stripDate": "1989-12-30",
+      "note": "Where are the flying cars? Hobbes doubts our ability to manage what we have."
+    },
+    "sourceDate": "1989-12-30"
+  },
+  {
+    "id": "quote-1990-05-11-1",
+    "displayName": "I’d say that crossed the line from Ironic Coincidence to Evil Omen.",
+    "aliases": [
+      "from ironic coincidence to evil omen"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1990",
+      "stripDate": "1990-05-11",
+      "note": "Crossing from ironic coincidence into evil omen."
+    },
+    "sourceDate": "1990-05-11"
+  },
+  {
+    "id": "quote-1990-10-13-1",
+    "displayName": "Oh, Great Altar of Passive Entertainment … Bestow upon me thy discordant images at such speed as to render linear thought impossible!",
+    "aliases": [
+      "great altar of passive entertainment"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Technology",
+      "year": "1990",
+      "stripDate": "1990-10-13",
+      "note": "A prayer to television for the loss of linear thought."
+    },
+    "sourceDate": "1990-10-13"
+  },
+  {
+    "id": "quote-1990-10-14-1",
+    "displayName": "Van Gogh would’ve sold more than one painting if he’d put tigers in them.",
+    "aliases": [
+      "if he'd put tigers in them"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Art",
+      "year": "1990",
+      "stripDate": "1990-10-14",
+      "note": "Van Gogh would have sold more with tigers in the pictures."
+    },
+    "sourceDate": "1990-10-14"
+  },
+  {
+    "id": "quote-1990-10-18-1",
+    "displayName": "Hobbes, do you think our morality is defined by our actions, or by what’s in our hearts?",
+    "aliases": [
+      "our morality is defined by our actions"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1990",
+      "stripDate": "1990-10-18",
+      "note": "Actions versus hearts; Calvin's verdict is resentful."
+    },
+    "sourceDate": "1990-10-18"
+  },
+  {
+    "id": "quote-1990-10-18-2",
+    "displayName": "I think our actions show what’s in our hearts.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1990",
+      "stripDate": "1990-10-18",
+      "note": "Actions versus hearts; Calvin's verdict is resentful."
+    },
+    "sourceDate": "1990-10-18"
+  },
+  {
+    "id": "quote-1990-10-18-3",
+    "displayName": "(after consideration) I resent that!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1990",
+      "stripDate": "1990-10-18",
+      "note": "Actions versus hearts; Calvin's verdict is resentful."
+    },
+    "sourceDate": "1990-10-18"
+  },
+  {
+    "id": "quote-1990-11-15-1",
+    "displayName": "Why waste time learning, when ignorance is instantaneous?",
+    "aliases": [
+      "ignorance is instantaneous"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1990",
+      "stripDate": "1990-11-15",
+      "note": "Ignorance is instantaneous; learning is not."
+    },
+    "sourceDate": "1990-11-15"
+  },
+  {
+    "id": "quote-1990-11-18-1",
+    "displayName": "It’s psychosomatic. You need a lobotomy. I’ll get a saw.",
+    "aliases": [
+      "psychosomatic"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1990",
+      "stripDate": "1990-11-18",
+      "note": "A diagnosis of cooties, delivered with a saw."
+    },
+    "sourceDate": "1990-11-18"
+  },
+  {
+    "id": "quote-1990-11-21-1",
+    "displayName": "“Live for the moment” is my motto. You never know how long you’ve got! You could step into the road tomorrow and — WHAM — you get hit by a cement truck! Then you’d be sorry you put off your pleasures! That’s why I say “Live for the Moment.” What’s your motto?",
+    "aliases": [
+      "live for the moment"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Death",
+      "year": "1990",
+      "stripDate": "1990-11-21",
+      "note": "Live for the moment, or look down the road."
+    },
+    "sourceDate": "1990-11-21"
+  },
+  {
+    "id": "quote-1990-11-21-2",
+    "displayName": "“Look down the road.”",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Death",
+      "year": "1990",
+      "stripDate": "1990-11-21",
+      "note": "Live for the moment, or look down the road."
+    },
+    "sourceDate": "1990-11-21"
+  },
+  {
+    "id": "quote-1991-01-06-1",
+    "displayName": "(walking through snowy field) You know, Hobbes, it seems the only time most people go outside is to walk to their cars. We have houses, electricity, plumbing, heat …. Maybe we’re so sheltered and comfortable that we’ve lost touch with the natural world and forgotten our place in it. Maybe we’ve lost our awe of nature. That’s why I want to ask you, as a tiger, a wild animal close to Nature, what you think we’re put on Earth to do. What’s our purpose in life? Why are we here?",
+    "aliases": [
+      "we're here to devour each other alive"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1991",
+      "stripDate": "1991-01-06",
+      "note": "Outdoors versus the heated house, and the tiger's view of both."
+    },
+    "sourceDate": "1991-01-06"
+  },
+  {
+    "id": "quote-1991-01-06-2",
+    "displayName": "(stating the obvious) We’re here to devour each other alive.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1991",
+      "stripDate": "1991-01-06",
+      "note": "Outdoors versus the heated house, and the tiger's view of both."
+    },
+    "sourceDate": "1991-01-06"
+  },
+  {
+    "id": "quote-1991-01-06-3",
+    "displayName": "(back in the house, yelling) Turn on the lights! Turn up the heat!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1991",
+      "stripDate": "1991-01-06",
+      "note": "Outdoors versus the heated house, and the tiger's view of both."
+    },
+    "sourceDate": "1991-01-06"
+  },
+  {
+    "id": "quote-1991-01-19-1",
+    "displayName": "Well, Hobbes, I guess there’s a moral to all this.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Winter",
+      "year": "1991",
+      "stripDate": "1991-01-19",
+      "note": "The snow goon, and the moral Calvin draws from it."
+    },
+    "sourceDate": "1991-01-19"
+  },
+  {
+    "id": "quote-1991-01-19-2",
+    "displayName": "What’s that?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Winter",
+      "year": "1991",
+      "stripDate": "1991-01-19",
+      "note": "The snow goon, and the moral Calvin draws from it."
+    },
+    "sourceDate": "1991-01-19"
+  },
+  {
+    "id": "quote-1991-01-19-3",
+    "displayName": "“Snow goons are bad news.”",
+    "aliases": [
+      "snow goons are bad news"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Winter",
+      "year": "1991",
+      "stripDate": "1991-01-19",
+      "note": "The snow goon, and the moral Calvin draws from it."
+    },
+    "sourceDate": "1991-01-19"
+  },
+  {
+    "id": "quote-1991-01-19-4",
+    "displayName": "That lesson certainly ought to be inapplicable elsewhere.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Winter",
+      "year": "1991",
+      "stripDate": "1991-01-19",
+      "note": "The snow goon, and the moral Calvin draws from it."
+    },
+    "sourceDate": "1991-01-19"
+  },
+  {
+    "id": "quote-1991-01-19-5",
+    "displayName": "I like maxims that don’t encourage behavior modification.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Winter",
+      "year": "1991",
+      "stripDate": "1991-01-19",
+      "note": "The snow goon, and the moral Calvin draws from it."
+    },
+    "sourceDate": "1991-01-19"
+  },
+  {
+    "id": "quote-1991-02-18-1",
+    "displayName": "I think grown-ups just act like they know what they’re doing.",
+    "aliases": [
+      "grown-ups just act like they know"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1991",
+      "stripDate": "1991-02-18",
+      "note": "Grown-ups only act as if they know what they are doing."
+    },
+    "sourceDate": "1991-02-18"
+  },
+  {
+    "id": "quote-1991-03-03-1",
+    "displayName": "Isn’t it strange that evolution would give us a sense of humor? When you think about it, it’s weird that we have a physiological response to absurdity. We laugh at nonsense. We like it. We think it’s funny. Don’t you think it’s odd that we appreciate absurdity? Why would we develop that way? How does it benefit us?",
+    "aliases": [
+      "we appreciate absurdity"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1991",
+      "stripDate": "1991-03-03",
+      "note": "Why would evolution produce a sense of humour?"
+    },
+    "sourceDate": "1991-03-03"
+  },
+  {
+    "id": "quote-1991-03-03-2",
+    "displayName": "I suppose if we couldn’t laugh at things that don’t make sense, we couldn’t react to a lot of life.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1991",
+      "stripDate": "1991-03-03",
+      "note": "Why would evolution produce a sense of humour?"
+    },
+    "sourceDate": "1991-03-03"
+  },
+  {
+    "id": "quote-1991-03-03-3",
+    "displayName": "(after a pause) I can’t tell if that’s funny or really scary.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1991",
+      "stripDate": "1991-03-03",
+      "note": "Why would evolution produce a sense of humour?"
+    },
+    "sourceDate": "1991-03-03"
+  },
+  {
+    "id": "quote-1991-06-09-1",
+    "displayName": "Why does the universe always give you the sign after you do it?",
+    "aliases": [
+      "the sign after you do it"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1991",
+      "stripDate": "1991-06-09",
+      "note": "Why the universe gives its signs after the event."
+    },
+    "sourceDate": "1991-06-09"
+  },
+  {
+    "id": "quote-1992-04-06-1",
+    "displayName": "Do you believe in the Devil? You know, a supreme evil being dedicated to the temptation, corruption, and destruction of Man?",
+    "aliases": [
+      "a supreme evil being"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1992",
+      "stripDate": "1992-04-06",
+      "note": "On the Devil, who may not be needed."
+    },
+    "sourceDate": "1992-04-06"
+  },
+  {
+    "id": "quote-1992-04-06-2",
+    "displayName": "I’m not sure Man needs the help.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1992",
+      "stripDate": "1992-04-06",
+      "note": "On the Devil, who may not be needed."
+    },
+    "sourceDate": "1992-04-06"
+  },
+  {
+    "id": "quote-1992-04-08-1",
+    "displayName": "If I’ve learned one thing in life, it’s that everyone has his price. Raise the ante high enough and there’s no such thing as scruples! People will do anything if the price is right!",
+    "aliases": [
+      "everyone has his price"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1992",
+      "stripDate": "1992-04-08",
+      "note": "Everyone has a price, and Calvin's is two dollars."
+    },
+    "sourceDate": "1992-04-08"
+  },
+  {
+    "id": "quote-1992-04-08-2",
+    "displayName": "What’s your price?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1992",
+      "stripDate": "1992-04-08",
+      "note": "Everyone has a price, and Calvin's is two dollars."
+    },
+    "sourceDate": "1992-04-08"
+  },
+  {
+    "id": "quote-1992-04-08-3",
+    "displayName": "Two bucks cold cash up front.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1992",
+      "stripDate": "1992-04-08",
+      "note": "Everyone has a price, and Calvin's is two dollars."
+    },
+    "sourceDate": "1992-04-08"
+  },
+  {
+    "id": "quote-1992-04-08-4",
+    "displayName": "I don’t know which is worse, … that everyone has his price, or that the price is always so low.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1992",
+      "stripDate": "1992-04-08",
+      "note": "Everyone has a price, and Calvin's is two dollars."
+    },
+    "sourceDate": "1992-04-08"
+  },
+  {
+    "id": "quote-1992-05-18-1",
+    "displayName": "When I grow up, I’m not going to read the newspaper and I’m not going to follow complex issues and I’m not going to vote. That way I can complain when the government doesn’t represent me. Then, when everything goes down the tubes, I can say the system doesn’t work and justify my further lack of participation.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1992",
+      "stripDate": "1992-05-18",
+      "note": "A plan to vote without following any issue."
+    },
+    "sourceDate": "1992-05-18"
+  },
+  {
+    "id": "quote-1992-05-18-2",
+    "displayName": "An ingeniously self-fulfilling plan.",
+    "aliases": [
+      "an ingeniously self-fulfilling plan"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Civics",
+      "year": "1992",
+      "stripDate": "1992-05-18",
+      "note": "A plan to vote without following any issue."
+    },
+    "sourceDate": "1992-05-18"
+  },
+  {
+    "id": "quote-1992-05-18-3",
+    "displayName": "It’s a lot more fun to blame things than to fix them.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1992",
+      "stripDate": "1992-05-18",
+      "note": "A plan to vote without following any issue."
+    },
+    "sourceDate": "1992-05-18"
+  },
+  {
+    "id": "quote-1992-05-21-1",
+    "displayName": "Have you an idea for your story yet?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-05-21",
+      "note": "Calvin's moods, inventoried for a school story."
+    },
+    "sourceDate": "1992-05-21"
+  },
+  {
+    "id": "quote-1992-05-21-2",
+    "displayName": "No, I’m waiting for inspiration. You can’t just turn on creativity like a faucet. You have to be in the right mood.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-05-21",
+      "note": "Calvin's moods, inventoried for a school story."
+    },
+    "sourceDate": "1992-05-21"
+  },
+  {
+    "id": "quote-1992-05-21-3",
+    "displayName": "What mood is that?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-05-21",
+      "note": "Calvin's moods, inventoried for a school story."
+    },
+    "sourceDate": "1992-05-21"
+  },
+  {
+    "id": "quote-1992-05-21-4",
+    "displayName": "Last-minute panic.",
+    "aliases": [
+      "last-minute panic"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-05-21",
+      "note": "Calvin's moods, inventoried for a school story."
+    },
+    "sourceDate": "1992-05-21"
+  },
+  {
+    "id": "quote-1992-07-14-1",
+    "displayName": "Bugs fly in such crazy loops and zigzags. I wonder why they don’t get dizzy and barf.",
+    "aliases": [
+      "bugs *like* to barf"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-14-2",
+    "displayName": "Maybe they do!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-14-3",
+    "displayName": "Eww, gross! Ha ha ha! But then why would they keep flying that way?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-14-4",
+    "displayName": "Maybe bugs like to barf!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-14-5",
+    "displayName": "Ewwww! They would!! Ha ha ha ha! Blaugh!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-14-6",
+    "displayName": "I tell you, Hobbes, it’s great to have a friend who appreciates an earnest discussion of ideas.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1992",
+      "stripDate": "1992-07-14",
+      "note": "An earnest discussion of what bugs do when they fly."
+    },
+    "sourceDate": "1992-07-14"
+  },
+  {
+    "id": "quote-1992-07-25-1",
+    "displayName": "I say, if your knees aren’t green by the end of the day, you ought to seriously re-examine your life.",
+    "aliases": [
+      "if your knees aren't green"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Sport",
+      "year": "1992",
+      "stripDate": "1992-07-25",
+      "note": "If your knees are not green by evening, re-examine your life."
+    },
+    "sourceDate": "1992-07-25"
+  },
+  {
+    "id": "quote-1992-08-08-1",
+    "displayName": "A little rudeness and disrespect can elevate a meaningless interaction to a battle of wills and add drama to an otherwise dull day.",
+    "aliases": [
+      "a battle of wills"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1992",
+      "stripDate": "1992-08-08",
+      "note": "Rudeness as a way to give a dull day some drama."
+    },
+    "sourceDate": "1992-08-08"
+  },
+  {
+    "id": "quote-1992-09-19-1",
+    "displayName": "I’m a simple man, Hobbes.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-09-19",
+      "note": "A nuclear car with heat-seeking missiles, then simplicity."
+    },
+    "sourceDate": "1992-09-19"
+  },
+  {
+    "id": "quote-1992-09-19-2",
+    "displayName": "You?? Yesterday you wanted a nuclear powered car that could turn into a jet with laser-guided heat-seeking missiles!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-09-19",
+      "note": "A nuclear car with heat-seeking missiles, then simplicity."
+    },
+    "sourceDate": "1992-09-19"
+  },
+  {
+    "id": "quote-1992-09-19-3",
+    "displayName": "I’m a simple man with complex tastes.",
+    "aliases": [
+      "simple man with complex tastes"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-09-19",
+      "note": "A nuclear car with heat-seeking missiles, then simplicity."
+    },
+    "sourceDate": "1992-09-19"
+  },
+  {
+    "id": "quote-1992-09-28-1",
+    "displayName": "It’s not denial. I’m just very selective about the reality I accept.",
+    "aliases": [
+      "selective about the reality i accept"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-09-28",
+      "note": "Calvin is not in denial, merely selective."
+    },
+    "sourceDate": "1992-09-28"
+  },
+  {
+    "id": "quote-1992-10-13-1",
+    "displayName": "I’m not going to do my math homework. Look at these unsolved problems. Here’s a number in mortal combat with another. One of them is going to get subtracted. But why? How? What will be left of him? If I answered these, it would kill the suspense. It would resolve the conflict and turn intriguing possibilities into boring ol’ facts.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-10-13",
+      "note": "Unsolved sums keep their suspense better than answers."
+    },
+    "sourceDate": "1992-10-13"
+  },
+  {
+    "id": "quote-1992-10-13-2",
+    "displayName": "I never really thought about the literary qualities of math.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-10-13",
+      "note": "Unsolved sums keep their suspense better than answers."
+    },
+    "sourceDate": "1992-10-13"
+  },
+  {
+    "id": "quote-1992-10-13-3",
+    "displayName": "I prefer to savor the mystery.",
+    "aliases": [
+      "i prefer to savor the mystery"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1992",
+      "stripDate": "1992-10-13",
+      "note": "Unsolved sums keep their suspense better than answers."
+    },
+    "sourceDate": "1992-10-13"
+  },
+  {
+    "id": "quote-1992-11-28-1",
+    "displayName": "I’ve noticed that comic book superheroes usually fight evil maniacs with grandiose plans to destroy the world. Why don’t superheroes go after more subtle, realistic bad guys?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-11-28",
+      "note": "Superheroes would have to fight real problems: quick, to the Bat-Fax!"
+    },
+    "sourceDate": "1992-11-28"
+  },
+  {
+    "id": "quote-1992-11-28-2",
+    "displayName": "Yeah, the superhero could attend council meetings and write letters to the editor, and stuff.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-11-28",
+      "note": "Superheroes would have to fight real problems: quick, to the Bat-Fax!"
+    },
+    "sourceDate": "1992-11-28"
+  },
+  {
+    "id": "quote-1992-11-28-3",
+    "displayName": "Hmmm … I think I see the problem.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-11-28",
+      "note": "Superheroes would have to fight real problems: quick, to the Bat-Fax!"
+    },
+    "sourceDate": "1992-11-28"
+  },
+  {
+    "id": "quote-1992-11-28-4",
+    "displayName": "“Quick! To the Bat-Fax!”",
+    "aliases": [
+      "quick! to the bat-fax!"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Imagination",
+      "year": "1992",
+      "stripDate": "1992-11-28",
+      "note": "Superheroes would have to fight real problems: quick, to the Bat-Fax!"
+    },
+    "sourceDate": "1992-11-28"
+  },
+  {
+    "id": "quote-1992-12-04-1",
+    "displayName": "Dad, are you vicariously living through me in the hope that my accomplishments will validate your mediocre life, and in some way compensate for all the opportunities you botched?",
+    "aliases": [
+      "vicariously living through me"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1992",
+      "stripDate": "1992-12-04",
+      "note": "Calvin accuses Dad of living through him."
+    },
+    "sourceDate": "1992-12-04"
+  },
+  {
+    "id": "quote-1993-01-02-1",
+    "displayName": "I’ve decided to stop caring about things. If you care, you just get disappointed all the time. If you don’t care, nothing matters, so you’re never upset. From now on, my rallying cry is, “So what?!”",
+    "aliases": [
+      "so what?!"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-01-02",
+      "note": "Calvin's rallying cry is to stop caring about anything."
+    },
+    "sourceDate": "1993-01-02"
+  },
+  {
+    "id": "quote-1993-01-02-2",
+    "displayName": "That’s a tough cry to rally around.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-01-02",
+      "note": "Calvin's rallying cry is to stop caring about anything."
+    },
+    "sourceDate": "1993-01-02"
+  },
+  {
+    "id": "quote-1993-01-02-3",
+    "displayName": "So what?!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-01-02",
+      "note": "Calvin's rallying cry is to stop caring about anything."
+    },
+    "sourceDate": "1993-01-02"
+  },
+  {
+    "id": "quote-1993-01-05-1",
+    "displayName": "I don’t want to go to school. I don’t want to know anything new. I already know more than I want to! I liked things better when I didn’t understand them! The fact is, I’m being educated against my will! My rights are being trampled!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-01-05",
+      "note": "Calvin would rather not understand things at all."
+    },
+    "sourceDate": "1993-01-05"
+  },
+  {
+    "id": "quote-1993-01-05-2",
+    "displayName": "Is it a right to remain ignorant?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-01-05",
+      "note": "Calvin would rather not understand things at all."
+    },
+    "sourceDate": "1993-01-05"
+  },
+  {
+    "id": "quote-1993-01-05-3",
+    "displayName": "I don’t know, but I refuse to find out!",
+    "aliases": [
+      "i refuse to find out"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-01-05",
+      "note": "Calvin would rather not understand things at all."
+    },
+    "sourceDate": "1993-01-05"
+  },
+  {
+    "id": "quote-1993-02-11-1",
+    "displayName": "I used to hate writing assignments, but now I enjoy them. I realized that the purpose of writing is to inflate weak ideas, obscure poor reasoning, and inhibit clarity. With a little practice, writing can be an intimidating and impenetrable fog!",
+    "aliases": [
+      "writing can be an intimidating and impenetrable fog"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-02-11",
+      "note": "Writing as an intimidating and impenetrable fog."
+    },
+    "sourceDate": "1993-02-11"
+  },
+  {
+    "id": "quote-1993-02-15-1",
+    "displayName": "(building a snowman) I should be doing my homework now. But the way I look at it, playing in the snow is a lot more important. Out here I’m learning real skills that I can apply throughout the rest of my life.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Winter",
+      "year": "1993",
+      "stripDate": "1993-02-15",
+      "note": "Snow is more important than homework, for good reasons."
+    },
+    "sourceDate": "1993-02-15"
+  },
+  {
+    "id": "quote-1993-02-15-2",
+    "displayName": "Such as?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Winter",
+      "year": "1993",
+      "stripDate": "1993-02-15",
+      "note": "Snow is more important than homework, for good reasons."
+    },
+    "sourceDate": "1993-02-15"
+  },
+  {
+    "id": "quote-1993-02-15-3",
+    "displayName": "Procrastinating and rationalizing.",
+    "aliases": [
+      "procrastinating and rationalizing"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Winter",
+      "year": "1993",
+      "stripDate": "1993-02-15",
+      "note": "Snow is more important than homework, for good reasons."
+    },
+    "sourceDate": "1993-02-15"
+  },
+  {
+    "id": "quote-1993-02-19-1",
+    "displayName": "Reality continues to ruin my life.",
+    "aliases": [
+      "reality continues to ruin my life"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-02-19",
+      "note": "Reality's track record, in one line."
+    },
+    "sourceDate": "1993-02-19"
+  },
+  {
+    "id": "quote-1993-03-04-1",
+    "displayName": "(wearing a mask and cape, scribbling on his test) Stupendous Man’s stupendous knowledge lets him complete the test with stupendous speed! 1492! The Battle of Lexington! Trotsky! The Cotton Gin! (runs from the classroom) Another triumph for virtue and right! And now, with a whoosh, Stupendous Man is off into the sky! So long kids! Always brush your teeth! KAPWINGGG!",
+    "aliases": [
+      "stupendous man's stupendous knowledge"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-03-04",
+      "note": "Stupendous Man completes a test by narrating his own glory."
+    },
+    "sourceDate": "1993-03-04"
+  },
+  {
+    "id": "quote-1993-03-21-1",
+    "displayName": "If Mom and Dad cared about me at all, they’d buy me some infra-red nighttime vision goggles.",
+    "aliases": [
+      "infra-red nighttime vision goggles"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1993",
+      "stripDate": "1993-03-21",
+      "note": "Nobody's parents love him quite as much as he deserves."
+    },
+    "sourceDate": "1993-03-21"
+  },
+  {
+    "id": "quote-1993-04-14-1",
+    "displayName": "I’m at peace with the world. I’m completely serene.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-2",
+    "displayName": "Why is that?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-3",
+    "displayName": "I’ve discoved my purpose in life. I know why I was put here and why everything exists.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-4",
+    "displayName": "Oh, really?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-5",
+    "displayName": "Yes. I am here so everybody can do what I want.",
+    "aliases": [
+      "everybody can do what i want"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-6",
+    "displayName": "It’s nice to have that cleared up.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-04-14-7",
+    "displayName": "Once everyone accepts it, they’ll be serene, too.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1993",
+      "stripDate": "1993-04-14",
+      "note": "Calvin's purpose in life, revealed as universal selfishness."
+    },
+    "sourceDate": "1993-04-14"
+  },
+  {
+    "id": "quote-1993-05-07-1",
+    "displayName": "Well, the important thing is that we tried our best.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Sport",
+      "year": "1993",
+      "stripDate": "1993-05-07",
+      "note": "Competition exists to divide people into winners and losers."
+    },
+    "sourceDate": "1993-05-07"
+  },
+  {
+    "id": "quote-1993-05-07-2",
+    "displayName": "The important thing is that we lost!",
+    "aliases": [
+      "the important thing is that we lost"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Sport",
+      "year": "1993",
+      "stripDate": "1993-05-07",
+      "note": "Competition exists to divide people into winners and losers."
+    },
+    "sourceDate": "1993-05-07"
+  },
+  {
+    "id": "quote-1993-05-07-3",
+    "displayName": "Oops, I always forget the purpose of competition is to divide people into winners and losers.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Sport",
+      "year": "1993",
+      "stripDate": "1993-05-07",
+      "note": "Competition exists to divide people into winners and losers."
+    },
+    "sourceDate": "1993-05-07"
+  },
+  {
+    "id": "quote-1993-05-07-4",
+    "displayName": "What’s the point of trying if you can’t be a winner?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Sport",
+      "year": "1993",
+      "stripDate": "1993-05-07",
+      "note": "Competition exists to divide people into winners and losers."
+    },
+    "sourceDate": "1993-05-07"
+  },
+  {
+    "id": "quote-1993-06-01-1",
+    "displayName": "Miss Wormwood, I have a question about this math lesson.",
+    "aliases": [
+      "what's the point of learning about integers"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-06-01",
+      "note": "Given that we all die, what is the point of integers?"
+    },
+    "sourceDate": "1993-06-01"
+  },
+  {
+    "id": "quote-1993-06-01-2",
+    "displayName": "Yes?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Miss Wormwood",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-06-01",
+      "note": "Given that we all die, what is the point of integers?"
+    },
+    "sourceDate": "1993-06-01"
+  },
+  {
+    "id": "quote-1993-06-01-3",
+    "displayName": "Given that, sooner or later, we’re all just going to die, what’s the point of learning about integers?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-06-01",
+      "note": "Given that we all die, what is the point of integers?"
+    },
+    "sourceDate": "1993-06-01"
+  },
+  {
+    "id": "quote-1993-06-01-4",
+    "displayName": "Turn to page 83, class.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Miss Wormwood",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-06-01",
+      "note": "Given that we all die, what is the point of integers?"
+    },
+    "sourceDate": "1993-06-01"
+  },
+  {
+    "id": "quote-1993-06-01-5",
+    "displayName": "(sulking) Nobody likes us “big picture” people.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-06-01",
+      "note": "Given that we all die, what is the point of integers?"
+    },
+    "sourceDate": "1993-06-01"
+  },
+  {
+    "id": "quote-1993-07-03-1",
+    "displayName": "The only skills I have the patience to learn are those that have no real application in life.",
+    "aliases": [
+      "no real application in life"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-07-03",
+      "note": "Calvin only has patience for skills with no use in life."
+    },
+    "sourceDate": "1993-07-03"
+  },
+  {
+    "id": "quote-1993-09-07-1",
+    "displayName": "I’m a genius, but I’m a misunderstood genius.",
+    "aliases": [
+      "i'm a genius, but i'm a misunderstood genius"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1993",
+      "stripDate": "1993-09-07",
+      "note": "A misunderstood genius, because nobody thinks he is one."
+    },
+    "sourceDate": "1993-09-07"
+  },
+  {
+    "id": "quote-1993-09-07-2",
+    "displayName": "What’s misunderstood about you?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Friendship",
+      "year": "1993",
+      "stripDate": "1993-09-07",
+      "note": "A misunderstood genius, because nobody thinks he is one."
+    },
+    "sourceDate": "1993-09-07"
+  },
+  {
+    "id": "quote-1993-09-07-3",
+    "displayName": "Nobody thinks I’m a genius.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1993",
+      "stripDate": "1993-09-07",
+      "note": "A misunderstood genius, because nobody thinks he is one."
+    },
+    "sourceDate": "1993-09-07"
+  },
+  {
+    "id": "quote-1993-09-12-1",
+    "displayName": "Today at school, I tried to decide whether to cheat on my test or not. I wondered, is it better to do the right thing and fail … or is it better to do the wrong thing and succeed?",
+    "aliases": [
+      "wrong thing and succeed"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-09-12",
+      "note": "Whether to cheat on the ethics test; Calvin ran out of time."
+    },
+    "sourceDate": "1993-09-12"
+  },
+  {
+    "id": "quote-1993-09-12-2",
+    "displayName": "So what did you decide?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-09-12",
+      "note": "Whether to cheat on the ethics test; Calvin ran out of time."
+    },
+    "sourceDate": "1993-09-12"
+  },
+  {
+    "id": "quote-1993-09-12-3",
+    "displayName": "Nothing. I ran out of time and had to turn in a blank paper.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-09-12",
+      "note": "Whether to cheat on the ethics test; Calvin ran out of time."
+    },
+    "sourceDate": "1993-09-12"
+  },
+  {
+    "id": "quote-1993-09-12-4",
+    "displayName": "Anymore, simply acknowledging the issue is a moral victory.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-09-12",
+      "note": "Whether to cheat on the ethics test; Calvin ran out of time."
+    },
+    "sourceDate": "1993-09-12"
+  },
+  {
+    "id": "quote-1993-09-12-5",
+    "displayName": "Well, it just seemed wrong to cheat on an ethics test.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-09-12",
+      "note": "Whether to cheat on the ethics test; Calvin ran out of time."
+    },
+    "sourceDate": "1993-09-12"
+  },
+  {
+    "id": "quote-1993-09-21-1",
+    "displayName": "The more you know, the harder it is to take decisive action. Once you become informed, you start seeing complexities and shades of gray. You realize that nothing is as clear and simple as it first appears. Ultimately, knowledge is paralyzing. Being a man of action, I can’t afford to take that risk.",
+    "aliases": [
+      "knowledge is paralyzing"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-09-21",
+      "note": "Knowledge is paralyzing, which excuses Calvin from acting."
+    },
+    "sourceDate": "1993-09-21"
+  },
+  {
+    "id": "quote-1993-09-21-2",
+    "displayName": "You’re ignorant, but at least you act on it.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-09-21",
+      "note": "Knowledge is paralyzing, which excuses Calvin from acting."
+    },
+    "sourceDate": "1993-09-21"
+  },
+  {
+    "id": "quote-1993-10-20-1",
+    "displayName": "Everybody seeks happiness! Not me, though! That’s the difference between me and the rest of the world! Happiness isn’t good enough for me! I demand euphoria!",
+    "aliases": [
+      "i demand euphoria"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-10-20",
+      "note": "Happiness is not enough; Calvin demands euphoria."
+    },
+    "sourceDate": "1993-10-20"
+  },
+  {
+    "id": "quote-1993-11-16-1",
+    "displayName": "I don’t care about issues! I’ve got better things to do than argue with every wrong-headed crackpot with an ignorant opinion! I’m a busy man! I say, either agree with me or take a hike! I’m right, period! End of discussion!",
+    "aliases": [
+      "i don't care about issues!"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1993",
+      "stripDate": "1993-11-16",
+      "note": "Calvin refuses to argue with issues, only with himself."
+    },
+    "sourceDate": "1993-11-16"
+  },
+  {
+    "id": "quote-1993-11-25-1",
+    "displayName": "My powerful brain has come up with a topic for my paper.",
+    "aliases": [
+      "they're so much cooler that way"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-2",
+    "displayName": "Great.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-3",
+    "displayName": "I’ll write about the debate over tyrannosaurs. Were they fearsome predators or disgusting scavengers?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-4",
+    "displayName": "Which side will you defend?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-5",
+    "displayName": "Oh, I believe they were fearsome predators, definitely.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-6",
+    "displayName": "How come?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-11-25-7",
+    "displayName": "They’re so much cooler that way.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1993",
+      "stripDate": "1993-11-25",
+      "note": "The tyrannosaur debate, settled on coolness."
+    },
+    "sourceDate": "1993-11-25"
+  },
+  {
+    "id": "quote-1993-12-11-1",
+    "displayName": "They say the world is a stage. But obviously the play is unrehearsed and everybody is ad-libbing his lines.",
+    "aliases": [
+      "the play is unrehearsed"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-12-11",
+      "note": "The world is a stage and the play is unrehearsed."
+    },
+    "sourceDate": "1993-12-11"
+  },
+  {
+    "id": "quote-1993-12-11-2",
+    "displayName": "Maybe that’s why it’s hard to tell if we’re in a tragedy or a farce.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-12-11",
+      "note": "The world is a stage and the play is unrehearsed."
+    },
+    "sourceDate": "1993-12-11"
+  },
+  {
+    "id": "quote-1993-12-11-3",
+    "displayName": "We need more special effects and dance numbers.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1993",
+      "stripDate": "1993-12-11",
+      "note": "The world is a stage and the play is unrehearsed."
+    },
+    "sourceDate": "1993-12-11"
+  },
+  {
+    "id": "quote-1994-01-27-1",
+    "displayName": "As you can see, I have memorized this utterly useless piece of information long enough to pass a test question. I now intend to forget it forever. You’ve taught me nothing except how to cynically manipulate the system. Congratulations.",
+    "aliases": [
+      "utterly useless piece of information"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1994",
+      "stripDate": "1994-01-27",
+      "note": "Useless information memorized to pass a test, then forgotten on purpose."
+    },
+    "sourceDate": "1994-01-27"
+  },
+  {
+    "id": "quote-1994-01-31-1",
+    "displayName": "Why is it I can recall a cigarette ad jingle from 25 years ago, but I can’t remember what I just got up to do?",
+    "aliases": [
+      "why is it i can recall a cigarette ad jingle"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1994",
+      "stripDate": "1994-01-31",
+      "note": "Dad remembers a cigarette jingle but not his own errands."
+    },
+    "sourceDate": "1994-01-31"
+  },
+  {
+    "id": "quote-1994-03-04-1",
+    "displayName": "It offends the human ego that nature is indifferent to us. Nature doesn’t care if people live or die. It refuses to be tamed. It does whatever it wants and acts like people don’t matter. It won’t confirm our right to be here. That drives people crazy. We can’t stand being ignored. It’s insulting and … hey!",
+    "aliases": [
+      "nature is indifferent to us"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1994",
+      "stripDate": "1994-03-04",
+      "note": "Nature's indifference offends the human ego; Hobbes yawns."
+    },
+    "sourceDate": "1994-03-04"
+  },
+  {
+    "id": "quote-1994-03-04-2",
+    "displayName": "YAWWNN. wanders off",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1994",
+      "stripDate": "1994-03-04",
+      "note": "Nature's indifference offends the human ego; Hobbes yawns."
+    },
+    "sourceDate": "1994-03-04"
+  },
+  {
+    "id": "quote-1994-03-04-3",
+    "displayName": "I think that’s also why some people don’t like cats.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1994",
+      "stripDate": "1994-03-04",
+      "note": "Nature's indifference offends the human ego; Hobbes yawns."
+    },
+    "sourceDate": "1994-03-04"
+  },
+  {
+    "id": "quote-1994-03-31-1",
+    "displayName": "I thought I had a great idea. But it never really took off. In fact, it didn’t even get on the runway. I guess you could say it exploded in the hangar.",
+    "aliases": [
+      "exploded in the hangar"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Imagination",
+      "year": "1994",
+      "stripDate": "1994-03-31",
+      "note": "An idea that never even got onto the runway."
+    },
+    "sourceDate": "1994-03-31"
+  },
+  {
+    "id": "quote-1994-04-17-1",
+    "displayName": "If you couldn’t find any weirdness, maybe we’ll just have to make some!",
+    "aliases": [
+      "we'll just have to make some"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Imagination",
+      "year": "1994",
+      "stripDate": "1994-04-17",
+      "note": "No weirdness to be found? Then make some."
+    },
+    "sourceDate": "1994-04-17"
+  },
+  {
+    "id": "quote-1995-01-09-1",
+    "displayName": "“1. Explain Newton’s First Law of Motion in your own words.”",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Miss Wormwood",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-01-09",
+      "note": "Newton's first law, answered in Calvin's own words."
+    },
+    "sourceDate": "1995-01-09"
+  },
+  {
+    "id": "quote-1995-01-09-2",
+    "displayName": "(writing, after a moment of inspiration) Yakka foob mog. Grug pubbawup zink wattoom gazork. Chumble spuzz.",
+    "aliases": [
+      "yakka foob mog"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-01-09",
+      "note": "Newton's first law, answered in Calvin's own words."
+    },
+    "sourceDate": "1995-01-09"
+  },
+  {
+    "id": "quote-1995-01-16-1",
+    "displayName": "Some days you get up and you already know that things aren’t going to go well. They’re the type of days when you should just give in, put your pajamas back on, make some hot chocolate, and read comic books in bed with the covers up until the world looks more encouraging.",
+    "aliases": [
+      "things aren't going to go well"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-01-16",
+      "note": "Bad days are known before they start."
+    },
+    "sourceDate": "1995-01-16"
+  },
+  {
+    "id": "quote-1995-01-19-1",
+    "displayName": "I’m thinking of starting my own talk radio show. I’ll spout simplistic opinions for hours on end, ridicule anyone who disagrees with me, and generally foster divisiveness, cynicism, and a lower level of public dialogue!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1995",
+      "stripDate": "1995-01-19",
+      "note": "Calvin applies for the job of talk-radio cynic."
+    },
+    "sourceDate": "1995-01-19"
+  },
+  {
+    "id": "quote-1995-01-19-2",
+    "displayName": "It would seem you were born for the job.",
+    "aliases": [
+      "born for the job"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Civics",
+      "year": "1995",
+      "stripDate": "1995-01-19",
+      "note": "Calvin applies for the job of talk-radio cynic."
+    },
+    "sourceDate": "1995-01-19"
+  },
+  {
+    "id": "quote-1995-01-19-3",
+    "displayName": "Imagine getting paid to act like a six-year-old!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Civics",
+      "year": "1995",
+      "stripDate": "1995-01-19",
+      "note": "Calvin applies for the job of talk-radio cynic."
+    },
+    "sourceDate": "1995-01-19"
+  },
+  {
+    "id": "quote-1995-01-25-1",
+    "displayName": "I wish I could just take a pill to be perfect and I wish I could just push a button and have anything I want.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-01-25",
+      "note": "A pill for perfection and a button for anything: the American Dream."
+    },
+    "sourceDate": "1995-01-25"
+  },
+  {
+    "id": "quote-1995-01-25-2",
+    "displayName": "The American Dream lives on.",
+    "aliases": [
+      "the american dream lives on"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-01-25",
+      "note": "A pill for perfection and a button for anything: the American Dream."
+    },
+    "sourceDate": "1995-01-25"
+  },
+  {
+    "id": "quote-1995-01-25-3",
+    "displayName": "Why should I have to work for everything?! It’s like saying I don’t deserve it!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-01-25",
+      "note": "A pill for perfection and a button for anything: the American Dream."
+    },
+    "sourceDate": "1995-01-25"
+  },
+  {
+    "id": "quote-1995-02-21-1",
+    "displayName": "I wonder why people are never content with what they have.",
+    "aliases": [
+      "people are never content with what they have"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-02-21",
+      "note": "Hobbes lists everything a tiger has that a human lacks."
+    },
+    "sourceDate": "1995-02-21"
+  },
+  {
+    "id": "quote-1995-02-21-2",
+    "displayName": "Are you kidding? Your fingernails are a joke, you’ve got no fangs, you can’t see at night, your pink hides are ridiculous, your reflexes are nil, and you don’t even have tails! Of course people aren’t content!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-02-21",
+      "note": "Hobbes lists everything a tiger has that a human lacks."
+    },
+    "sourceDate": "1995-02-21"
+  },
+  {
+    "id": "quote-1995-02-21-3",
+    "displayName": "Forget I said anything.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-02-21",
+      "note": "Hobbes lists everything a tiger has that a human lacks."
+    },
+    "sourceDate": "1995-02-21"
+  },
+  {
+    "id": "quote-1995-02-21-4",
+    "displayName": "Now if tigers weren’t content, that would be something to wonder about.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-02-21",
+      "note": "Hobbes lists everything a tiger has that a human lacks."
+    },
+    "sourceDate": "1995-02-21"
+  },
+  {
+    "id": "quote-1995-03-07-1",
+    "displayName": "(in front of the class yelling) Today for “Show and Tell,” I refuse to show you what I brought and I refuse to tell you anything about it.",
+    "aliases": [
+      "show and tell"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-03-07",
+      "note": "Show and Tell, refused on principle."
+    },
+    "sourceDate": "1995-03-07"
+  },
+  {
+    "id": "quote-1995-03-07-2",
+    "displayName": "(grinning evilly) It’s a mystery that will haunt you all your miserable lives! You’ll never, ever know what I brought! You can beg and plead, but I’ll never end your torment!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-03-07",
+      "note": "Show and Tell, refused on principle."
+    },
+    "sourceDate": "1995-03-07"
+  },
+  {
+    "id": "quote-1995-03-07-3",
+    "displayName": "(laughing) I’ll carry my secret to the grave! It’s the Show and Tell that was never shown or told! Ha ha ha! Ah ha ha ha ha!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-03-07",
+      "note": "Show and Tell, refused on principle."
+    },
+    "sourceDate": "1995-03-07"
+  },
+  {
+    "id": "quote-1995-03-07-4",
+    "displayName": "(walking toward the Principal’s door, sulking) Everybody wants the same old thing.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "School",
+      "year": "1995",
+      "stripDate": "1995-03-07",
+      "note": "Show and Tell, refused on principle."
+    },
+    "sourceDate": "1995-03-07"
+  },
+  {
+    "id": "quote-1995-03-13-1",
+    "displayName": "Whatcha doin’?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-03-13-2",
+    "displayName": "Looking for frogs.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-03-13-3",
+    "displayName": "How come?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-03-13-4",
+    "displayName": "I must obey the inscrutable exhortations of my soul.",
+    "aliases": [
+      "inscrutable exhortations of my soul"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-03-13-5",
+    "displayName": "Ah. But of course.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-03-13-6",
+    "displayName": "My mandate also includes weird bugs.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-03-13",
+      "note": "Frog hunting as the soul's mandate."
+    },
+    "sourceDate": "1995-03-13"
+  },
+  {
+    "id": "quote-1995-05-07-1",
+    "displayName": "Weekends don’t count unless you spend them doing something completely pointless.",
+    "aliases": [
+      "weekends don't count"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-05-07",
+      "note": "A weekend only counts if it was spent pointlessly."
+    },
+    "sourceDate": "1995-05-07"
+  },
+  {
+    "id": "quote-1995-05-09-1",
+    "displayName": "How come grown-ups don’t go out to play?",
+    "aliases": [
+      "why don't grown-ups go out to play"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-09-2",
+    "displayName": "Grown-ups can only justify playing outside by calling it exercise, doing it when they’d rather not, and keeping records to quantify their performance.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-09-3",
+    "displayName": "That sounds like a job.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-09-4",
+    "displayName": "… Except you don’t get paid.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-09-5",
+    "displayName": "So play is worse than work?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-09-6",
+    "displayName": "Being a grown-up is tough.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-05-09",
+      "note": "Grown-ups can only justify playing outside as exercise."
+    },
+    "sourceDate": "1995-05-09"
+  },
+  {
+    "id": "quote-1995-05-14-1",
+    "displayName": "You know, Hobbes, some days even my lucky rocketship underpants don’t help.",
+    "aliases": [
+      "lucky rocketship underpants"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-05-14",
+      "note": "Even the lucky rocketship underpants do not always help."
+    },
+    "sourceDate": "1995-05-14"
+  },
+  {
+    "id": "quote-1995-06-15-1",
+    "displayName": "If people could put rainbows in zoos, they’d do it.",
+    "aliases": [
+      "rainbows in zoos"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Nature",
+      "year": "1995",
+      "stripDate": "1995-06-15",
+      "note": "If people could put rainbows in zoos, they would."
+    },
+    "sourceDate": "1995-06-15"
+  },
+  {
+    "id": "quote-1995-06-17-1",
+    "displayName": "Why does ice float?",
+    "aliases": [
+      "why does ice float?"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-06-17-2",
+    "displayName": "Because it’s cold. Ice wants to get warm, so it goes to the top of liquids in order to be nearer to the sun.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-06-17-3",
+    "displayName": "Is that true?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-06-17-4",
+    "displayName": "Look it up and find out.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-06-17-5",
+    "displayName": "(stomping off, frowning) I should just look stuff up in the first place.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-06-17-6",
+    "displayName": "You can learn a lot, talking to me.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Dad",
+      "theme": "Science",
+      "year": "1995",
+      "stripDate": "1995-06-17",
+      "note": "Why does ice float? Dad's answer is a joke about trusting him."
+    },
+    "sourceDate": "1995-06-17"
+  },
+  {
+    "id": "quote-1995-07-07-1",
+    "displayName": "I’m writing a fund-raising letter. The secret to getting donations is to depict everyone who disagrees with you as the enemy. Then you explain how they’re systematically working to destroy everything you hold dear. It’s a War of Values! Rational discussion is hopeless! Compromise is unthinkable! Our only hope is well-funded antagonism, so we need your money to keep up the fight!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-07-07",
+      "note": "Fund-raising by depicting opponents as the enemy."
+    },
+    "sourceDate": "1995-07-07"
+  },
+  {
+    "id": "quote-1995-07-07-2",
+    "displayName": "How cynically unconstructive.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-07-07",
+      "note": "Fund-raising by depicting opponents as the enemy."
+    },
+    "sourceDate": "1995-07-07"
+  },
+  {
+    "id": "quote-1995-07-07-3",
+    "displayName": "Enmity sells.",
+    "aliases": [
+      "enmity sells"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Greed",
+      "year": "1995",
+      "stripDate": "1995-07-07",
+      "note": "Fund-raising by depicting opponents as the enemy."
+    },
+    "sourceDate": "1995-07-07"
+  },
+  {
+    "id": "quote-1995-08-03-1",
+    "displayName": "I have a hammer!",
+    "aliases": [
+      "i have a hammer!"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-08-03",
+      "note": "The hammer, and everything a boy can do with one."
+    },
+    "sourceDate": "1995-08-03"
+  },
+  {
+    "id": "quote-1995-08-03-2",
+    "displayName": "I can put things together! I can knock things apart! I can alter my environment at will and make an incredible din all the while!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-08-03",
+      "note": "The hammer, and everything a boy can do with one."
+    },
+    "sourceDate": "1995-08-03"
+  },
+  {
+    "id": "quote-1995-08-03-3",
+    "displayName": "Ah, it’s great to be male!",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-08-03",
+      "note": "The hammer, and everything a boy can do with one."
+    },
+    "sourceDate": "1995-08-03"
+  },
+  {
+    "id": "quote-1995-08-11-1",
+    "displayName": "Some people are pragmatists, taking things as they come and making the best of the choices available. Some people are idealists, standing for principle and refusing to compromise. And some people just act on any whim that enters their head.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-08-11",
+      "note": "Pragmatists, idealists and whims, turned into principles."
+    },
+    "sourceDate": "1995-08-11"
+  },
+  {
+    "id": "quote-1995-08-11-2",
+    "displayName": "I wonder which you are.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-08-11",
+      "note": "Pragmatists, idealists and whims, turned into principles."
+    },
+    "sourceDate": "1995-08-11"
+  },
+  {
+    "id": "quote-1995-08-11-3",
+    "displayName": "I pragmatically turn my whims into principles!",
+    "aliases": [
+      "i pragmatically turn my whims into principles"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-08-11",
+      "note": "Pragmatists, idealists and whims, turned into principles."
+    },
+    "sourceDate": "1995-08-11"
+  },
+  {
+    "id": "quote-1995-09-01-1",
+    "displayName": "There would be more civility in this world if people didn’t take it as an invitation to walk on you.",
+    "aliases": [
+      "more civility in this world"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Mom",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-09-01",
+      "note": "On civility and taking it as an invitation to walk on you."
+    },
+    "sourceDate": "1995-09-01"
+  },
+  {
+    "id": "quote-1995-11-03-1",
+    "displayName": "(watching TV) Why isn’t my life like this situation comedy? Why don’t I have a bunch of friends with nothing to do but drop by and instigate wacky adventures? Why aren’t my conversations peppered with spontaneous witticisms? Why don’t my friends demonstrate heartfelt concern for my well-being when I have problems?",
+    "aliases": [
+      "why isn't my life like this situation comedy"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-11-03",
+      "note": "Why his life is not a situation comedy."
+    },
+    "sourceDate": "1995-11-03"
+  },
+  {
+    "id": "quote-1995-11-03-2",
+    "displayName": "Why don’t you know any gorgeous babes?",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Hobbes",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-11-03",
+      "note": "Why his life is not a situation comedy."
+    },
+    "sourceDate": "1995-11-03"
+  },
+  {
+    "id": "quote-1995-11-03-3",
+    "displayName": "I gotta get my life some writers.",
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-11-03",
+      "note": "Why his life is not a situation comedy."
+    },
+    "sourceDate": "1995-11-03"
+  },
+  {
+    "id": "quote-1995-11-04-1",
+    "displayName": "Know what’s weird? Day by day nothing seems to change. But pretty soon, everything is different.",
+    "aliases": [
+      "day by day nothing seems to change"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Philosophy",
+      "year": "1995",
+      "stripDate": "1995-11-04",
+      "note": "Nothing changes day by day until everything is different."
+    },
+    "sourceDate": "1995-11-04"
+  },
+  {
+    "id": "quote-1995-11-07-1",
+    "displayName": "No one recognizes my hints to smother me with affection.",
+    "aliases": [
+      "hints to smother me with affection"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Family",
+      "year": "1995",
+      "stripDate": "1995-11-07",
+      "note": "Nobody recognizes the hints he drops to be smothered."
+    },
+    "sourceDate": "1995-11-07"
+  },
+  {
+    "id": "quote-1995-12-31-1",
+    "displayName": "It's a magical world, Hobbes, ol' buddy... Let's go exploring!",
+    "aliases": [
+      "let's go exploring",
+      "it's a magical world"
+    ],
+    "category": "quote",
+    "properties": {
+      "type": "quote",
+      "speaker": "Calvin",
+      "theme": "Friendship",
+      "year": "1995",
+      "stripDate": "1995-12-31",
+      "note": "The final strip: the two of them sled downhill after a fresh snowfall."
+    },
+    "sourceDate": "1995-12-31"
+  }
+]

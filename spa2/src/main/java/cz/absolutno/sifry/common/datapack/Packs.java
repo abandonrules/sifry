@@ -30,6 +30,10 @@ public final class Packs {
         return C.astronomy(assets);
     }
 
+    public static CalvinHobbesDataPack calvinhobbes(AssetManager assets) throws IOException {
+        return C.calvinhobbes(assets);
+    }
+
     private static final class C {
         static PackManifest manifest(AssetManager assets, String pack) throws IOException {
             try (InputStream in = assets.open(ROOT + '/' + pack + '/' + PackJsonLoader.MANIFEST)) {
@@ -57,6 +61,10 @@ public final class Packs {
 
         static AstronomyDataPack astronomy(AssetManager assets) throws IOException {
             return new AstronomyDataPack(manifest(assets, "astronomy"), records(assets, "astronomy"));
+        }
+
+        static CalvinHobbesDataPack calvinhobbes(AssetManager assets) throws IOException {
+            return new CalvinHobbesDataPack(manifest(assets, "calvinhobbes"), records(assets, "calvinhobbes"));
         }
     }
 }
